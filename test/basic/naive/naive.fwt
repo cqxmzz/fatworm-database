@@ -1,0 +1,19 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table Classes(
+	a int,
+	b int,
+	c int)
+;
+insert into Classes values(1,2,3)
+;
+
+select a from Classes where a=1
+;
+select c from Classes where a=1
+;

@@ -1,0 +1,65 @@
+create database db
+;
+
+use db
+;
+
+create table a (
+    a int
+)
+;
+
+create table b (
+    b varchar(200)
+)
+;
+
+create table c (
+    a int,
+    b char(200)
+)
+;
+
+create table d (
+    a decimal(10),
+    b decimal(10)
+)
+;
+
+insert into a values (1)
+;
+
+insert into a values (2)
+;
+
+insert into a values (1)
+;
+
+insert into a values (2)
+;
+
+insert into b values ('a')
+;
+
+insert into b values ('b')
+;
+
+insert into c values (1, 'b')
+;
+
+insert into c values (2, 'a')
+;
+
+insert into d values (1, 1)
+;
+
+insert into d values (1, 2)
+;
+
+insert into d values (2, 1)
+;
+
+create table empty (
+a int
+)
+;

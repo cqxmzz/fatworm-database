@@ -1,0 +1,4 @@
+select * from c
+where a in (select distinct * from a)
+;
+

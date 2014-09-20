@@ -1,0 +1,25 @@
+drop database sort
+;
+create database sort
+;
+use sort
+;
+create table chars(
+	ch int)
+;
+insert into chars values(1)
+;
+insert into chars values(2)
+;
+insert into chars values(3)
+;
+insert into chars values(4)
+;
+insert into chars values(7)
+;
+insert into chars values(8)
+;
+insert into chars values(9)
+;
+insert into chars values(0)
+;

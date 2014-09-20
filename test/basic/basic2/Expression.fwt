@@ -1,0 +1,213 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int)
+;
+insert into InfraTest values(0-1-2+3-4*5-6-7+8+9)
+;
+insert into InfraTest values(0-1*2-3*4-5*6-7+8+9)
+;
+insert into InfraTest values(0-1-2*3*4+5+6*7*8*9)
+;
+insert into InfraTest values(0-1-2-3*4+5+6+7*8+9)
+;
+insert into InfraTest values(0-1-2-3-4+5+6+7*8*9)
+;
+insert into InfraTest values(0-1*2*3*4+5*6-7-8*9)
+;
+insert into InfraTest values(0*1+2*3*4-5-6+7+8*9)
+;
+insert into InfraTest values(0+1*2*3-4+5-6*7+8+9)
+;
+insert into InfraTest values(0+1+2*3+4*5*6+7*8-9)
+;
+insert into InfraTest values(0+1+2*3*4+5+6*7*8-9)
+;
+insert into InfraTest values(0+1+2*3+4-5-6-7+8+9)
+;
+insert into InfraTest values(0*1+2-3*4-5*6+7*8*9)
+;
+insert into InfraTest values(0+1+2-3*4-5*6*7-8+9)
+;
+insert into InfraTest values(0*1-2*3-4+5+6-7+8*9)
+;
+insert into InfraTest values(0+1*2+3-4+5-6*7+8+9)
+;
+insert into InfraTest values(0*1-2*3*4*5-6+7*8*9)
+;
+insert into InfraTest values(0+1*2+3+4-5*6-7+8+9)
+;
+insert into InfraTest values(0*1*2-3*4+5-6*7*8-9)
+;
+insert into InfraTest values(0*1*2-3*4-5-6*7-8+9)
+;
+insert into InfraTest values(0-1*2*3+4+5*6-7+8-9)
+;
+insert into InfraTest values(0-1*2*3-4*5*6+7-8*9)
+;
+insert into InfraTest values(0-1*2-3+4-5*6*7+8+9)
+;
+insert into InfraTest values(0+1+2*3-4-5-6*7*8*9)
+;
+insert into InfraTest values(0-1-2-3+4+5+6+7*8+9)
+;
+insert into InfraTest values(0*1+2+3*4*5*6-7*8-9)
+;
+insert into InfraTest values(0+1*2*3*4-5+6*7+8*9)
+;
+insert into InfraTest values(0-1+2+3-4*5*6*7+8*9)
+;
+insert into InfraTest values(0+1-2*3-4-5*6-7+8-9)
+;
+insert into InfraTest values(0-1+2-3*4+5*6-7+8+9)
+;
+insert into InfraTest values(0*1*2-3+4*5*6+7+8*9)
+;
+insert into InfraTest values(0+1+2*3*4+5-6*7*8+9)
+;
+insert into InfraTest values(0*1+2-3-4*5-6+7-8*9)
+;
+insert into InfraTest values(0*1-2+3+4-5+6*7-8*9)
+;
+insert into InfraTest values(0*1*2+3-4*5+6+7+8-9)
+;
+insert into InfraTest values(0+1+2-3+4*5*6-7-8+9)
+;
+insert into InfraTest values(0+1*2*3+4*5+6+7-8+9)
+;
+insert into InfraTest values(0-1-2*3-4+5*6-7-8*9)
+;
+insert into InfraTest values(0*1*2+3*4*5+6-7+8-9)
+;
+insert into InfraTest values(0-1*2*3-4+5*6-7+8*9)
+;
+insert into InfraTest values(0*1-2+3*4-5-6*7*8*9)
+;
+insert into InfraTest values(0*1*2+3*4*5+6+7-8+9)
+;
+insert into InfraTest values(0-1*2-3*4*5+6*7+8-9)
+;
+insert into InfraTest values(0-1-2*3-4-5-6*7-8*9)
+;
+insert into InfraTest values(0-1-2*3+4+5-6-7-8*9)
+;
+insert into InfraTest values(0*1-2+3+4+5-6-7+8+9)
+;
+insert into InfraTest values(0+1+2+3-4*5+6-7-8*9)
+;
+insert into InfraTest values(0+1+2-3+4*5+6*7+8+9)
+;
+insert into InfraTest values(0*1*2-3-4-5+6*7*8-9)
+;
+insert into InfraTest values(0+1+2*3-4-5*6+7+8-9)
+;
+insert into InfraTest values(0+1*2+3+4*5*6-7*8*9)
+;
+insert into InfraTest values(0-1*2*3+4-5-6*7*8+9)
+;
+insert into InfraTest values(0+1*2*3*4+5-6*7*8*9)
+;
+insert into InfraTest values(0-1*2+3+4+5*6-7+8*9)
+;
+insert into InfraTest values(0-1*2-3+4-5-6*7*8+9)
+;
+insert into InfraTest values(0*1-2+3*4*5+6+7-8+9)
+;
+insert into InfraTest values(0*1+2+3*4*5*6+7+8+9)
+;
+insert into InfraTest values(0+1*2+3+4+5+6*7+8*9)
+;
+insert into InfraTest values(0+1+2-3-4*5*6*7+8*9)
+;
+insert into InfraTest values(0*1-2-3+4+5+6-7*8+9)
+;
+insert into InfraTest values(0-1+2-3*4-5+6+7*8-9)
+;
+insert into InfraTest values(0-1-2*3-4+5-6*7*8+9)
+;
+insert into InfraTest values(0+1*2-3+4*5*6*7*8+9)
+;
+insert into InfraTest values(0+1-2-3-4-5-6*7+8+9)
+;
+insert into InfraTest values(0-1-2*3+4-5*6+7*8+9)
+;
+insert into InfraTest values(0-1*2*3*4+5-6-7+8+9)
+;
+insert into InfraTest values(0-1+2+3+4-5*6-7*8+9)
+;
+insert into InfraTest values(0+1*2-3-4+5+6-7-8-9)
+;
+insert into InfraTest values(0-1*2-3-4-5-6-7+8-9)
+;
+insert into InfraTest values(0+1*2*3-4*5+6*7*8-9)
+;
+insert into InfraTest values(0*1-2-3+4-5*6*7+8*9)
+;
+insert into InfraTest values(0*1*2-3-4-5-6+7+8*9)
+;
+insert into InfraTest values(0-1*2-3+4+5+6+7-8+9)
+;
+insert into InfraTest values(0+1-2*3+4+5+6*7-8+9)
+;
+insert into InfraTest values(0-1+2+3*4-5*6-7+8*9)
+;
+insert into InfraTest values(0+1+2*3+4*5*6-7+8*9)
+;
+insert into InfraTest values(0+1-2-3+4*5+6-7*8-9)
+;
+insert into InfraTest values(0*1*2+3*4-5-6+7+8*9)
+;
+insert into InfraTest values(0+1*2+3*4*5+6*7*8+9)
+;
+insert into InfraTest values(0*1*2+3*4*5*6-7+8-9)
+;
+insert into InfraTest values(0*1-2*3+4-5*6+7-8+9)
+;
+insert into InfraTest values(0*1*2-3*4+5+6*7+8+9)
+;
+insert into InfraTest values(0+1-2+3+4-5*6-7+8*9)
+;
+insert into InfraTest values(0+1*2+3*4-5*6-7*8-9)
+;
+insert into InfraTest values(0+1+2+3-4+5*6*7+8+9)
+;
+insert into InfraTest values(0+1+2*3-4-5+6*7*8-9)
+;
+insert into InfraTest values(0*1+2-3+4*5-6-7*8*9)
+;
+insert into InfraTest values(0+1+2-3*4-5+6+7*8+9)
+;
+insert into InfraTest values(0+1+2-3-4+5*6+7*8-9)
+;
+insert into InfraTest values(0-1*2+3+4*5-6-7*8-9)
+;
+insert into InfraTest values(0+1+2+3+4*5+6+7-8*9)
+;
+insert into InfraTest values(0+1-2*3-4-5*6*7+8+9)
+;
+insert into InfraTest values(0*1-2+3+4+5+6-7+8+9)
+;
+insert into InfraTest values(0+1*2+3*4+5*6*7+8-9)
+;
+insert into InfraTest values(0-1-2+3+4-5*6+7*8-9)
+;
+insert into InfraTest values(0+1*2+3-4*5-6-7*8*9)
+;
+insert into InfraTest values(0*1-2+3+4-5*6-7+8+9)
+;
+insert into InfraTest values(0+1+2*3*4-5+6*7*8*9)
+;
+insert into InfraTest values(0*1+2*3-4+5-6-7-8+9)
+;
+insert into InfraTest values(0+1-2+3+4-5-6-7*8+9)
+;
+insert into InfraTest values(0-1+2-3+4-5-6*7-8+9)
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest
+;

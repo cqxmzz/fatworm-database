@@ -1,0 +1,52 @@
+@NEW_THREAD
+drop database fatwormTypes
+;
+create database fatwormTypes
+;
+use fatwormTypes
+;
+create table test1(a int, d datetime)
+;
+insert into test1 values(1,'1988-04-09 10:10:10')
+;
+insert into test1 values(2,'1988-04-10 10:10:10')
+;
+insert into test1 values(3,'1988-04-11 10:10:10')
+;
+insert into test1 values(4,'1988-04-12 10:10:10')
+;
+insert into test1 values(5,'1988-04-13 10:10:10')
+;
+insert into test1 values(6,'1988-04-13 10:10:09')
+;
+insert into test1 values(7,'1988-04-12 10:10:09')
+;
+insert into test1 values(8,'1988-04-11 10:10:09')
+;
+insert into test1 values(9,'1988-04-10 10:10:09')
+;
+insert into test1 values(10,'1988-04-09 10:10:09')
+;
+insert into test1 values(11,'1988-04-09 10:10:10')
+;
+insert into test1 values(12,'1988-04-10 10:10:10')
+;
+insert into test1 values(13,'1988-04-11 10:10:10')
+;
+insert into test1 values(14,'1988-04-12 10:10:10')
+;
+insert into test1 values(15,'1988-04-13 10:10:10')
+;
+@UN_ORDERED_SELECT
+select * from test1 where d='1988-04-12 10:10:10'
+;
+@UN_ORDERED_SELECT
+select count(a) from test1 where d>'1988-04-12 10:10:10'
+;
+@ORDERED_SELECT
+select count(d) from test1 where d>'1988-04-12 10:10:10' and d<'2222-02-22 00:00:00'
+;
+@ORDERED_SELECT
+select d from test1 order by d
+;
+

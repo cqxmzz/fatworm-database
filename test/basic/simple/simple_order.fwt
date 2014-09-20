@@ -1,0 +1,37 @@
+create table testorder (
+    a int,
+    b varchar(200)
+)
+;
+
+insert into testorder values (10, 'b')
+;
+insert into testorder values (9, 'b')
+;
+insert into testorder values (8, 'b')
+;
+insert into testorder values (4, 'b')
+;
+insert into testorder values (6, 'b')
+;
+insert into testorder values (2, 'b')
+;
+insert into testorder values (3, 'b')
+;
+insert into testorder values (1, 'b')
+;
+insert into testorder values (7, 'b')
+;
+insert into testorder values (5, 'b')
+;
+insert into testorder values (10, 'a')
+;
+insert into testorder values (10, 'c')
+;
+
+select * from testorder
+;
+
+select * from testorder order by a DESC, b
+;
+

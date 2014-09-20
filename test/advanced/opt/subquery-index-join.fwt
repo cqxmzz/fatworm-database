@@ -1,0 +1,13 @@
+@NEW_THREAD
+use opt
+;
+
+@UN_ORDERED_SELECT
+select TTAA.id, TTAA.val
+from TTAA
+where TTAA.id in ( select id from TTBB )
+;
+
+
+
+

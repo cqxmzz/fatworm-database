@@ -1,0 +1,64 @@
+@NEW_THREAD
+use opt
+;
+
+create table TTAA(
+   id  int,
+   val int
+)
+;
+
+create table TTAD(
+   id  int,
+   val int
+)
+;
+
+create table TTBB(
+   id  int,
+   val int
+)
+;
+
+create table TTBD(
+   id  int,
+   val int
+)
+;
+
+
+insert into TTAA(
+   select * from TTA
+)
+;
+
+insert into TTAA(
+   select id, val+10 from TTT    
+)
+;
+
+
+insert into TTBB(
+   select * from TTB
+)
+;
+
+insert into TTAD(
+   select * from TTA
+)
+;
+
+insert into TTBD(
+   select * from TTB
+)
+;
+
+insert into TTAD(
+   select id, val+10 from TTT
+)
+;
+
+insert into TTBD(
+   select id, val+11 from TTT
+)
+;

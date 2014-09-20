@@ -1,0 +1,34 @@
+@NEW_THREAD
+drop database fatwormTypes
+;
+create database fatwormTypes
+;
+use fatwormTypes
+;
+create table test1(a int, c char(200))
+;
+insert into test1 values(5,'abcdefgihaosidngoiasndgoiansiodgjasdjg')
+;
+insert into test1 values(4,'aksofkokqwojpoisdgnasdgn')
+;
+insert into test1 values(3,'asjgojdojnposndfjopjdpfnje')
+;
+insert into test1 values(2,'nojconjeornoiejrnoijeoinjojsonpjspofn')
+;
+insert into test1 values(1,'kodsfjnoeoijnpoenopjsopdfnpodposjndfn')
+;
+insert into test1 values(644,'bksodfjobjeoprjhpownpbonwpobnopwnbpowb')
+;
+insert into test1 values(712,'mfsobpoejrnpomdsopnopdsfmnpomdsopfmnpo')
+;
+insert into test1 values(844,'bkosfdkopjnopenopmsdopfmnpomewpnmpsomn')
+;
+insert into test1 values(911,'odsfnmopdfpommnpomewponmpsdomfnpomsdpnd')
+;
+@UN_ORDERED_SELECT
+select * from test1 where c='odsfnmopdfpommnpomewponmpsdomfnpomsdpnd'
+;
+@ORDERED_SELECT
+select * from test1 order by c
+;
+

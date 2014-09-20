@@ -1,0 +1,10 @@
+<project>
+    <target name="fat">
+        <javac
+        srcdir="src"
+        destdir="classes"
+        debug="on"
+        classpath="lib/antlr-3.2.jar"
+        />
+    </target>
+</project>

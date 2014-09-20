@@ -1,0 +1,14 @@
+select avg(a) from a
+;
+
+select avg(a) from c group by b having avg(a) > 1
+;
+
+select min(a)+max(a) from a
+;
+
+select avg(a) from a
+;
+
+select count(a) from empty
+;

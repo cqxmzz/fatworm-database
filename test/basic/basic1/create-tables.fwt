@@ -1,0 +1,24 @@
+@NEW_THREAD
+drop database fatwormBasic1
+;
+create database fatwormBasic1
+;
+use fatwormBasic1
+;
+create table test1(a int, b int, primary key(a))
+;
+drop table test1
+;
+create table test2(a int, b int, c int, d int, e int, f int)
+;
+drop table test2
+;
+create table test3(a int, b char(200), c datetime, d boolean, f decimal(10, 10), g timestamp, h varchar(10))
+;
+drop table test3
+;
+create table test4(a int not null auto_increment, b varchar(20) default 'aaaaa', primary key(a))
+;
+drop table test4
+;
+

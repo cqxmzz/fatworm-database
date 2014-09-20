@@ -1,0 +1,35 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+drop table InfraTest
+;
+create table InfraTest(k int, v int auto_increment, primary key(v))
+;
+insert into InfraTest values(1,default)
+;
+insert into InfraTest values(2,default)
+;
+insert into InfraTest values(3,default)
+;
+insert into InfraTest values(4,default)
+;
+insert into InfraTest values(5,default)
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest
+;
+
+delete from InfraTest where k=1
+;
+delete from InfraTest where v=2
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest
+;
+

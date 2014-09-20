@@ -1,0 +1,7 @@
+@NEW_THREAD
+use ATIS
+;
+
+@ORDERED_SELECT;
+select count(aircraftcode) as num, min(payload) as min ,max(payload) as max from aircraft where payload>0
+;

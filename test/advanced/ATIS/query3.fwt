@@ -1,0 +1,7 @@
+@NEW_THREAD
+use ATIS
+;
+
+@ORDERED_SELECT;
+select monthname.monthname,dayname.dayname from monthname,dayname where monthname.monthnumber=dayname.daycode order by monthname.monthname ASC
+;

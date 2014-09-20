@@ -1,0 +1,39 @@
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select city.cityname,state.statename,city.citycode from city,state where city.citycode='MATL' and city.statecode=state.statecode order by city.cityname,state.statename,city.citycode
+;
+
+@ORDERED_SELECT
+select city.cityname,state.statename,city.citycode from state,city where city.statecode=state.statecode order by city.cityname,state.statename,city.citycode
+;
+
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select monthname.monthname,dayname.dayname from monthname,dayname where monthname.monthnumber=dayname.daycode order by monthname.monthname,dayname.dayname
+;
+
+@ORDERED_SELECT
+select monthname.monthname,dayname.dayname from monthname,dayname where monthname.monthnumber=dayname.daycode and dayname.daycode >= 4 order by monthname.monthname,dayname.dayname
+;
+
+@ORDERED_SELECT
+select flight.flightcode,aircraft.aircrafttype from flight,aircraft where flight.aircraftcode=aircraft.aircraftcode order by flight.flightcode,aircraft.aircrafttype
+;
+
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select fare.farecode from restrictcarrier,airline,fare where restrictcarrier.airlinecode=airline.airlinecode and fare.restrictcode=restrictcarrier.restrictcode order by fare.farecode
+;
+
+@ORDERED_SELECT
+select airline.airlinename,aircraft.aircrafttype from aircraft,airline,flight where flight.aircraftcode=aircraft.aircraftcode and flight.airlinecode=airline.airlinecode order by airline.airlinename,aircraft.aircrafttype
+;

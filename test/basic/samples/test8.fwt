@@ -1,0 +1,17 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table Classes(
+	flag boolean)
+;
+insert into Classes values (true)
+;
+
+@UN_ORDERED_SELECT
+select * from Classes
+;
+

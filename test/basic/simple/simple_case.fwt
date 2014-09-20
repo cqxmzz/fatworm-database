@@ -1,0 +1,14 @@
+create table AAAAA ( a int )
+;
+
+insert into aaaaa values ( 1 )
+;
+
+insert into aaaaa values ( 2 )
+;
+
+insert into aaaaa values ( 3 )
+;
+
+select * from aaaaa where aaaaa.a = 1
+;

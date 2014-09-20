@@ -1,0 +1,132 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table Classes(
+	class varchar(20),
+	type varchar(20),
+	country varchar(20),
+	numGuns int,
+	bore int,
+	displacement int)
+;
+insert into Classes values('Bismarck','battleship','Germany',8,15,42000)
+;
+insert into Classes values('Iowa','battleship','USA',9,16,46000)
+;
+insert into Classes values('Kongo','battlecruiser','Japan',8,14,32000)
+;
+insert into Classes values('North Carolina','battleship','USA',9,16,37000)
+;
+insert into Classes values('Renown','battlecruiser','Gt. Britain',6,15,32000)
+;
+insert into Classes values('Revenge','battleship','Gt. Britain',8,15,29000)
+;
+insert into Classes values('Tennessee','battleship','USA',12,14,32000)
+;
+insert into Classes values('Yamato','battleship','Japan',9,18,65000)
+;
+
+create table Ships(
+	name varchar(20),
+	class varchar(20),
+	launched int)
+;
+insert into Ships values('California','Tennessee',1921)
+;
+insert into Ships values('Haruna','Kongo',1915)
+;
+insert into Ships values('Hiei','Kongo',1914)
+;
+insert into Ships values('Iowa','Iowa',1943)
+;
+insert into Ships values('Kirishima','Kongo',1915)
+;
+insert into Ships values('Kongo','Kongo',1913)
+;
+insert into Ships values('Missouri','Iowa',1944)
+;
+insert into Ships values('Musashi','Yamato',1942)
+;
+insert into Ships values('New Jersey','Iowa',1943)
+;
+insert into Ships values('North Carolian','North Carolina',1941)
+;
+insert into Ships values('Ramillies','Revenge',1917)
+;
+insert into Ships values('Renown','Renown',1916)
+;
+insert into Ships values('Repulse','Renown',1916)
+;
+insert into Ships values('Resolution','Revenge',1916)
+;
+insert into Ships values('Revenge','Revenge',1916)
+;
+insert into Ships values('Royal Oak','Revenge',1916)
+;
+insert into Ships values('Royal Sovereign','Revenge',1916)
+;
+insert into Ships values('Tennessee','Tennessee',1920)
+;
+insert into Ships values('Washington','North Carolina',1941)
+;
+insert into Ships values('Wisconsin','Iowa',1944)
+;
+insert into Ships values('Yamato','Yamato',1941)
+;
+
+create table Battles(
+	name varchar(20),
+	date datetime)
+;
+insert into Battles values('North Atlantic','1941-05-24 00:00:00')
+;
+insert into Battles values('Guadalcanal','1942-11-15 00:00:00')
+;
+insert into Battles values('North Cape','1943-12-26 00:00:00')
+;
+insert into Battles values('Surigao Straint','1944-10-25 00:00:00')
+;
+
+create table Outcomes(
+	ship varchar(20),
+	battle varchar(20),
+	result varchar(10))
+;
+insert into Outcomes values('Bismarck','North Atlantic','sunk')
+;
+insert into Outcomes values('California','Surigao Strait','ok')
+;
+insert into Outcomes values('Duke of York','North Cape','ok')
+;
+insert into Outcomes values('Fuso','Surigao Strait','sunk')
+;
+insert into Outcomes values('Hood','North Atlantic','sunk')
+;
+insert into Outcomes values('King George V','North Atlantic','ok')
+;
+insert into Outcomes values('Kirishima','Guadalcanal','sunk')
+;
+insert into Outcomes values('Prince of Wales','North Atlantic','damaged')
+;
+insert into Outcomes values('Prince of Wales','Guadalcanal','ok')
+;
+insert into Outcomes values('Prince of Wales','North Cape','sunk')
+;
+insert into Outcomes values('Rodney','North Atlantic','ok')
+;
+insert into Outcomes values('Scharnhorst','North Cape','sunk')
+;
+insert into Outcomes values('South Dakota','Guadalcanal','damaged')
+;
+insert into Outcomes values('Tennessee','Surigao Strait','ok')
+;
+insert into Outcomes values('Washington','Guadalcanal','ok')
+;
+insert into Outcomes values('West Virginia','Surigao Strait','ok')
+;
+insert into Outcomes values('Yamashiro','Surigao Strait','sunk')
+;

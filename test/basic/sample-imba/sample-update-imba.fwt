@@ -1,0 +1,13 @@
+@NEW_THREAD
+use nano
+;
+insert into Ships 
+	(select class, class, 1920 
+		from Classes 
+		where not exists (select name from Ships where Ships.class = Classes.class))
+;
+
+insert into Ships 
+	(select ship, 'Iowa', 1900 
+		from Outcomes where ship <> ALL(select name from Ships))
+;

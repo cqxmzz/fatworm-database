@@ -1,0 +1,36 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int, v char(10))
+;
+
+insert into InfraTest values(1, 'abc')
+;
+insert into InfraTest values(2, 'def')
+;
+insert into InfraTest values(2, 'abc')
+;
+insert into InfraTest values(3, 'def')
+;
+insert into InfraTest values(3, 'abcdef')
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest
+;
+
+update InfraTest set k=5 where v='abc'
+;
+update InfraTest set v='def' where k=2
+;
+update InfraTest set v='abcdef' where v='abcdef'
+;
+update InfraTest set k=100 where k=5
+;
+@UN_ORDERED_SELECT
+select * from InfraTest
+;

@@ -1,0 +1,15 @@
+create table time(
+id int,
+time datetime
+)
+;
+
+insert into time values (1, '1990-08-15 00:00:00')
+;
+
+insert into time (id) values (2)
+;
+
+select * from time
+;
+

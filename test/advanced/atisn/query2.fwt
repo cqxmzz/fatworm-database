@@ -1,0 +1,31 @@
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select distinct category from aircraft order by category
+;
+
+@ORDERED_SELECT
+select distinct fromairport from flight order by fromairport
+;
+
+@ORDERED_SELECT
+select distinct aircraftcode from flight order by aircraftcode
+;
+
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select distinct flightcode from flightfare order by flightcode
+;
+
+@ORDERED_SELECT
+select distinct flight.flightcode,aircraft.aircrafttype from flight,aircraft where flight.aircraftcode=aircraft.aircraftcode order by flight.flightcode,aircraft.aircrafttype
+;
+
+@ORDERED_SELECT
+select distinct airline.airlinename,aircraft.aircrafttype from aircraft,airline,flight where flight.aircraftcode=aircraft.aircraftcode and flight.airlinecode=airline.airlinecode order by airline.airlinename,aircraft.aircrafttype
+;

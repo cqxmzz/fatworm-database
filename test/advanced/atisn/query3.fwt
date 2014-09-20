@@ -1,0 +1,63 @@
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select sum(engines) from aircraft
+;
+
+@ORDERED_SELECT
+select avg(engines) from aircraft
+;
+
+@ORDERED_SELECT
+select avg(engines) from aircraft where engines>0
+;
+
+@ORDERED_SELECT
+select count(aircraftcode),min(payload),max(payload) from aircraft where payload>0
+;
+
+@ORDERED_SELECT
+select min(flightcode),min(flightcode) from flight
+;
+
+@ORDERED_SELECT
+select min(fromairport),min(toairport) from flight
+;
+
+@ORDERED_SELECT
+select count(aircraftcode) from aircraft where payload>10000
+;
+
+@ORDERED_SELECT
+select count(aircraftcode) from aircraft where payload<>0
+;
+
+@ORDERED_SELECT
+select count(flightcode) from flight where flightcode >= 112793
+;
+
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select citycode, avg(groundfare) from groundservice where groundfare<>0 group by citycode order by citycode
+;
+
+@ORDERED_SELECT
+select groundservice.citycode from groundservice group by groundservice.citycode order by groundservice.citycode
+;
+
+@ORDERED_SELECT
+select category,count(aircraftcode) as totalnr from aircraft where engines=2 group by category having totalnr>4 order by category
+;
+
+@ORDERED_SELECT
+select category,count(aircraftcode) from aircraft where engines=2 group by category having count(aircraftcode)>4 order by category
+;
+
+@ORDERED_SELECT
+select dayname.dayname,count(flightday.daymask) from flightday,dayname where dayname.daycode=flightday.daycode group by dayname.dayname order by dayname.dayname
+;

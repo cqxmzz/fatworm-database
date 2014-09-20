@@ -1,0 +1,37 @@
+@NEW_THREAD
+use acm
+;
+
+# testHashIndex
+create index idx0 on student(id)
+;
+
+drop index idx0 on student
+;
+
+create index idx1 on fatworm(groupid)
+;
+
+@UN_ORDERED_SELECT
+select name, groupid from fatworm where groupid = 'Z'
+;
+
+drop index idx1 on fatworm
+;
+
+# testIndexEqualJoin
+create index ind on E(id)
+;
+
+@UN_ORDERED_SELECT
+select * from A, E where A.id = E.id
+;
+
+@UN_ORDERED_SELECT
+SELECT * FROM E as E1 WHERE id >= ALL(select ID from E where E1.id <= E.id)
+;
+
+drop index ind on E
+;
+
+# testBTree

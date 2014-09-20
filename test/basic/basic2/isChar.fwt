@@ -1,0 +1,46 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int, value char(10))
+;
+
+insert into InfraTest values(1,'')
+;
+insert into InfraTest values(2,'1')
+;
+insert into InfraTest values(3,'123')
+;
+insert into InfraTest values(4,'1234')
+;
+insert into InfraTest values(5,'1234567890')
+;
+insert into InfraTest values(6,'9999-12-31')
+;
+insert into InfraTest values(7,'1988-04-19')
+;
+insert into InfraTest values(8,'2012-01-01')
+;
+insert into InfraTest values(9,'2010-06-15')
+;
+insert into InfraTest values(0,'1988-04-09')
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest where value ='123'
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest where value =''
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest where value <> '9999-12-31'
+;

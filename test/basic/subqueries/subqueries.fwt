@@ -1,0 +1,113 @@
+@IN
+@Find all the customers who have both a loan and an account at the bank.
+select distinct customer_name
+from borrower
+where customer_name in (select customer_name
+                        from depositor)
+;
+
+@Find all customers who have both an account and a loan at the Perryridge branch.
+select distinct customer_name
+from borrower,loan
+where borrower.loan_number = loan.loan_number and
+      branch_name = 'Perryridge' and 
+      (branch_name, customer_name) in
+            (select branch_name, customer_name
+             from depositor, account
+             where depositor.account_number = account.account_number)
+;
+
+@NOT IN
+@Find all customers who do have a loan at the bank, but not have an account at the bank.
+select distinct customer_name
+from borrower
+where customer_name not in (select customer_name
+                            from depositor)
+;
+
+@Find the names of customers who have a loan at the bank, and whose names are neither Smith nor Jones.
+select distinct customer_name
+from borrower
+where customer_name not in ('Smith', 'Jones')
+;
+
+@ANY
+@Find the names of all branches that have assets greater than those of at least one branch located in Brooklyn.
+select branch_name
+from branch
+where assets > any (select assets
+                    from branch
+                    where branch_city = 'Brooklyn')
+;
+
+@ALL
+@Find the names of all branched that have an asset value greater than that of each branch in Brooklyn.
+select branch_name
+from branch
+where assets > all (select assets
+                    from branch
+                    where branch_city = 'Brooklyn')
+;
+
+@Find the branch that has the highest average balance.
+select branch_name
+from account
+group by branch_name
+having avg(balance) >= all(select avg(balance)
+                           from account
+                           group by branch_name)
+;
+
+@EXISTS
+@Find all customers who have both an account an a loan at the bank
+select customer_name
+from borrower
+where exists (select * 
+              from depositor
+              where depositor.customer_name = borrower.customer_name)
+;
+
+@NOT EXITSTS
+select distinct S.customer_name
+from depositor as S
+where not exists ((select R.branch_name
+                    from depositor as T, account as R
+                    where T.account_number = R.account_number and S.customer_name = T.customer_name))
+;
+
+@Subquery in FROM clause
+@Find the average account balance of those branches where the average account balance is greater than $1200.
+select branch_name, avg_balance
+from (select branch_name, avg(balance) as avg_balance
+      from account
+      group by branch_name)
+      as branch_avg
+where avg_balance > 1200
+;
+
+@Find the maximum across all branches of the total balance at each branch.
+select max(tot_balance)
+from (select branch_name, sum(balance) as tot_balance
+      from account
+      group by branch_name) 
+      as branch_total
+;
+
+@INSERT SUBQUERY
+insert into account 
+       select loan_number, branch_name, 200
+       from loan
+       where branch_name = 'Perryridge'
+;
+
+@value ::= (subquery with only one elements(or NULL)in the result table)
+update account 
+set balance = (select amount 
+               from loan
+               where branch_name = 'Mianus')
+where balance >= 900
+;
+
+@test for insert and update
+select * from account
+;

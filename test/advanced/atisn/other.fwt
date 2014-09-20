@@ -1,0 +1,24 @@
+@NEW_THREAD
+use ATISN
+;
+
+select day_name.day_name,day_name.day_code,count(flight_day.day_mask) from flight_day,day_name where day_name.day_code=flight_day.day_code group by day_name.day_name,day_name.day_code order by day_name.day_name,day_name.day_code
+;
+
+select month_name,day_name from month_name,day_name where month_number=day_code and day_code>3 group by month_name,day_name order by month_name,day_name
+;
+
+select day_name.day_name,flight_day.day_code,count(flight_day.day_mask) from flight_day,day_name where day_name.day_code=flight_day.day_code group by flight_day.day_code,day_name.day_name order by day_name.day_name,flight_day.day_code
+;
+
+select from_airport,to_airport,avg(time_elapsed) FROM flight WHERE from_airport='ATL' AND to_airport='BOS' group by from_airport,to_airport order by from_airport,to_airport
+;
+
+@UN_ORDERED_SELECT
+select distinct from_airport.time_zone_code,to_airport.time_zone_code,(arrival_time/100*60+arrival_time%100-departure_time/100*60-departure_time%100-time_elapsed)/60 AS time_zone_diff FROM flight,airport AS from_airport,airport AS to_airport WHERE flight.from_airport=from_airport.airport_code AND flight.to_airport=to_airport.airport_code
+;
+
+@UN_ORDERED_SELECT
+select DISTINCT from_airport.time_zone_code,to_airport.time_zone_code,((arrival_time/100*60+arrival_time%100-departure_time/100*60-departure_time%100-time_elapsed)/60+36)%24-12 AS time_zone_diff FROM flight,airport AS from_airport,airport AS to_airport WHERE flight.from_airport=from_airport.airport_code AND flight.to_airport=to_airport.airport_code and ((arrival_time/100*60+arrival_time%100-departure_time/100*60-departure_time%100-time_elapsed)/60+36)%24-12 < 10
+;
+

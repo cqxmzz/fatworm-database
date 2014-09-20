@@ -1,0 +1,76 @@
+create table onek (
+	unique1 int NOT NULL,
+	unique2 int NOT NULL,
+	two int,
+	four int,
+	ten int,
+	twenty int,
+	hundred int NOT NULL,
+	thousand int,
+	twothousand int,
+	fivethous int,
+	tenthous int,
+	odd int,
+	even int,
+	stringu1 char(16),
+	stringu2 char(16),
+	string4 char(16)
+);
+create index hundred1 on onek(hundred);
+create table tenk1 (
+	unique1 int NOT NULL,
+	unique2 int NOT NULL,
+	two int,
+	four int,
+	ten int,
+	twenty int,
+	hundred int NOT NULL,
+	thousand int,
+	twothousand int,
+	fivethous int,
+	tenthous int,
+	odd int,
+	even int,
+	stringu1 char(16),
+	stringu2 char(16),
+	string4 char(16)
+);
+create index hundred2 on tenk1(hundred);
+create table tenk2 (
+	unique1 int NOT NULL,
+	unique2 int NOT NULL,
+	two int,
+	four int,
+	ten int,
+	twenty int,
+	hundred int NOT NULL,
+	thousand int,
+	twothousand int,
+	fivethous int,
+	tenthous int,
+	odd int,
+	even int,
+	stringu1 char(16),
+	stringu2 char(16),
+	string4 char(16)
+);
+create index hundred3 on tenk2(hundred);
+create table Bprime (
+	unique1 int NOT NULL,
+	unique2 int NOT NULL,
+	two int,
+	four int,
+	ten int,
+	twenty int,
+	hundred int NOT NULL,
+	thousand int,
+	twothousand int,
+	fivethous int,
+	tenthous int,
+	odd int,
+	even int,
+	stringu1 char(16),
+	stringu2 char(16),
+	string4 char(16)
+);
+create index hundred4 on Bprime(hundred);

@@ -1,0 +1,46 @@
+create table tsa(
+    id int,
+    ts timestamp
+)
+;
+
+create table tsb(
+    id int,
+    ts timestamp
+)
+;
+
+insert into tsa (id) values (1)
+;
+
+insert into tsa (id) values (2)
+;
+
+insert into tsa (id) values (3)
+;
+
+insert into tsa (id) values (4)
+;
+
+insert into tsa (id) values (5)
+;
+
+insert into tsa (id) values (6)
+;
+
+insert into tsa (id) values (7)
+;
+
+insert into tsa (id) values (8)
+;
+
+insert into tsa (id) values (9)
+;
+
+insert into tsb (id) values (10)
+;
+
+select count(id) from tsa
+where ts <= ALL (select ts from tsb)
+;
+

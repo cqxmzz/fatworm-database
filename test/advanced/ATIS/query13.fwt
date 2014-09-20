@@ -1,0 +1,7 @@
+@NEW_THREAD
+use ATIS
+;
+
+@ORDERED_SELECT;
+select distinct flight.flightcode,aircraft.aircrafttype from flight,aircraft where flight.aircraftcode=aircraft.aircraftcode order by flight.flightcode, aircraft.aircrafttype ASC
+;

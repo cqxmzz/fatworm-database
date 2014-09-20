@@ -1,0 +1,40 @@
+@NEW_THREAD
+use acm
+;
+
+# testUpdateDelete
+update student set malesex = false where name = 'JiangXiao'
+;
+
+@UN_ORDERED_SELECT
+select id, name, age, malesex from student
+;
+
+update student set id = id + 1000, id = id + id, id = id / 2 - 1000
+;
+
+@UN_ORDERED_SELECT
+select id, name, age, malesex from student
+;
+
+update student set age = id, id = age, age = 250 where id > all(
+	select student.id from fatworm where student.id = fatworm.id and fatworm.groupid = 'C')
+;
+
+@UN_ORDERED_SELECT
+select id, name, age, malesex from student
+;
+
+delete from student where deathday > '1989-02-21 0:0:0'
+;
+
+@UN_ORDERED_SELECT
+select id, name, age, malesex from student
+;
+
+insert into A (select * from A)
+;
+
+@UN_ORDERED_SELECT
+select count(id) from A
+;

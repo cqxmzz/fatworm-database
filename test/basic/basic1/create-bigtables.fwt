@@ -1,0 +1,80 @@
+@NEW_THREAD
+drop database fatwormBasic1
+;
+create database fatwormBasic1
+;
+use fatwormBasic1
+;
+create table test1(a int, b int, primary key(a))
+;
+drop table test1
+;
+create table test2(a1 int,
+a2 int,  
+a3 int,  
+a4 int,  
+a5 int,  
+a6 int,  
+a7 int,  
+a8 int,  
+a9 int,  
+a10 int,  
+a11 int,  
+a12 int,  
+a13 int,  
+a14 int,  
+a15 int,  
+a16 int,  
+a17 int,  
+a18 int,  
+a19 int,
+a20 int not null auto_increment,
+primary key (a20))
+;
+drop table test2
+;
+create table test3(a1 int,
+a2 int,
+a3 int,
+a4 int,
+a5 int,
+a6 int,
+a7 int,
+a8 int,
+a9 int,
+a10 int,
+a11 int,
+a12 int,
+a13 int,
+a14 int,
+a15 int,
+a16 int,
+a17 int,
+a18 int,
+a19 int,
+a20 int,
+b1 varchar(50),
+b2 varchar(50),
+b3 varchar(50),
+b4 varchar(50),
+b5 varchar(50),
+b6 varchar(50),
+b7 varchar(50),
+b8 varchar(50),
+b9 varchar(50),
+b10 varchar(50),
+b11 varchar(50),
+b12 varchar(50),
+b13 varchar(50),
+b14 varchar(50),
+b15 varchar(50),
+b16 varchar(50),
+b17 varchar(50),
+b18 varchar(50),
+b19 varchar(50),
+b20 varchar(50)
+)
+;
+drop table test3
+;
+

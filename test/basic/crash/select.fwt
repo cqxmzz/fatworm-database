@@ -1,0 +1,7 @@
+@NEW_THREAD
+use nano
+;
+@UN_ORDERED_SELECT
+select * from Salary
+;
+

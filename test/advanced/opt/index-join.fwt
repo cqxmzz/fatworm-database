@@ -1,0 +1,17 @@
+@NEW_THREAD
+use opt
+;
+
+@UN_ORDERED_SELECT
+select TTAA.id, TTAA.val, TTBB.val 
+from TTAA, TTBB
+where TTAA.id = TTBB.id
+;
+
+@UN_ORDERED_SELECT
+select CTB.val 
+from CTA, CTB
+where CTA.id = CTB.id
+;
+
+

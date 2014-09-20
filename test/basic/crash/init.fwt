@@ -1,0 +1,26 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table Salary (id INT, salary INT)
+;
+insert into Salary values (1, 158235)
+;
+insert into Salary values (2, 157999)
+;
+insert into Salary values (3, 918231)
+;
+insert into Salary values (4, 183952)
+;
+insert into Salary values (5, 348583)
+;
+insert into Salary values (6, 982923)
+;
+insert into Salary values (7, 827374)
+;
+insert into Salary values (8, 987582)
+;
+

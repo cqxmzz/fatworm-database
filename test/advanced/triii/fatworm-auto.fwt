@@ -1,0 +1,58 @@
+@NEW_THREAD
+use acm
+;
+
+# testAutoIncrement
+create table auto(
+	id int auto_increment,
+	name varchar(20),
+	primary key(id))
+;
+insert into auto values (3, 'AAA')
+;
+
+@UN_ORDERED_SELECT
+select * from auto where id = 3
+;
+
+insert into auto values (null, 'BBB')
+;
+
+@UN_ORDERED_SELECT
+select * from auto
+;
+
+@UN_ORDERED_SELECT
+select * from auto where id = 4
+;
+
+insert into auto values (default, 'CCC')
+;
+
+@UN_ORDERED_SELECT
+select * from auto where id = 5
+;
+
+insert into auto values (default, 'DDD')
+;
+
+@UN_ORDERED_SELECT
+select * from auto where id = 6
+;
+
+insert into auto values (1, 'EEE')
+;
+
+@UN_ORDERED_SELECT
+select * from auto where id = 1
+;
+
+insert into auto values (null, 'FFF')
+;
+
+@UN_ORDERED_SELECT
+select * from auto where id = 7
+;
+
+drop table auto
+;

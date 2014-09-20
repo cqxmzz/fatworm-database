@@ -1,0 +1,10 @@
+select *
+from a, b
+where a = 1, b = 'a'
+;
+
+select *
+from a as b, a as c
+where b.a = 1 and c.a = 1
+;
+

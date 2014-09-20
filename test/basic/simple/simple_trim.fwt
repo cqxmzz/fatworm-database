@@ -1,0 +1,17 @@
+create table ctest ( a char(1) )
+;
+
+insert into ctest values ('eee')
+;
+
+select * from ctest
+;
+
+create table vctest ( a varchar(1) )
+;
+
+insert into vctest values ('eee')
+;
+
+select * from vctest
+;

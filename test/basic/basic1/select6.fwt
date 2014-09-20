@@ -1,0 +1,102 @@
+@NEW_THREAD
+drop database fatwormBasic1
+;
+create database fatwormBasic1
+;
+use fatwormBasic1
+;
+create table test1(a int)
+;
+create table test2(b int)
+;
+insert into test1 values(9)
+;
+insert into test1 values(8)
+;
+insert into test1 values(7)
+;
+insert into test1 values(6)
+;
+insert into test1 values(5)
+;
+insert into test1 values(4)
+;
+insert into test1 values(3)
+;
+insert into test1 values(2)
+;
+insert into test1 values(9)
+;
+insert into test1 values(1)
+;
+insert into test1 values(2)
+;
+insert into test1 values(3)
+;
+insert into test1 values(4)
+;
+insert into test1 values(5)
+;
+insert into test1 values(6)
+;
+insert into test1 values(7)
+;
+insert into test1 values(8)
+;
+insert into test1 values(9)
+;
+insert into test2 values(1)
+;
+insert into test2 values(4)
+;
+insert into test2 values(6)
+;
+insert into test2 values(2)
+;
+insert into test2 values(5)
+;
+insert into test2 values(7)
+;
+insert into test2 values(8)
+;
+insert into test2 values(9)
+;
+insert into test2 values(2)
+;
+insert into test2 values(5)
+;
+insert into test2 values(192)
+;
+insert into test2 values(321)
+;
+insert into test2 values(438)
+;
+insert into test2 values(832)
+;
+insert into test2 values(584)
+;
+@UN_ORDERED_SELECT
+select * from test1 as t1
+;
+@UN_ORDERED_SELECT
+select * from test2 as t2
+;
+@UN_ORDERED_SELECT
+select a, max(b) from test1 as t1, test2 as t2
+where exists (select * from test2 as t3)
+group by a having max(b) > 5
+;
+@UN_ORDERED_SELECT
+select distinct a, b from test1 as t1, test2 as t2
+where exists (select * from test2 as t3 where b > 1000)
+;
+@UN_ORDERED_SELECT
+select distinct a, b from test1 as t1, test2 as t2
+where exists (select * from test2 as t3 where b < 5)
+;
+@ORDERED_SELECT
+select distinct a, b from test1 as t1, test2 as t2
+where b > 5 and b < 5
+order by a
+;
+

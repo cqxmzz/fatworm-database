@@ -1,0 +1,20 @@
+@NEW_THREAD
+drop database fatwormTypes
+;
+create database fatwormTypes
+;
+use fatwormTypes
+;
+create table test1(a int, d decimal(40))
+;
+insert into test1 values(1,1234567891011121314)
+;
+insert into test1 values(2,123456789101112131415161718192021223)
+;
+@UN_ORDERED_SELECT
+select * from test1 where d>10
+;
+@ORDERED_SELECT
+select d from test1 order by d
+;
+

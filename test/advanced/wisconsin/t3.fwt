@@ -1,0 +1,8 @@
+USE winsconsin
+;
+@partially ordered by columns 0 1
+select *  from onek order by unique1 ASC, unique2 ASC
+;
+select MIN(unique2) as x  from tenk1
+;
+

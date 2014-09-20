@@ -1,0 +1,13 @@
+@NEW_THREAD
+use opt
+;
+
+update TTBB
+set val = val + 100
+where id = 8229
+;
+
+select * from TTBB
+where id = 8229
+;
+

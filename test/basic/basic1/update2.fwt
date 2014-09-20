@@ -1,0 +1,45 @@
+@NEW_THREAD
+drop database fatwormBasic1
+;
+create database fatwormBasic1
+;
+use fatwormBasic1
+;
+create table test1(a int, b int, primary key(a))
+;
+create table test2(a int)
+;
+insert into test2 values (1)
+;
+insert into test2 values (2)
+;
+insert into test2 values (3)
+;
+insert into test2 values (4)
+;
+insert into test2 values (5)
+;
+insert into test1 values(1,9)
+;
+insert into test1 values(2,8)
+;
+insert into test1 values(3,7)
+;
+insert into test1 values(4,6)
+;
+insert into test1 values(5,5)
+;
+insert into test1 values(6,4)
+;
+insert into test1 values(7,3)
+;
+insert into test1 values(8,2)
+;
+insert into test1 values(9,1)
+;
+update test1 set a=a*20+b*50,b=-10*b-20*a where b%2 <> 1
+;
+@UN_ORDERED_SELECT
+select * from test1
+;
+

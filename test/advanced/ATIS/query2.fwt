@@ -1,0 +1,7 @@
+@NEW_THREAD
+use ATIS
+;
+
+@ORDERED_SELECT;
+select city.cityname,state.statename,city.citycode from state,city where city.statecode=state.statecode order by city.cityname ASC
+;

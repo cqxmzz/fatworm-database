@@ -1,0 +1,43 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int, v int)
+;
+
+insert into InfraTest values(1, 1)
+;
+insert into InfraTest values(2, 2)
+;
+insert into InfraTest values(3, 3)
+;
+insert into InfraTest values(4, 4)
+;
+insert into InfraTest values(5, 5)
+;
+insert into InfraTest values(6, 5)
+;
+insert into InfraTest values(7, 5)
+;
+insert into InfraTest values(8, 5)
+;
+insert into InfraTest values(9, 5)
+;
+insert into InfraTest values(5, 5)
+;
+
+@UN_ORDERED_SELECT
+select avg(k) from InfraTest
+;
+@UN_ORDERED_SELECT
+select sum(v) from InfraTest
+;
+
+@UN_ORDERED_SELECT
+select sum(k) from InfraTest
+;
+
+

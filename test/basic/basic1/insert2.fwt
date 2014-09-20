@@ -1,0 +1,31 @@
+@NEW_THREAD
+drop database fatwormBasic1
+;
+create database fatwormBasic1
+;
+use fatwormBasic1
+;
+create table test1(a int not null auto_increment, b int, primary key(a))
+;
+insert into test1 (b) values(9)
+;
+insert into test1 (b) values(8)
+;
+insert into test1 (b) values(7)
+;
+insert into test1 (b) values(6)
+;
+insert into test1 (b) values(5)
+;
+insert into test1 (b) values(4)
+;
+insert into test1 (b) values(3)
+;
+insert into test1 (b) values(2)
+;
+insert into test1 (b) values(1)
+;
+@UN_ORDERED_SELECT
+select * from test1
+;
+

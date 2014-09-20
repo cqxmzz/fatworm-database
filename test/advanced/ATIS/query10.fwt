@@ -1,0 +1,7 @@
+@NEW_THREAD
+use ATIS
+;
+
+@ORDERED_SELECT;
+select distinct aircraftcode from flight order by aircraftcode ASC
+;

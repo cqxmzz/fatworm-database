@@ -1,0 +1,34 @@
+@NEW_THREAD
+drop database fatwormTypes
+;
+create database fatwormTypes
+;
+use fatwormTypes
+;
+create table test1(a int, b float)
+;
+insert into test1 values(1,10000.3)
+;
+insert into test1 values(2,92385.2)
+;
+insert into test1 values(3,83745.3)
+;
+insert into test1 values(4,82348.1)
+;
+insert into test1 values(5,23713.5)
+;
+insert into test1 values(6,48241.7)
+;
+insert into test1 values(7,48234.4)
+;
+insert into test1 values(8,81824.5)
+;
+insert into test1 values(9,98923.1)
+;
+@UN_ORDERED_SELECT
+select sum(b),avg(b) from test1
+;
+@ORDERED_SELECT
+select a from test1 order by b
+;
+

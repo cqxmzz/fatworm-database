@@ -1,0 +1,38 @@
+@NEW_THREAD
+DROP DATABASE ARNO
+;
+
+CREATE DATABASE ARNO
+;
+
+USE ARNO
+;
+
+CREATE TABLE MODEL (
+   MODEL_ID int NOT NULL DEFAULT 0,
+   IS_MUTAGEN char(3),
+   LUMO int,
+   LOGP int,
+   PRIMARY KEY (MODEL_ID)
+)
+;
+
+CREATE TABLE ATOM (
+   ATOM_ID varchar(10) NOT NULL,
+   MODEL_ID int,
+   ELEMENT char(2),
+   TYPE char(3),
+   CHARGE int,
+   PRIMARY KEY (ATOM_ID)
+)
+;
+
+CREATE TABLE BOND (
+   BOND_ID int NOT NULL DEFAULT 0,
+   MODEL_ID int,
+   ATOM1 varchar(10),
+   ATOM2 varchar(10),
+   TYPE char(3),
+   PRIMARY KEY (BOND_ID)
+)
+;

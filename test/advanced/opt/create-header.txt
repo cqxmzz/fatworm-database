@@ -1,0 +1,40 @@
+@NEW_THREAD
+drop database opt
+;
+create database opt
+;
+use opt
+;
+
+create table TTT(
+   id  int,
+   val int
+)
+;
+
+create table TTA(
+   id  int,
+   val int
+)
+;
+
+create table TTB(
+   id  int,
+   val int
+)
+;
+
+
+create table CTA(
+   id  varchar(500),
+   val int
+)
+;
+
+create table CTB(
+   id  varchar(500),
+   val int
+)
+;
+
+

@@ -1,0 +1,8 @@
+@NEW_THREAD
+use nano
+;
+select * from Salary_
+;
+select id as Id, salary as Salary from Salary
+;
+

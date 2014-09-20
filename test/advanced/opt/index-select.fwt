@@ -1,0 +1,15 @@
+@NEW_THREAD
+use opt
+;
+
+select * from TTAA
+where TTAA.id = 100
+;
+
+select val from CTA
+where CTA.id = '100'
+;
+
+select * from TTAA
+where TTAA.id > 10010 and TTAA.id < 10030
+;

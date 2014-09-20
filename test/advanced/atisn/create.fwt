@@ -1,0 +1,258 @@
+@NEW_THREAD
+
+drop database ATISN
+;
+
+create database ATISN
+;
+
+use ATISN
+;
+
+create table aircraft
+(aircraftcode char(3) NOT NULL,
+aircrafttype char(64) NOT NULL,
+engines INT NOT NULL,
+category char(10) NOT NULL,
+widebody char(3) NOT NULL,
+wingspan float NOT NULL,
+length1 float NOT NULL,
+weight INT NOT NULL,
+capacity INT NOT NULL,
+payload INT NOT NULL,
+cruisingspeed INT NOT NULL,
+rangemiles INT NOT NULL,
+pressurized char(3) NOT NULL,
+PRIMARY KEY (aircraftcode))
+;
+
+create table airline
+(airlinecode char(2) NOT NULL,
+airlinename char(64) NOT NULL,
+notes char(38) NOT NULL,
+PRIMARY KEY (airlinecode))
+;
+
+create table airport
+(airportcode char(3) NOT NULL,
+airportname char(40) NOT NULL,
+location char(36) NOT NULL,
+statecode char(2) NOT NULL,
+countryname char(25) NOT NULL,
+timezonecode char(3) NOT NULL,
+PRIMARY KEY (airportcode))
+;
+
+create table airportservice
+(citycode char(4) NOT NULL,
+airportcode char(3) NOT NULL,
+milesdistant float NOT NULL,
+direction char(3) NOT NULL,
+minutesdistant INT NOT NULL)
+;
+
+create table city
+(citycode char(4) NOT NULL,
+cityname char(25) NOT NULL,
+statecode char(2) NOT NULL,
+countryname char(25) NOT NULL,
+timezonecode char(3) NOT NULL,
+PRIMARY KEY (citycode))
+;
+
+create table classofservice
+(classcode char(2) NOT NULL,
+rank INT NOT NULL,
+classdescription char(80) NOT NULL,
+PRIMARY KEY (classcode))
+;
+
+create table codedescription
+(code char(5) NOT NULL,
+description char(110) NOT NULL,
+PRIMARY KEY (code))
+;
+
+create table compoundclass
+(fareclass char(3) NOT NULL,
+baseclass char(2) NOT NULL,
+classtype char(10) NOT NULL,
+premium char(3) NOT NULL,
+economy char(3) NOT NULL,
+discounted char(3) NOT NULL,
+night char(3) NOT NULL,
+seasonfare char(4) NOT NULL,
+classdays char(7) NOT NULL,
+PRIMARY KEY (fareclass))
+;
+
+create table connectleg
+(connectcode INT NOT NULL,
+legnumber INT NOT NULL,
+flightcode INT NOT NULL)
+;
+
+create table fconnection
+(connectcode INT NOT NULL,
+fromairport char(3) NOT NULL,
+toairport char(3) NOT NULL,
+departuretime INT NOT NULL,
+arrivaltime INT NOT NULL,
+flightdays char(7) NOT NULL,
+stops INT NOT NULL,
+connections INT NOT NULL,
+timeelapsed INT NOT NULL,
+PRIMARY KEY (connectcode))
+;
+
+create index fromairport1 on fconnection(fromairport)
+;
+
+create index toairport1 on fconnection(toairport)
+;
+
+create table dayname
+(daycode INT NOT NULL,
+dayname char(9) NOT NULL,
+PRIMARY KEY (daycode))
+;
+
+create table dualcarrier
+(mainairline char(2) NOT NULL,
+dualairline char(2) NOT NULL,
+lowflight INT NOT NULL,
+highflight INT NOT NULL,
+fconnectionname char(64) NOT NULL)
+;
+
+create index mainairline1 on dualcarrier(mainairline)
+;
+
+create table fare
+(farecode char(8) NOT NULL,
+fromairport char(3) NOT NULL,
+toairport char(3) NOT NULL,
+fareclass char(3) NOT NULL,
+fareairline char(2) NOT NULL,
+restrictcode char(5) NOT NULL,
+onewaycost float NOT NULL,
+rndtripcost float NOT NULL,
+PRIMARY KEY (farecode))
+;
+
+create index fromairport2 on fare(fromairport)
+;
+
+create index toairport2 on fare(toairport)
+;
+
+create table flight
+(flightcode INT NOT NULL,
+flightdays char(7) NOT NULL,
+fromairport char(3) NOT NULL,
+toairport char(3) NOT NULL,
+departuretime INT NOT NULL,
+arrivaltime INT NOT NULL,
+airlinecode char(2) NOT NULL,
+flightnumber INT NOT NULL,
+classstring char(8) NOT NULL,
+aircraftcode char(3) NOT NULL,
+mealcode char(7) NOT NULL,
+stops INT NOT NULL,
+dualcarrier char(1) NOT NULL,
+timeelapsed INT NOT NULL,
+PRIMARY KEY (flightcode))
+;
+
+create index fromairport3 on flight(fromairport)
+;
+
+create index toairport3 on flight(toairport)
+;
+
+create table flightclass
+(flightcode INT NOT NULL,
+fareclass char(3) NOT NULL)
+;
+
+create table flightday
+(daymask char(7) NOT NULL,
+daycode INT NOT NULL,
+dayname char(9) NOT NULL)
+;
+
+create table flightfare
+(flightcode INT NOT NULL,
+farecode char(8) NOT NULL)
+;
+
+create table foodservice
+(mealcode char(4) NOT NULL,
+mealnumber INT NOT NULL,
+mealclass char(10) NOT NULL,
+mealdescription char(10) NOT NULL)
+;
+
+create table groundservice
+(citycode char(4) NOT NULL,
+airportcode char(3) NOT NULL,
+transportcode char(1) NOT NULL,
+groundfare float NOT NULL)
+;
+
+create table timeinterval
+(period char(20) NOT NULL,
+begintime INT NOT NULL,
+endtime INT NOT NULL)
+;
+
+create table monthname
+(monthnumber INT NOT NULL,
+monthname char(9) NOT NULL,
+PRIMARY KEY (monthnumber))
+;
+
+create table restrictcarrier
+(restrictcode char(5) NOT NULL,
+airlinecode char(2) NOT NULL)
+;
+
+create table restrictclass
+(restrictcode char(5) NOT NULL,
+exfareclass char(12) NOT NULL)
+;
+
+create table restriction
+(restrictcode char(5) NOT NULL,
+application char(80) NOT NULL,
+nodiscounts char(80) NOT NULL,
+reserveticket INT NOT NULL,
+stopovers char(1) NOT NULL,
+returnmin INT NOT NULL,
+returnmax INT NOT NULL,
+PRIMARY KEY (restrictcode))
+;
+
+create table state
+(statecode char(2) NOT NULL,
+statename char(25) NOT NULL,
+countryname char(25) NOT NULL,
+PRIMARY KEY (statecode))
+;
+
+create table stop
+(flightcode INT NOT NULL,
+stopnumber INT NOT NULL,
+stopflight INT NOT NULL)
+;
+
+create table timezone
+(timezonecode char(3) NOT NULL,
+timezonename char(32) NOT NULL)
+;
+
+create table transport
+(transportcode char(1) NOT NULL,
+transportdesc char(32) NOT NULL,
+PRIMARY KEY (transportcode))
+;

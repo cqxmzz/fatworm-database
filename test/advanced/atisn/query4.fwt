@@ -1,0 +1,23 @@
+@NEW_THREAD
+use ATISN
+;
+
+@ORDERED_SELECT
+select DISTINCT flightnumber,rangemiles,fareclass FROM aircraft,flight,flightclass WHERE flight.flightcode=flightclass.flightcode AND flight.aircraftcode=aircraft.aircraftcode AND rangemiles<>0 AND (stops=1 OR stops=2) order by flightnumber,rangemiles,fareclass
+;
+
+@ORDERED_SELECT
+select DISTINCT fromairport,toairport,rangemiles,timeelapsed FROM aircraft,flight WHERE aircraft.aircraftcode=flight.aircraftcode AND toairport <> fromairport AND rangemiles<>0 AND timeelapsed<>0 order by fromairport,toairport,rangemiles,timeelapsed
+;
+
+@ORDERED_SELECT
+select DISTINCT airport.countryname,state.statename,city.cityname,airportservice.direction FROM airportservice,state,airport,city WHERE airportservice.citycode=city.citycode AND airportservice.airportcode=airport.airportcode AND state.statecode=airport.statecode AND state.statecode=city.statecode AND airport.statecode=city.statecode AND airport.countryname=city.countryname AND airport.countryname=state.countryname AND city.timezonecode=airport.timezonecode ORDER BY airport.countryname,state.statename,city.cityname,airportservice.direction
+;
+
+@ORDERED_SELECT
+select DISTINCT fromairport,toairport,fare.fareclass,night,onewaycost,rndtripcost,classdays FROM compoundclass,fare WHERE compoundclass.fareclass=fare.fareclass AND onewaycost <= 825 AND onewaycost >= 280 AND fromairport='SFO' AND toairport='DFW' ORDER BY fromairport,toairport,fare.fareclass,night,onewaycost,rndtripcost,classdays
+;
+
+@ORDERED_SELECT
+select DISTINCT engines,category,cruisingspeed,fromairport,toairport FROM aircraft,flight WHERE category='JET' AND ENGINES >= 1 AND aircraft.aircraftcode=flight.aircraftcode AND toairport <> fromairport AND stops>0 ORDER BY engines,category,cruisingspeed,fromairport,toairport
+;

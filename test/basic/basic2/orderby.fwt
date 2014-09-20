@@ -1,0 +1,64 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int, v char(10))
+;
+
+insert into InfraTest values(1, 'abc')
+;
+insert into InfraTest values(2, 'def')
+;
+insert into InfraTest values(2, 'abc')
+;
+insert into InfraTest values(3, 'def')
+;
+insert into InfraTest values(3, 'abcdef')
+;
+insert into InfraTest values(0, 'abcdef')
+;
+insert into InfraTest values(90, 'abcdef')
+;
+insert into InfraTest values(300, 'abcdef')
+;
+insert into InfraTest values(32, 'abcdef')
+;
+insert into InfraTest values(31, 'abcdef')
+;
+insert into InfraTest values(30000, 'abcdef')
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by k ASC, v ASC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by k ASC, v DESC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by k DESC, v ASC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by k DESC, v DESC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by v ASC, k ASC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by v ASC, k DESC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by v DESC, k ASC
+;
+
+@ORDERED_SELECT
+select * from InfraTest order by v DESC, k DESC
+;

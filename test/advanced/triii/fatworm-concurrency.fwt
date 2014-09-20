@@ -1,0 +1,418 @@
+# Thread 1, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select id as a, name as b from student as s where s.malesex = true group by name having name >= b
+;
+
+@UN_ORDERED_SELECT
+select id as a, name as b from student where student.malesex = true group by b
+	having name > any (select name from student where a < id and student.malesex = true) 
+;
+
+@UN_ORDERED_SELECT
+select id, name from student as s where (select id from student where s.name = name and student.malesex = true) >= id and s.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, (select name) from student where malesex = true
+;
+
+
+# Thread 2, Write
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student
+;
+
+update student set id = id + 32767 where malesex = false
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student
+;
+
+update student set id = id - 32767 where malesex = false
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student
+;
+
+# Thread 3, Read
+@NEW_THREAD
+use acm
+;
+
+@ORDERED_SELECT
+select * from fatworm order by loc
+;
+
+@ORDERED_SELECT
+select A.name, B.id from A, B order by A.id DESC, b.id ASC, b.name
+;
+
+@UN_ORDERED_SELECT
+select count(id) from student where 1 = 0
+;
+
+@UN_ORDERED_SELECT
+select id from student where 1 = 0
+;
+
+# Thread 4, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select * from student where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select 1+2+3+4+5
+;
+
+@UN_ORDERED_SELECT
+select *, 3*5%11 from student where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select * from student, fatworm where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select a.id, a.name, student.id, student.name from fatworm as a, student where malesex = true
+;
+
+# Thread 5, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select count(a.ID) from a, b, c, d
+	where a.id + b.id < c.id and d.id % 2 = 1 and b.id * d.id % 3 = 0 and a.id = b.id
+;
+
+@UN_ORDERED_SELECT
+select count(A.id) from
+	(select B.id from A, A as B) as A,
+	(select A.id from B, B as A) as B, C, D
+	where B.id = D.id and A.id = B.id and C.id = D.id
+;
+
+# Thread 6, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select * from (select * from student where birthday = '1989-02-24 04:44:44') as t1 where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, b from (select id as a, name as b from student where malesex = true) as sub, student where sub.a < id and student.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student where id in (select id from student where malesex = false) and student.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, name from student as f where name > any (select name from student where id > f.id) and f.malesex = true
+;
+
+# Thread 7, Write
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select age, name, malesex from student
+;
+
+update student set age = age - 10 where malesex = false
+;
+
+@UN_ORDERED_SELECT
+select age, name, malesex from student
+;
+
+update student set age = age + 10 where malesex = false
+;
+
+@UN_ORDERED_SELECT
+select age, name, malesex from student
+;
+
+# Thread 8, Read
+@NEW_THREAD
+use acm
+;
+
+@ORDERED_SELECT
+select groupid, sum(loc) as sumloc, count(loc), avg(loc), min(loc), max(loc) from fatworm
+	group by groupid order by sumloc DESC
+;
+
+@ORDERED_SELECT
+select sum(loc) as sumloc, avg(loc), name from fatworm group by leader
+	having min(loc) >= all (select min(loc) from fatworm group by leader)
+	order by sumloc
+;
+
+@UN_ORDERED_SELECT
+select id from student as s
+	where (select count(nickname) from student, fatworm, fatworm as f
+	where student.malesex = true and fatworm.id = s.id and fatworm.groupid = f.groupid and student.id = f.id) >= 3 and malesex = true
+;
+
+@ORDERED_SELECT
+select id, name from student
+	where (select count(id) from fatworm where student.id = 4 and groupid = 'H') > 0 and malesex = true
+	order by id
+;
+
+# Thread 9, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select distinct groupid from fatworm
+;
+
+@UN_ORDERED_SELECT
+select distinct * from fatworm
+;
+
+@UN_ORDERED_SELECT
+select count(cnt) from (select distinct count(name) as cnt from fatworm group by groupid) as membercnt
+;
+
+@UN_ORDERED_SELECT
+select count(a.id) from a, b, c, d
+	where a.id + b.id > c.id and d.id % 3 = 1 and b.id * d.id % 5 = 0 and a.id = b.id
+;
+
+# Thread 10, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select *, 3*5%11 from student where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select * from student, fatworm where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select a.id, a.name, student.id, student.name from fatworm as a, student where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select * from (select * from student where birthday = '1989-02-24 04:44:44') as t1 where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, b from (select id as a, name as b from student where malesex = true) as sub, student where sub.a < id and student.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student where id in (select id from student where malesex = false) and student.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id, name from student as f where name > any (select name from student where id > f.id) and f.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select id as a, name as b from student as s where s.malesex = true group by name having name >= b
+;
+
+@UN_ORDERED_SELECT
+select id as a, name as b from student where student.malesex = true group by b
+	having name > any (select name from student where a < id and student.malesex = true) 
+;
+
+# Thread 11, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select id from student as s
+	where (select count(nickname) from student, fatworm, fatworm as f
+	where student.malesex = true and fatworm.id = s.id and fatworm.groupid = f.groupid and student.id = f.id) >= 3 and malesex = true
+;
+
+@ORDERED_SELECT
+select id, name from student
+	where (select count(id) from fatworm where student.id = 4 and groupid = 'H') > 0 and malesex = true
+	order by id
+;
+
+@UN_ORDERED_SELECT
+select distinct groupid from fatworm
+;
+
+# Thread 12, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select count(A.id) from
+	(select B.id from A, A as B) as A,
+	(select A.id from B, B as A) as B, C, D
+	where B.id = D.id and A.id = B.id and C.id = D.id
+;
+
+# Thread 13, Write
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select name, malesex from student
+;
+
+update student set id = id - 99, id = id + 99 where malesex = false
+;
+
+@UN_ORDERED_SELECT
+select name, malesex from student
+;
+
+# Thread 14, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select * from student where malesex = true
+;
+
+@UN_ORDERED_SELECT
+select 1+2+3+4+5
+;
+
+# Thread 15, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select id, (select name) from student where malesex = true
+;
+
+@ORDERED_SELECT
+select * from fatworm order by loc
+;
+
+@ORDERED_SELECT
+select A.name, B.id from A, B order by A.id DESC, b.id ASC, b.name
+;
+
+@UN_ORDERED_SELECT
+select count(id) from student where 1 = 0
+;
+
+@UN_ORDERED_SELECT
+select id from student where 1 = 0
+;
+
+@ORDERED_SELECT
+select groupid, sum(loc) as sumloc, count(loc), avg(loc), min(loc), max(loc) from fatworm
+	group by groupid order by sumloc DESC
+;
+
+@ORDERED_SELECT
+select sum(loc) as sumloc, avg(loc), name from fatworm group by leader
+	having min(loc) >= all (select min(loc) from fatworm group by leader)
+	order by sumloc
+;
+
+# Thread 16, Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select id, name from student as s where (select id from student where s.name = name and student.malesex = true) >= id and s.malesex = true
+;
+
+@UN_ORDERED_SELECT
+select name, malesex from student
+;
+
+# Thread 17 Write
+@NEW_THREAD
+use acm
+;
+
+create table concur(
+	col1 int,
+	col2 int,
+	col3 int,
+	col4 int,
+	col5 int,
+	col6 int)
+;
+
+@UN_ORDERED_SELECT
+select distinct * from concur
+;
+
+insert into concur values(4, 8, 15, 16, 23, 42)
+;
+insert into concur values(1, 1, 2, 3, 5, 8)
+;
+insert into concur values(13, 21, 34, 55, 89, 144)
+;
+
+@ORDERED_SELECT
+select * from concur order by col1
+;
+
+@ORDERED_SELECT
+select col3 from concur order by col4 DESC
+;
+
+drop table concur
+;
+
+# Thread 18 Read
+@NEW_THREAD
+use acm
+;
+
+@UN_ORDERED_SELECT
+select distinct * from fatworm
+;
+
+@UN_ORDERED_SELECT
+select count(cnt) from (select distinct count(name) as cnt from fatworm group by groupid) as membercnt
+;
+
+@UN_ORDERED_SELECT
+select count(a.id) from a, b, c, d
+	where a.id + b.id > c.id and d.id % 3 = 1 and b.id * d.id % 5 = 0 and a.id = b.id
+;
+
+@UN_ORDERED_SELECT
+select count(a.ID) from a, b, c, d
+	where a.id + b.id < c.id and d.id % 2 = 1 and b.id * d.id % 3 = 0 and a.id = b.id
+;

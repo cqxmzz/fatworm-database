@@ -1,0 +1,213 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int, value float)
+;
+insert into InfraTest values(1,0.5)
+;
+insert into InfraTest values(2,1)
+;
+insert into InfraTest values(3,1.5)
+;
+insert into InfraTest values(4,2)
+;
+insert into InfraTest values(5,2.5)
+;
+insert into InfraTest values(6,3)
+;
+insert into InfraTest values(7,3.5)
+;
+insert into InfraTest values(8,4)
+;
+insert into InfraTest values(9,4.5)
+;
+insert into InfraTest values(10,5)
+;
+insert into InfraTest values(11,5.5)
+;
+insert into InfraTest values(12,6)
+;
+insert into InfraTest values(13,6.5)
+;
+insert into InfraTest values(14,7)
+;
+insert into InfraTest values(15,7.5)
+;
+insert into InfraTest values(16,8)
+;
+insert into InfraTest values(17,8.5)
+;
+insert into InfraTest values(18,9)
+;
+insert into InfraTest values(19,9.5)
+;
+insert into InfraTest values(20,10)
+;
+insert into InfraTest values(21,10.5)
+;
+insert into InfraTest values(22,11)
+;
+insert into InfraTest values(23,11.5)
+;
+insert into InfraTest values(24,12)
+;
+insert into InfraTest values(25,12.5)
+;
+insert into InfraTest values(26,13)
+;
+insert into InfraTest values(27,13.5)
+;
+insert into InfraTest values(28,14)
+;
+insert into InfraTest values(29,14.5)
+;
+insert into InfraTest values(30,15)
+;
+insert into InfraTest values(31,15.5)
+;
+insert into InfraTest values(32,16)
+;
+insert into InfraTest values(33,16.5)
+;
+insert into InfraTest values(34,17)
+;
+insert into InfraTest values(35,17.5)
+;
+insert into InfraTest values(36,18)
+;
+insert into InfraTest values(37,18.5)
+;
+insert into InfraTest values(38,19)
+;
+insert into InfraTest values(39,19.5)
+;
+insert into InfraTest values(40,20)
+;
+insert into InfraTest values(41,20.5)
+;
+insert into InfraTest values(42,21)
+;
+insert into InfraTest values(43,21.5)
+;
+insert into InfraTest values(44,22)
+;
+insert into InfraTest values(45,22.5)
+;
+insert into InfraTest values(46,23)
+;
+insert into InfraTest values(47,23.5)
+;
+insert into InfraTest values(48,24)
+;
+insert into InfraTest values(49,24.5)
+;
+insert into InfraTest values(50,25)
+;
+insert into InfraTest values(51,25.5)
+;
+insert into InfraTest values(52,26)
+;
+insert into InfraTest values(53,26.5)
+;
+insert into InfraTest values(54,27)
+;
+insert into InfraTest values(55,27.5)
+;
+insert into InfraTest values(56,28)
+;
+insert into InfraTest values(57,28.5)
+;
+insert into InfraTest values(58,29)
+;
+insert into InfraTest values(59,29.5)
+;
+insert into InfraTest values(60,30)
+;
+insert into InfraTest values(61,30.5)
+;
+insert into InfraTest values(62,31)
+;
+insert into InfraTest values(63,31.5)
+;
+insert into InfraTest values(64,32)
+;
+insert into InfraTest values(65,32.5)
+;
+insert into InfraTest values(66,33)
+;
+insert into InfraTest values(67,33.5)
+;
+insert into InfraTest values(68,34)
+;
+insert into InfraTest values(69,34.5)
+;
+insert into InfraTest values(70,35)
+;
+insert into InfraTest values(71,35.5)
+;
+insert into InfraTest values(72,36)
+;
+insert into InfraTest values(73,36.5)
+;
+insert into InfraTest values(74,37)
+;
+insert into InfraTest values(75,37.5)
+;
+insert into InfraTest values(76,38)
+;
+insert into InfraTest values(77,38.5)
+;
+insert into InfraTest values(78,39)
+;
+insert into InfraTest values(79,39.5)
+;
+insert into InfraTest values(80,40)
+;
+insert into InfraTest values(81,40.5)
+;
+insert into InfraTest values(82,41)
+;
+insert into InfraTest values(83,41.5)
+;
+insert into InfraTest values(84,42)
+;
+insert into InfraTest values(85,42.5)
+;
+insert into InfraTest values(86,43)
+;
+insert into InfraTest values(87,43.5)
+;
+insert into InfraTest values(88,44)
+;
+insert into InfraTest values(89,44.5)
+;
+insert into InfraTest values(90,45)
+;
+insert into InfraTest values(91,45.5)
+;
+insert into InfraTest values(92,46)
+;
+insert into InfraTest values(93,46.5)
+;
+insert into InfraTest values(94,47)
+;
+insert into InfraTest values(95,47.5)
+;
+insert into InfraTest values(96,48)
+;
+insert into InfraTest values(97,48.5)
+;
+insert into InfraTest values(98,49)
+;
+insert into InfraTest values(99,49.5)
+;
+insert into InfraTest values(100,50)
+;
+
+@UN_ORDERED_SELECT
+select SUM(value) from InfraTest
+;

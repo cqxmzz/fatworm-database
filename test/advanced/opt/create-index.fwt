@@ -1,0 +1,10 @@
+@NEW_THREAD
+use opt
+;
+
+create index idxida on TTAA( id )
+;
+create unique index idxidb on TTBB( id )
+;
+create index idxidc on CTA( id )
+;

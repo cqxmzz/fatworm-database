@@ -1,0 +1,8 @@
+@NEW_THREAD
+USE fatworm
+;
+@UN_ORDERED_SELECT
+SELECT * FROM i3
+;
+DROP DATABASE fatworm
+;

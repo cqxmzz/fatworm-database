@@ -1,0 +1,442 @@
+@NEW_THREAD
+use nano
+;
+
+@UN_ORDERED_SELECT
+SELECT class, country
+	FROM Classes
+	WHERE numGuns >= 10
+;
+
+@UN_ORDERED_SELECT
+SELECT name AS shipName
+	FROM Ships
+	WHERE launched < 1918
+;
+
+@UN_ORDERED_SELECT
+SELECT ship, battle
+	FROM Outcomes
+	WHERE result = 'sunk' 
+;
+
+@UN_ORDERED_SELECT
+SELECT * FROM Ships
+	WHERE name = class
+;
+
+@UN_ORDERED_SELECT
+SELECT S.name
+	FROM Ships AS S, Classes as C
+	WHERE S.class = C.class AND C.displacement > 35000
+;
+
+@UN_ORDERED_SELECT
+SELECT S.name, C.displacement, C.numGuns
+	FROM Outcomes AS O, Classes AS C, Ships AS S
+	WHERE O.battle = 'Guadalcanal' AND C.class = S.class AND O.ship = S.name
+;
+
+@UN_ORDERED_SELECT
+SELECT C1.country
+	FROM Classes AS C1, Classes as C2
+	WHERE C1.type = 'Battleship' AND C2.type = 'battlecruiser' AND C1.country = C2.country
+;
+
+@UN_ORDERED_SELECT
+SELECT O1.ship
+	FROM Outcomes AS O1, Outcomes AS O2, Battles AS B1, Battles AS B2
+	WHERE O1.ship = O2.ship AND O1.result = 'damaged' AND B1.name = O1.battle AND B2.name = O2.battle AND B1.date < B2.date
+;
+
+@UN_ORDERED_SELECT
+SELECT distinct O1.battle AS battle
+	FROM Classes AS C1, Classes AS C2, Classes AS C3, 
+	Ships AS S1, Ships AS S2, Ships AS S3,
+	Outcomes AS O1, Outcomes AS O2, Outcomes AS O3
+	WHERE C1.country = C2.country AND C2.country = C3.country AND
+	C1.class = S1.class AND C2.class = S2.class AND C3.class = S3.class AND
+	S1.name = O1.ship AND S2.name = O2.ship AND S3.name = O3.ship AND
+	O1.battle = O2.battle AND O2.battle = O3.battle AND
+	O1.ship <> O2.ship AND O2.ship <> O3.ship AND O1.ship <> O3.ship
+;
+
+@ORDERED_SELECT
+SELECT battle
+	FROM Outcomes, Ships, Classes
+	WHERE ship = name AND Ships.class = Classes.class
+	GROUP BY battle, country
+	HAVING count(ship) >= 3
+;
+
+@UN_ORDERED_SELECT
+SELECT country
+	FROM Classes
+	WHERE numGuns >= ALL ( SELECT numGuns FROM Classes) 
+;
+
+@UN_ORDERED_SELECT
+SELECT country
+	FROM Classes as C1
+	WHERE NOT EXISTS( SELECT * FROM Classes AS C2 WHERE C1.numGuns < C2.numGuns ) 
+;
+
+@UN_ORDERED_SELECT
+SELECT country
+	FROM Classes
+	WHERE numGuns IN ( SELECT MAX(numGuns) FROM Classes ) 
+;
+
+@UN_ORDERED_SELECT
+SELECT class
+	FROM Ships
+	WHERE name IN ( SELECT ship FROM Outcomes WHERE result = 'sunk' )
+;
+
+@UN_ORDERED_SELECT
+SELECT class
+	FROM Ships AS S
+	WHERE EXISTS ( SELECT * FROM Outcomes WHERE result = 'sunk' AND S.name = ship ) 
+;
+
+@UN_ORDERED_SELECT
+SELECT name
+	FROM Ships
+	WHERE class IN ( SELECT class FROM Classes WHERE bore = 16 )
+;
+
+@UN_ORDERED_SELECT
+SELECT S.name
+	FROM Ships AS S
+	WHERE EXISTS ( SELECT * FROM Classes as C WHERE C.class = S.class AND C.bore = 16 )
+;
+
+@UN_ORDERED_SELECT
+SELECT battle
+	FROM Outcomes
+	WHERE ship IN ( SELECT name FROM Ships WHERE class = 'Kongo' )
+;
+
+@UN_ORDERED_SELECT
+SELECT O.battle
+	FROM Outcomes as O
+	WHERE EXISTS ( SELECT * FROM Ships AS S WHERE S.class = 'Kongo' AND S.name = O.ship )
+;
+
+@UN_ORDERED_SELECT
+SELECT S.name
+	FROM ( SELECT Ships.name, numGuns, bore from Ships, Classes WHERE Ships.class = Classes.class) AS S
+	WHERE numGuns >= ALL ( SELECT numGuns FROM Classes AS C WHERE C.bore = S.bore )
+;
+
+@UN_ORDERED_SELECT
+SELECT S.name
+	FROM Ships AS S
+	WHERE EXISTS ( SELECT * FROM Classes AS C
+		WHERE C.class = S.class AND
+		C.numGuns >= ALL(SELECT C1.numGuns FROM Classes AS C1 WHERE C1.bore = C.bore))
+;
+
+@UN_ORDERED_SELECT
+SELECT AVG(numGuns) AS meanNumGuns
+	FROM Classes
+	WHERE type = 'Battleship' 
+;
+
+@UN_ORDERED_SELECT
+SELECT AVG(numGuns)
+	FROM Classes as c, Ships as s
+	WHERE c.class = s.class AND c.type = 'Battleship'
+;
+
+@ORDERED_SELECT
+SELECT class, MIN(launched)
+	FROM Ships
+	GROUP BY class
+;
+
+@ORDERED_SELECT
+SELECT class, COUNT(ship) AS shipCount
+	FROM ( SELECT class, result, ship from Ships, Outcomes where Ships.name = Outcomes.ship ) as S
+	WHERE result = 'sunk'
+	GROUP BY class
+;
+
+
+@ORDERED_SELECT
+SELECT class, COUNT(ship) AS shipCount
+	FROM ( SELECT class, result, ship from Ships, Outcomes where Ships.name = Outcomes.ship ) as S
+	WHERE result = 'sunk' AND
+	class IN ( SELECT class
+		FROM Ships
+		GROUP BY class
+		HAVING count(name) >= 3 )
+	GROUP BY class
+;
+
+@ORDERED_SELECT
+SELECT country, AVG(b2) AS meanShellWeight
+	FROM ( SELECT country, numGuns, (bore*bore*bore)/2 as b2 from Ships, Classes WHERE Ships.class = Classes.class ) as S
+	GROUP BY country
+;
+
+###################################################################################################
+
+@UN_ORDERED_SELECT
+SELECT country FROM Classes
+	WHERE numGuns = (SELECT MAX(numGuns) from Classes)
+;
+
+@UN_ORDERED_SELECT
+SELECT country FROM Classes
+	WHERE numGuns >= ALL (SELECT numGuns from Classes)
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT class FROM Ships
+	WHERE name IN (SELECT ship FROM Outcomes WHERE result = 'sunk')
+;
+
+@UN_ORDERED_SELECT
+SELECT class FROM Ships
+	WHERE EXISTS (SELECT * FROM Outcomes WHERE Ships.name = Outcomes.ship AND result = 'sunk')
+;
+
+@UN_ORDERED_SELECT
+SELECT name FROM Ships
+	WHERE class IN (SELECT class from Classes where bore = 16)
+;
+
+@UN_ORDERED_SELECT
+SELECT name FROM Ships, Classes
+	WHERE Ships.class = Classes.class AND bore = 16
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT battle FROM Ships, Outcomes
+	WHERE name = ship AND class = 'Kongo'
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT battle FROM Outcomes
+	WHERE ship = ANY (SELECT name FROM Ships WHERE class = 'Kongo')
+;
+
+@UN_ORDERED_SELECT
+SELECT name FROM Ships, Classes AS C1
+	WHERE Ships.class = C1.class AND numGuns = 
+	(SELECT MAX(numGuns) FROM Classes AS C2 WHERE C1.bore = C2.bore)
+;
+
+@ORDERED_SELECT
+Select count(ship) from Outcomes, Ships
+	Where Outcomes.ship = Ships.name and Outcomes.result = 'sunk'
+	AND class in (Select class from Ships as s2 where (Select count(name) from Ships where class=s2.class)>=3)
+	Group by class
+;
+
+###################################################################################################
+
+@UN_ORDERED_SELECT
+SELECT COUNTRY FROM Classes WHERE NUMGUNS >= ALL ( SELECT NUMGUNS FROM Classes )
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT COUNTRY FROM Classes as C WHERE NOT EXISTS
+	( SELECT COUNTRY FROM Classes WHERE C.NUMGUNS < NUMGUNS )
+;
+
+@UN_ORDERED_SELECT
+SELECT CLASS FROM Ships WHERE NAME IN
+	( SELECT SHIP FROM Outcomes WHERE RESULT = 'sunk')
+;
+
+@UN_ORDERED_SELECT
+SELECT CLASS FROM Ships WHERE NAME = ANY
+	( SELECT SHIP FROM Outcomes WHERE RESULT = 'sunk')
+;
+
+@UN_ORDERED_SELECT
+SELECT CLASS FROM Ships AS S WHERE EXISTS
+	( SELECT SHIP FROM Outcomes WHERE RESULT = 'sunk' AND SHIP = S.NAME)
+;
+
+@UN_ORDERED_SELECT
+SELECT NAME FROM Ships WHERE CLASS IN
+	( SELECT CLASS FROM Classes WHERE BORE = 16 )
+;
+
+@UN_ORDERED_SELECT
+SELECT S.NAME FROM Ships AS S WHERE EXISTS
+	( SELECT * FROM Classes AS C WHERE C.BORE = 16 AND C.CLASS = S.CLASS )
+;
+
+@UN_ORDERED_SELECT
+SELECT BATTLE FROM Outcomes WHERE SHIP IN
+	( SELECT NAME FROM Ships WHERE CLASS = 'Kongo')
+;
+
+@UN_ORDERED_SELECT
+SELECT BATTLE FROM Outcomes WHERE SHIP = ANY
+	( SELECT NAME FROM Ships WHERE CLASS = 'Kongo')
+;
+
+@UN_ORDERED_SELECT
+SELECT O.BATTLE FROM Outcomes AS O WHERE EXISTS
+	( SELECT * FROM Ships AS S WHERE S.CLASS = 'Kongo'AND S.NAME = O.SHIP )
+;
+
+@UN_ORDERED_SELECT
+SELECT NAME FROM Ships WHERE CLASS IN
+	( SELECT CLASS FROM Classes as C WHERE NUMGUNS >= ALL
+		( SELECT NUMGUNS FROM Classes WHERE BORE = C.BORE ) )
+;
+
+@UN_ORDERED_SELECT
+SELECT NAME FROM Ships WHERE CLASS = ANY
+	( SELECT CLASS FROM Classes as C WHERE NUMGUNS >= ALL
+		( SELECT NUMGUNS FROM Classes WHERE BORE = C.BORE ) )
+;
+
+@UN_ORDERED_SELECT
+SELECT S.NAME FROM Ships AS S WHERE EXISTS
+	( SELECT * FROM Classes AS C WHERE C.CLASS = S.CLASS AND C.NUMGUNS >= ALL
+		( SELECT NUMGUNS FROM Classes AS C2 WHERE C2.BORE = C.BORE ) )
+;
+
+@UN_ORDERED_SELECT
+SELECT A.NAME FROM
+	(Select numguns, bore, name from Ships,Classes where Ships.CLASS = Classes.CLASS ) AS A WHERE NOT EXISTS
+		( SELECT CLASS FROM Classes WHERE BORE = A.BORE AND NUMGUNS > A.NUMGUNS )
+;
+
+@UN_ORDERED_SELECT
+SELECT CLASS, COUNTRY FROM Classes WHERE BORE >= 16
+;
+
+@UN_ORDERED_SELECT
+SELECT NAME FROM Ships WHERE LAUNCHED < 1921
+;
+
+@UN_ORDERED_SELECT
+SELECT SHIP FROM Outcomes WHERE BATTLE = 'North Atlantic' AND RESULT = 'sunk'
+;
+
+@UN_ORDERED_SELECT
+SELECT Ships.NAME FROM Ships, Classes
+	WHERE Ships.CLASS = Classes.CLASS AND Classes.DISPLACEMENT > 35000 AND LAUNCHED >= 1921
+;
+
+@UN_ORDERED_SELECT
+SELECT NAME FROM Ships
+	WHERE LAUNCHED>=1921 AND CLASS IN
+		(SELECT CLASS FROM Classes WHERE DISPLACEMENT>=35000)
+;
+
+@UN_ORDERED_SELECT
+SELECT BAR.NAME FROM
+	(SELECT C.CLASS FROM Classes as C WHERE C.DISPLACEMENT > 35000) AS FOO,
+	(SELECT * FROM Ships AS SH WHERE SH.LAUNCHED >= 1921) AS BAR
+	WHERE FOO.CLASS = BAR.CLASS
+;
+
+@UN_ORDERED_SELECT
+SELECT Ships.NAME, Classes.DISPLACEMENT, Classes.NUMGUNS FROM
+	Ships, Classes, Outcomes WHERE Ships.CLASS = Classes.CLASS AND
+	Outcomes.SHIP = Ships.NAME AND Outcomes.BATTLE = 'Guadalcanal'
+;
+
+@UN_ORDERED_SELECT
+SELECT NAME, DISPLACEMENT, NUMGUNS FROM
+	( SELECT SHIP as NAME, CLASS FROM Outcomes, Ships WHERE SHIP=Ships.NAME AND BATTLE='Guadalcanal') AS SOME_Ships, Classes
+	WHERE Classes.CLASS=SOME_Ships.CLASS
+;
+
+@UN_ORDERED_SELECT
+SELECT BAR.NAME, C.DISPLACEMENT, C.NUMGUNS FROM
+	(SELECT B.NAME, B.CLASS FROM Ships as B, 
+		(SELECT A.SHIP AS NAME FROM Outcomes as A WHERE A.BATTLE = 'Guadalcanal') AS FOO
+		WHERE B.NAME = FOO.NAME) AS BAR, 
+	Classes as C
+	WHERE BAR.CLASS = C.CLASS
+;
+
+@ORDERED_SELECT
+SELECT CLASS FROM Ships GROUP BY CLASS HAVING COUNT(NAME)=1
+;
+
+@UN_ORDERED_SELECT
+SELECT CLASS FROM Ships
+	WHERE CLASS <> ANY
+		(SELECT S1.CLASS FROM Ships AS S1, Ships AS S2 WHERE S1.CLASS = S2.CLASS AND S1.NAME <> S2.NAME)
+;
+
+@UN_ORDERED_SELECT
+SELECT CLASS FROM Classes
+	WHERE CLASS <> ANY
+		( SELECT S1.CLASS FROM Ships AS S1, Ships AS S2 WHERE S1.CLASS = S2.CLASS AND S1.NAME <> S2.NAME )
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT COUNTRY FROM Classes WHERE type = 'battlecruiser' AND COUNTRY IN
+	(SELECT COUNTRY FROM Classes WHERE TYPE = 'Battleship')
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT C1.COUNTRY FROM Classes AS C1, Classes AS C2 WHERE
+	C1.COUNTRY = C2.COUNTRY AND C1.TYPE = 'Battleship' AND C2.TYPE = 'battlecruiser'
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT FOO.COUNTRY FROM
+	(SELECT C1.TYPE, C1.COUNTRY FROM Classes as C1) AS FOO,
+	(SELECT C2.TYPE, C2.COUNTRY FROM Classes as C2) AS BAR
+	WHERE FOO.TYPE <> BAR.TYPE AND FOO.COUNTRY = BAR.COUNTRY
+;
+
+@UN_ORDERED_SELECT
+SELECT O1.SHIP FROM
+	Outcomes AS O1, Battles AS B1, Outcomes AS O2, Battles AS B2
+	WHERE O1.BATTLE = B1.NAME AND O2.BATTLE = B2.NAME AND B1.DATE > B2.DATE 
+	AND O2.RESULT = 'damaged' AND O1.SHIP = O2.SHIP
+;
+
+@UN_ORDERED_SELECT
+SELECT DISTINCT T1.SHIP FROM
+	(SELECT SHIP, DATE FROM Outcomes as O, Battles as B WHERE O.BATTLE = B.NAME AND RESULT = 'damaged') as T1,
+	(SELECT SHIP, DATE FROM Outcomes as O, Battles as B WHERE O.BATTLE = B.NAME) as T2
+	WHERE T1.SHIP = T2.SHIP AND T1.DATE < T2.DATE
+;
+
+@UN_ORDERED_SELECT
+SELECT O.SHIP FROM Outcomes AS O, Battles AS B1
+	WHERE O.BATTLE = B1.NAME AND O.RESULT = 'damaged' AND O.SHIP IN
+		(SELECT SHIP FROM Outcomes, Battles AS B2
+			WHERE SHIP = O.SHIP AND BATTLE = B2.NAME AND B1.NAME <> B2.NAME AND B2.DATE > B1.DATE)
+;
+
+@UN_ORDERED_SELECT
+SELECT A.SHIP FROM Outcomes as A, Battles as B
+	WHERE A.BATTLE = B.NAME AND A.RESULT='DAMAGED' AND EXISTS
+		(SELECT SHIP FROM Outcomes, Battles WHERE BATTLE = NAME AND SHIP = A.SHIP AND RESULT='OK' AND DATE >= B.DATE)
+;
+
+@UN_ORDERED_SELECT
+Select name
+	From Ships as s, Classes as c1
+	Where s.class = c1.class And c1.numGuns>= ALL
+		(Select numGuns From Classes as c2 Where c1.bore = c2.bore)
+;
+
+@UN_ORDERED_SELECT
+SELECT QUUX.SHIP FROM
+	(SELECT SHIP, BATTLE2, DATE AS DATE1 FROM
+		(SELECT FOO.SHIP AS SHIP, FOO.BATTLE AS BATTLE1, BAR.BATTLE AS BATTLE2 FROM
+			(SELECT * FROM Outcomes AS O1 WHERE O1.RESULT = 'damaged') AS FOO,
+			(SELECT * FROM Outcomes AS O2 ) AS BAR
+			WHERE FOO.BATTLE <> BAR.BATTLE AND FOO.SHIP = BAR.SHIP ) AS BAT,
+		(SELECT * FROM Battles ) AS QUX
+		WHERE QUX.NAME = BAT.BATTLE1) AS QUUX,
+	(SELECT * FROM Battles ) AS QUUUX
+	WHERE QUUUX.NAME = QUUX.BATTLE2 AND QUUUX.DATE > QUUX.DATE1
+;

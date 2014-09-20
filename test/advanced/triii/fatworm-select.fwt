@@ -1,0 +1,157 @@
+@NEW_THREAD
+use acm
+;
+
+# testNaiveSelect
+@UN_ORDERED_SELECT
+select * from student where malesex = true
+;
+
+# testCalcSelect
+@UN_ORDERED_SELECT
+select 1+2+3+4+5
+;
+
+@ORDERED_SELECT
+select 1, 1*0, -1-2, -1%10, -(-1-(-1)), 1/2, 0.5+0.314, 1e-4*1e-4 from student
+;
+
+@UN_ORDERED_SELECT
+select *, 3*5%11 from student
+;
+
+# testProduct
+@UN_ORDERED_SELECT
+select * from student, fatworm
+;
+
+@UN_ORDERED_SELECT
+select a.id, a.name, student.id, student.name from fatworm as a, student
+;
+
+# testSubquery
+@UN_ORDERED_SELECT
+select * from (select * from student where birthday = '1989-02-24 04:44:44') as t1
+;
+
+@UN_ORDERED_SELECT
+select id, b from (select id as a, name as b from student where malesex = true) as sub, student where sub.a < id
+;
+
+@UN_ORDERED_SELECT
+select id, name, malesex from student where id in (select id from student where malesex = false)
+;
+
+@UN_ORDERED_SELECT
+select id, name from student as f where name > any (select name from student where id > f.id)
+;
+
+@UN_ORDERED_SELECT
+select id as a, name as b from student as s group by name having name >= b
+;
+
+@UN_ORDERED_SELECT
+select id as a, name as b from student group by b
+	having name > any (select name from student where a < id) 
+;
+
+@UN_ORDERED_SELECT
+select id, name from student as s where (select id from student where s.name = name) >= id
+;
+
+@UN_ORDERED_SELECT
+select id, (select name) from student
+;
+
+# testOrderBy
+@ORDERED_SELECT
+select * from fatworm order by loc
+;
+
+@ORDERED_SELECT
+select A.name, B.id from A, B order by A.id DESC, b.id ASC, b.name
+;
+
+# testGroupBy
+@UN_ORDERED_SELECT
+select count(id) from student where 1 = 0
+;
+
+@UN_ORDERED_SELECT
+select id from student where 1 = 0
+;
+
+@ORDERED_SELECT
+select groupid, sum(loc) as sumloc, count(loc), avg(loc), min(loc), max(loc) from fatworm
+	group by groupid order by sumloc DESC
+;
+
+@ORDERED_SELECT
+select sum(loc) as sumloc, avg(loc), name from fatworm group by leader
+	having min(loc) >= all (select min(loc) from fatworm group by leader)
+	order by sumloc
+;
+
+@UN_ORDERED_SELECT
+select id from student as s
+	where (select count(nickname) from student, fatworm, fatworm as f
+	where fatworm.id = s.id and fatworm.groupid = f.groupid and student.id = f.id) >= 3
+;
+
+@ORDERED_SELECT
+select id, name from student
+	where (select count(id) from fatworm where student.id = 4 and groupid = 'H') > 0
+	order by id
+;
+
+# testUnique
+@UN_ORDERED_SELECT
+select distinct groupid from fatworm
+;
+
+@UN_ORDERED_SELECT
+select distinct * from fatworm
+;
+
+@UN_ORDERED_SELECT
+select count(cnt) from (select distinct count(name) as cnt from fatworm group by groupid) as membercnt
+;
+
+# testJoinOrder
+# Ignored because RMI is too slow, count(res) instead
+# @UN_ORDERED_SELECT
+# select * from a, b, c, d
+#	where a.id + b.id < c.id and d.id % 3 = 1 and b.id * d.id % 5 = 0 and a.id = b.id
+# ;
+
+@UN_ORDERED_SELECT
+select count(a.id) from a, b, c, d
+	where a.id + b.id > c.id and d.id % 3 = 1 and b.id * d.id % 5 = 0 and a.id = b.id
+;
+
+@UN_ORDERED_SELECT
+select count(a.ID) from a, b, c, d
+	where a.id + b.id < c.id and d.id % 2 = 1 and b.id * d.id % 3 = 0 and a.id = b.id
+;
+
+# 10 instance
+@UN_ORDERED_SELECT
+select count(b0.ID) from B as b0, D as d0, B as b1, B as b2, B as b3, B as b4, B as b5, B as b6, B as b7, B as b8
+	where b0.id % 2 = 1 and b1.id % 3 = 1 and b2.id % 3 = 2 and b3.id % 4 = 1 and b4.id % 4 = 2 and d0.id >= 18
+      or b5.id % 4 = 3 and b6.id % 5 = 2 and b7.id % 5 = 3 and b8.id % 5 = 4 and d0.id <= 1
+;
+
+# 11 instance
+@UN_ORDERED_SELECT
+select count(b0.ID) from B as b0, D as d0, B as b1, D as d1, B as b2, B as b3, B as b4, B as b5, B as b6, B as b7, B as b8
+	where b0.id % 2 = 1 and b1.id % 3 = 1 and b2.id % 3 = 2 and b3.id % 4 = 1 and b4.id % 4 = 2 and d0.id + d1.id = 37
+      or b5.id % 4 = 3 and b6.id % 5 = 2 and b7.id % 5 = 3 and b8.id % 5 = 4 and d0.id + d1.id = 1
+;
+
+# testMergeJoin
+@UN_ORDERED_SELECT
+select count(A.id) from
+	(select B.id from A, A as B) as A,
+	(select A.id from B, B as A) as B, C, D
+	where B.id = D.id and A.id = B.id and C.id = D.id
+;

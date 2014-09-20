@@ -1,0 +1,33 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table InfraTest( k int, v int)
+;
+
+insert into InfraTest values(1, 1)
+;
+insert into InfraTest values(2, 2)
+;
+insert into InfraTest values(2, 3)
+;
+insert into InfraTest values(3, 4)
+;
+insert into InfraTest values(3, 5)
+;
+
+@UN_ORDERED_SELECT
+select min(k) from InfraTest
+;
+@UN_ORDERED_SELECT
+select max(v) from InfraTest where k=2
+;
+
+@UN_ORDERED_SELECT
+select max(v) from InfraTest
+;
+
+

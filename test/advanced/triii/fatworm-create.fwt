@@ -1,0 +1,795 @@
+@NEW_THREAD
+drop database acm
+;
+create database acm
+;
+use acm
+;
+create table student(
+	id int,
+	name varchar(100),
+	nickname char(10),
+	age int,
+	height float,
+	weight decimal(4,1),
+	birthday timestamp,
+	deathday datetime,
+	malesex boolean)
+;
+insert into student values(1, 'ChengYu', 'cy', 20, 180, 69.5, '1989-08-31 17:17:17', '2112-08-31 17:17:17', true)
+;
+insert into student values(2, 'JiangXiao', 'FireDancer', 21, 175.0, 80.0, '1989-02-20 02:22:22', '2222-02-22 02:22:22', true)
+;
+insert into student values(3, 'TangBo', 'tangbonk1', 21, 180.3, 65.5, '1989-01-25 21:32:13', '8888-12-31 23:59:59', true)
+;
+insert into student values(4, 'FengZiming', 'laoselang', 21, 150.0, 99.9, '1989-02-24 04:44:44', '1111-01-11 11:11:11', false)
+;
+
+create table fatworm(
+	id int,
+	name varchar(100),
+	groupid char(1),
+	leader varchar(100),
+	loc int)
+;
+insert into fatworm values(1, 'ChengYu', 'C', 'TangBo', 11899)
+;
+insert into fatworm values(2, 'JiangXiao', 'C', 'TangBo', 3187)
+;
+insert into fatworm values(3, 'TangBo', 'C', 'TangBo', 51664)
+;
+insert into fatworm values(4, 'FengZiming', 'I', 'ShengMeiLun', 11890)
+;
+insert into fatworm values(5, 'ShengMeilun', 'I', 'ShengMeiLun', 10528)
+;
+insert into fatworm values(6, 'ZhangJiapeng', 'I', '.', 0)
+;
+insert into fatworm values(7, 'KangNanXi', 'I', 'KangNanXi', 12610)
+;
+insert into fatworm values(8, 'ZhangYan', 'A', 'KangNanXi', 2343)
+;
+insert into fatworm values(9, 'ZhouYujiao', 'A', 'KangNanXi', 664)
+;
+insert into fatworm values(10, 'ChenKailong', 'H', 'ChenKailong', 21635)
+;
+insert into fatworm values(11, 'WangHang', 'H', 'WangHang', 44921)
+;
+insert into fatworm values(12, 'LuoYuLong', 'Z', 'ChenKailong', 6957)
+;
+
+create table A(
+	id int,
+	name char(5))
+;
+insert into A values (0, 'a0')
+;
+insert into A values (1, 'a1')
+;
+insert into A values (2, 'a2')
+;
+insert into A values (3, 'a3')
+;
+insert into A values (4, 'a4')
+;
+insert into A values (5, 'a5')
+;
+insert into A values (6, 'a6')
+;
+insert into A values (7, 'a7')
+;
+insert into A values (8, 'a8')
+;
+insert into A values (9, 'a9')
+;
+insert into A values (10, 'a10')
+;
+insert into A values (11, 'a11')
+;
+insert into A values (12, 'a12')
+;
+insert into A values (13, 'a13')
+;
+insert into A values (14, 'a14')
+;
+insert into A values (15, 'a15')
+;
+insert into A values (16, 'a16')
+;
+insert into A values (17, 'a17')
+;
+insert into A values (18, 'a18')
+;
+insert into A values (19, 'a19')
+;
+insert into A values (20, 'a20')
+;
+insert into A values (21, 'a21')
+;
+insert into A values (22, 'a22')
+;
+insert into A values (23, 'a23')
+;
+insert into A values (24, 'a24')
+;
+insert into A values (25, 'a25')
+;
+insert into A values (26, 'a26')
+;
+insert into A values (27, 'a27')
+;
+insert into A values (28, 'a28')
+;
+insert into A values (29, 'a29')
+;
+insert into A values (30, 'a30')
+;
+insert into A values (31, 'a31')
+;
+insert into A values (32, 'a32')
+;
+insert into A values (33, 'a33')
+;
+insert into A values (34, 'a34')
+;
+insert into A values (35, 'a35')
+;
+insert into A values (36, 'a36')
+;
+insert into A values (37, 'a37')
+;
+insert into A values (38, 'a38')
+;
+insert into A values (39, 'a39')
+;
+insert into A values (40, 'a40')
+;
+insert into A values (41, 'a41')
+;
+insert into A values (42, 'a42')
+;
+insert into A values (43, 'a43')
+;
+insert into A values (44, 'a44')
+;
+insert into A values (45, 'a45')
+;
+insert into A values (46, 'a46')
+;
+insert into A values (47, 'a47')
+;
+insert into A values (48, 'a48')
+;
+insert into A values (49, 'a49')
+;
+
+create table B(
+	id int,
+	name char(5))
+;
+insert into B values (0, 'b0')
+;
+insert into B values (1, 'b1')
+;
+insert into B values (2, 'b2')
+;
+insert into B values (3, 'b3')
+;
+insert into B values (4, 'b4')
+;
+insert into B values (5, 'b5')
+;
+
+create table C(
+	id int,
+	name char(5))
+;
+insert into C values (0, 'c0')
+;
+insert into C values (1, 'c1')
+;
+insert into C values (2, 'c2')
+;
+insert into C values (3, 'c3')
+;
+insert into C values (4, 'c4')
+;
+insert into C values (5, 'c5')
+;
+insert into C values (6, 'c6')
+;
+insert into C values (7, 'c7')
+;
+insert into C values (8, 'c8')
+;
+insert into C values (9, 'c9')
+;
+insert into C values (10, 'c10')
+;
+insert into C values (11, 'c11')
+;
+insert into C values (12, 'c12')
+;
+insert into C values (13, 'c13')
+;
+insert into C values (14, 'c14')
+;
+insert into C values (15, 'c15')
+;
+insert into C values (16, 'c16')
+;
+insert into C values (17, 'c17')
+;
+insert into C values (18, 'c18')
+;
+insert into C values (19, 'c19')
+;
+insert into C values (20, 'c20')
+;
+insert into C values (21, 'c21')
+;
+insert into C values (22, 'c22')
+;
+insert into C values (23, 'c23')
+;
+insert into C values (24, 'c24')
+;
+insert into C values (25, 'c25')
+;
+insert into C values (26, 'c26')
+;
+insert into C values (27, 'c27')
+;
+insert into C values (28, 'c28')
+;
+insert into C values (29, 'c29')
+;
+insert into C values (30, 'c30')
+;
+insert into C values (31, 'c31')
+;
+insert into C values (32, 'c32')
+;
+insert into C values (33, 'c33')
+;
+insert into C values (34, 'c34')
+;
+insert into C values (35, 'c35')
+;
+insert into C values (36, 'c36')
+;
+insert into C values (37, 'c37')
+;
+insert into C values (38, 'c38')
+;
+insert into C values (39, 'c39')
+;
+insert into C values (40, 'c40')
+;
+insert into C values (41, 'c41')
+;
+insert into C values (42, 'c42')
+;
+insert into C values (43, 'c43')
+;
+insert into C values (44, 'c44')
+;
+insert into C values (45, 'c45')
+;
+insert into C values (46, 'c46')
+;
+insert into C values (47, 'c47')
+;
+insert into C values (48, 'c48')
+;
+insert into C values (49, 'c49')
+;
+insert into C values (50, 'c50')
+;
+insert into C values (51, 'c51')
+;
+insert into C values (52, 'c52')
+;
+insert into C values (53, 'c53')
+;
+insert into C values (54, 'c54')
+;
+insert into C values (55, 'c55')
+;
+insert into C values (56, 'c56')
+;
+insert into C values (57, 'c57')
+;
+insert into C values (58, 'c58')
+;
+insert into C values (59, 'c59')
+;
+insert into C values (60, 'c60')
+;
+insert into C values (61, 'c61')
+;
+insert into C values (62, 'c62')
+;
+insert into C values (63, 'c63')
+;
+insert into C values (64, 'c64')
+;
+insert into C values (65, 'c65')
+;
+insert into C values (66, 'c66')
+;
+insert into C values (67, 'c67')
+;
+insert into C values (68, 'c68')
+;
+insert into C values (69, 'c69')
+;
+insert into C values (70, 'c70')
+;
+insert into C values (71, 'c71')
+;
+insert into C values (72, 'c72')
+;
+insert into C values (73, 'c73')
+;
+insert into C values (74, 'c74')
+;
+insert into C values (75, 'c75')
+;
+insert into C values (76, 'c76')
+;
+insert into C values (77, 'c77')
+;
+insert into C values (78, 'c78')
+;
+insert into C values (79, 'c79')
+;
+insert into C values (80, 'c80')
+;
+insert into C values (81, 'c81')
+;
+insert into C values (82, 'c82')
+;
+insert into C values (83, 'c83')
+;
+insert into C values (84, 'c84')
+;
+insert into C values (85, 'c85')
+;
+insert into C values (86, 'c86')
+;
+insert into C values (87, 'c87')
+;
+insert into C values (88, 'c88')
+;
+insert into C values (89, 'c89')
+;
+insert into C values (90, 'c90')
+;
+insert into C values (91, 'c91')
+;
+insert into C values (92, 'c92')
+;
+insert into C values (93, 'c93')
+;
+insert into C values (94, 'c94')
+;
+insert into C values (95, 'c95')
+;
+insert into C values (96, 'c96')
+;
+insert into C values (97, 'c97')
+;
+insert into C values (98, 'c98')
+;
+insert into C values (99, 'c99')
+;
+insert into C values (100, 'c100')
+;
+insert into C values (101, 'c101')
+;
+insert into C values (102, 'c102')
+;
+insert into C values (103, 'c103')
+;
+insert into C values (104, 'c104')
+;
+insert into C values (105, 'c105')
+;
+insert into C values (106, 'c106')
+;
+insert into C values (107, 'c107')
+;
+insert into C values (108, 'c108')
+;
+insert into C values (109, 'c109')
+;
+insert into C values (110, 'c110')
+;
+insert into C values (111, 'c111')
+;
+insert into C values (112, 'c112')
+;
+insert into C values (113, 'c113')
+;
+insert into C values (114, 'c114')
+;
+insert into C values (115, 'c115')
+;
+insert into C values (116, 'c116')
+;
+insert into C values (117, 'c117')
+;
+insert into C values (118, 'c118')
+;
+insert into C values (119, 'c119')
+;
+insert into C values (120, 'c120')
+;
+insert into C values (121, 'c121')
+;
+insert into C values (122, 'c122')
+;
+insert into C values (123, 'c123')
+;
+insert into C values (124, 'c124')
+;
+insert into C values (125, 'c125')
+;
+insert into C values (126, 'c126')
+;
+insert into C values (127, 'c127')
+;
+insert into C values (128, 'c128')
+;
+insert into C values (129, 'c129')
+;
+insert into C values (130, 'c130')
+;
+insert into C values (131, 'c131')
+;
+insert into C values (132, 'c132')
+;
+insert into C values (133, 'c133')
+;
+insert into C values (134, 'c134')
+;
+insert into C values (135, 'c135')
+;
+insert into C values (136, 'c136')
+;
+insert into C values (137, 'c137')
+;
+insert into C values (138, 'c138')
+;
+insert into C values (139, 'c139')
+;
+insert into C values (140, 'c140')
+;
+insert into C values (141, 'c141')
+;
+insert into C values (142, 'c142')
+;
+insert into C values (143, 'c143')
+;
+insert into C values (144, 'c144')
+;
+insert into C values (145, 'c145')
+;
+insert into C values (146, 'c146')
+;
+insert into C values (147, 'c147')
+;
+insert into C values (148, 'c148')
+;
+insert into C values (149, 'c149')
+;
+insert into C values (150, 'c150')
+;
+insert into C values (151, 'c151')
+;
+insert into C values (152, 'c152')
+;
+insert into C values (153, 'c153')
+;
+insert into C values (154, 'c154')
+;
+insert into C values (155, 'c155')
+;
+insert into C values (156, 'c156')
+;
+insert into C values (157, 'c157')
+;
+insert into C values (158, 'c158')
+;
+insert into C values (159, 'c159')
+;
+insert into C values (160, 'c160')
+;
+insert into C values (161, 'c161')
+;
+insert into C values (162, 'c162')
+;
+insert into C values (163, 'c163')
+;
+insert into C values (164, 'c164')
+;
+insert into C values (165, 'c165')
+;
+insert into C values (166, 'c166')
+;
+insert into C values (167, 'c167')
+;
+insert into C values (168, 'c168')
+;
+insert into C values (169, 'c169')
+;
+insert into C values (170, 'c170')
+;
+insert into C values (171, 'c171')
+;
+insert into C values (172, 'c172')
+;
+insert into C values (173, 'c173')
+;
+insert into C values (174, 'c174')
+;
+insert into C values (175, 'c175')
+;
+insert into C values (176, 'c176')
+;
+insert into C values (177, 'c177')
+;
+insert into C values (178, 'c178')
+;
+insert into C values (179, 'c179')
+;
+insert into C values (180, 'c180')
+;
+insert into C values (181, 'c181')
+;
+insert into C values (182, 'c182')
+;
+insert into C values (183, 'c183')
+;
+insert into C values (184, 'c184')
+;
+insert into C values (185, 'c185')
+;
+insert into C values (186, 'c186')
+;
+insert into C values (187, 'c187')
+;
+insert into C values (188, 'c188')
+;
+insert into C values (189, 'c189')
+;
+insert into C values (190, 'c190')
+;
+insert into C values (191, 'c191')
+;
+insert into C values (192, 'c192')
+;
+insert into C values (193, 'c193')
+;
+insert into C values (194, 'c194')
+;
+insert into C values (195, 'c195')
+;
+insert into C values (196, 'c196')
+;
+insert into C values (197, 'c197')
+;
+insert into C values (198, 'c198')
+;
+insert into C values (199, 'c199')
+;
+
+create table D(
+	id int,
+	name char(5))
+;
+insert into D values (0, 'd0')
+;
+insert into D values (1, 'd1')
+;
+insert into D values (2, 'd2')
+;
+insert into D values (3, 'd3')
+;
+insert into D values (4, 'd4')
+;
+insert into D values (5, 'd5')
+;
+insert into D values (6, 'd6')
+;
+insert into D values (7, 'd7')
+;
+insert into D values (8, 'd8')
+;
+insert into D values (9, 'd9')
+;
+insert into D values (10, 'd10')
+;
+insert into D values (11, 'd11')
+;
+insert into D values (12, 'd12')
+;
+insert into D values (13, 'd13')
+;
+insert into D values (14, 'd14')
+;
+insert into D values (15, 'd15')
+;
+insert into D values (16, 'd16')
+;
+insert into D values (17, 'd17')
+;
+insert into D values (18, 'd18')
+;
+insert into D values (19, 'd19')
+;
+
+create table E(
+	id int,
+	name char(5))
+;
+insert into E values (40, 'e40')
+;
+insert into E values (41, 'e41')
+;
+insert into E values (42, 'e42')
+;
+insert into E values (43, 'e43')
+;
+insert into E values (44, 'e44')
+;
+insert into E values (45, 'e45')
+;
+insert into E values (46, 'e46')
+;
+insert into E values (47, 'e47')
+;
+insert into E values (48, 'e48')
+;
+insert into E values (49, 'e49')
+;
+insert into E values (50, 'e50')
+;
+insert into E values (51, 'e51')
+;
+insert into E values (52, 'e52')
+;
+insert into E values (53, 'e53')
+;
+insert into E values (54, 'e54')
+;
+insert into E values (55, 'e55')
+;
+insert into E values (56, 'e56')
+;
+insert into E values (57, 'e57')
+;
+insert into E values (58, 'e58')
+;
+insert into E values (59, 'e59')
+;
+insert into E values (60, 'e60')
+;
+insert into E values (61, 'e61')
+;
+insert into E values (62, 'e62')
+;
+insert into E values (63, 'e63')
+;
+insert into E values (64, 'e64')
+;
+insert into E values (65, 'e65')
+;
+insert into E values (66, 'e66')
+;
+insert into E values (67, 'e67')
+;
+insert into E values (68, 'e68')
+;
+insert into E values (69, 'e69')
+;
+insert into E values (70, 'e70')
+;
+insert into E values (71, 'e71')
+;
+insert into E values (72, 'e72')
+;
+insert into E values (73, 'e73')
+;
+insert into E values (74, 'e74')
+;
+insert into E values (75, 'e75')
+;
+insert into E values (76, 'e76')
+;
+insert into E values (77, 'e77')
+;
+insert into E values (78, 'e78')
+;
+insert into E values (79, 'e79')
+;
+insert into E values (80, 'e80')
+;
+insert into E values (81, 'e81')
+;
+insert into E values (82, 'e82')
+;
+insert into E values (83, 'e83')
+;
+insert into E values (84, 'e84')
+;
+insert into E values (85, 'e85')
+;
+insert into E values (86, 'e86')
+;
+insert into E values (87, 'e87')
+;
+insert into E values (88, 'e88')
+;
+insert into E values (89, 'e89')
+;
+insert into E values (90, 'e90')
+;
+insert into E values (91, 'e91')
+;
+insert into E values (92, 'e92')
+;
+insert into E values (93, 'e93')
+;
+insert into E values (94, 'e94')
+;
+insert into E values (95, 'e95')
+;
+insert into E values (96, 'e96')
+;
+insert into E values (97, 'e97')
+;
+insert into E values (98, 'e98')
+;
+insert into E values (99, 'e99')
+;
+insert into E values (100, 'e100')
+;
+insert into E values (101, 'e101')
+;
+insert into E values (102, 'e102')
+;
+insert into E values (103, 'e103')
+;
+insert into E values (104, 'e104')
+;
+insert into E values (105, 'e105')
+;
+insert into E values (106, 'e106')
+;
+insert into E values (107, 'e107')
+;
+insert into E values (108, 'e108')
+;
+insert into E values (109, 'e109')
+;
+insert into E values (110, 'e110')
+;
+insert into E values (111, 'e111')
+;
+insert into E values (112, 'e112')
+;
+insert into E values (113, 'e113')
+;
+insert into E values (114, 'e114')
+;
+insert into E values (115, 'e115')
+;
+insert into E values (116, 'e116')
+;
+insert into E values (117, 'e117')
+;
+insert into E values (118, 'e118')
+;
+insert into E values (119, 'e119')
+;

@@ -1,0 +1,10 @@
+@NEW_THREAD
+use opt
+;
+
+@UN_ORDERED_SELECT
+select TTA.id, TTA.val, TTB.val 
+from TTA, TTB
+where TTA.id = TTB.id
+;
+

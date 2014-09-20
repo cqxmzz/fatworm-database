@@ -1,0 +1,42 @@
+select * from a
+;
+
+select * from b
+;
+
+select * from a, b
+;
+
+select a from a, b
+;
+
+select b from a, b
+;
+
+select a.a from a, b
+;
+
+select b.b from a, b
+;
+
+select a, b from a,b
+;
+
+select a, b from a as c, b
+;
+
+select c.a, b from a as c, b
+;
+
+select a.a, c.a, c.b from a, c where a.a = c.a and a.a = 1
+;
+
+select a.a as a, a.a as b from a
+;
+
+select distinct a from a
+;
+
+select 1-(-2*10)
+;
+

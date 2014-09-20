@@ -1,0 +1,7 @@
+@NEW_THREAD
+use ATIS
+;
+
+@UN_ORDERED_SELECT;
+select city.cityname,state.statename,city.citycode from city,state where city.citycode='MATL' and city.statecode=state.statecode
+;

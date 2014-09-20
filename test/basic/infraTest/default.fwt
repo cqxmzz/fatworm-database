@@ -1,0 +1,27 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+drop table InfraTest
+;
+create table InfraTest( k int default 10, v char(10) default 'miemiemie')
+;
+
+insert into InfraTest values(1, default)
+;
+insert into InfraTest values(2, default)
+;
+insert into InfraTest values(default, default)
+;
+insert into InfraTest values(default, '123')
+;
+insert into InfraTest values(1, '23')
+;
+
+@UN_ORDERED_SELECT
+select * from InfraTest
+;
+

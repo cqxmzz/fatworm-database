@@ -1,0 +1,2034 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+
+drop table IndexTest
+;
+
+create table IndexTest(
+	k int,
+	value varchar(20)
+)
+;
+
+insert into IndexTest values(81,'81')
+;
+insert into IndexTest values(237,'237')
+;
+insert into IndexTest values(346,'346')
+;
+insert into IndexTest values(545,'545')
+;
+insert into IndexTest values(569,'569')
+;
+insert into IndexTest values(606,'606')
+;
+insert into IndexTest values(657,'657')
+;
+insert into IndexTest values(681,'681')
+;
+insert into IndexTest values(723,'723')
+;
+insert into IndexTest values(925,'925')
+;
+insert into IndexTest values(973,'973')
+;
+insert into IndexTest values(1039,'1039')
+;
+insert into IndexTest values(1052,'1052')
+;
+insert into IndexTest values(1063,'1063')
+;
+insert into IndexTest values(1255,'1255')
+;
+insert into IndexTest values(1360,'1360')
+;
+insert into IndexTest values(1474,'1474')
+;
+insert into IndexTest values(1839,'1839')
+;
+insert into IndexTest values(1947,'1947')
+;
+insert into IndexTest values(1961,'1961')
+;
+insert into IndexTest values(1962,'1962')
+;
+insert into IndexTest values(2021,'2021')
+;
+insert into IndexTest values(2215,'2215')
+;
+insert into IndexTest values(2245,'2245')
+;
+insert into IndexTest values(2254,'2254')
+;
+insert into IndexTest values(2305,'2305')
+;
+insert into IndexTest values(2336,'2336')
+;
+insert into IndexTest values(2362,'2362')
+;
+insert into IndexTest values(2422,'2422')
+;
+insert into IndexTest values(2567,'2567')
+;
+insert into IndexTest values(2647,'2647')
+;
+insert into IndexTest values(2651,'2651')
+;
+insert into IndexTest values(2726,'2726')
+;
+insert into IndexTest values(2747,'2747')
+;
+insert into IndexTest values(2829,'2829')
+;
+insert into IndexTest values(2900,'2900')
+;
+insert into IndexTest values(2904,'2904')
+;
+insert into IndexTest values(2954,'2954')
+;
+insert into IndexTest values(3033,'3033')
+;
+insert into IndexTest values(3074,'3074')
+;
+insert into IndexTest values(3135,'3135')
+;
+insert into IndexTest values(3177,'3177')
+;
+insert into IndexTest values(3190,'3190')
+;
+insert into IndexTest values(3348,'3348')
+;
+insert into IndexTest values(3465,'3465')
+;
+insert into IndexTest values(3493,'3493')
+;
+insert into IndexTest values(3526,'3526')
+;
+insert into IndexTest values(3682,'3682')
+;
+insert into IndexTest values(3729,'3729')
+;
+insert into IndexTest values(3881,'3881')
+;
+insert into IndexTest values(4234,'4234')
+;
+insert into IndexTest values(4289,'4289')
+;
+insert into IndexTest values(4292,'4292')
+;
+insert into IndexTest values(4310,'4310')
+;
+insert into IndexTest values(4339,'4339')
+;
+insert into IndexTest values(4346,'4346')
+;
+insert into IndexTest values(4567,'4567')
+;
+insert into IndexTest values(4789,'4789')
+;
+insert into IndexTest values(4794,'4794')
+;
+insert into IndexTest values(4916,'4916')
+;
+insert into IndexTest values(5000,'5000')
+;
+insert into IndexTest values(5057,'5057')
+;
+insert into IndexTest values(5153,'5153')
+;
+insert into IndexTest values(5211,'5211')
+;
+insert into IndexTest values(5236,'5236')
+;
+insert into IndexTest values(5363,'5363')
+;
+insert into IndexTest values(5385,'5385')
+;
+insert into IndexTest values(5403,'5403')
+;
+insert into IndexTest values(5624,'5624')
+;
+insert into IndexTest values(5732,'5732')
+;
+insert into IndexTest values(5771,'5771')
+;
+insert into IndexTest values(5989,'5989')
+;
+insert into IndexTest values(6042,'6042')
+;
+insert into IndexTest values(6219,'6219')
+;
+insert into IndexTest values(6355,'6355')
+;
+insert into IndexTest values(6367,'6367')
+;
+insert into IndexTest values(6403,'6403')
+;
+insert into IndexTest values(6445,'6445')
+;
+insert into IndexTest values(6582,'6582')
+;
+insert into IndexTest values(6640,'6640')
+;
+insert into IndexTest values(6710,'6710')
+;
+insert into IndexTest values(6725,'6725')
+;
+insert into IndexTest values(6732,'6732')
+;
+insert into IndexTest values(6862,'6862')
+;
+insert into IndexTest values(6887,'6887')
+;
+insert into IndexTest values(6996,'6996')
+;
+insert into IndexTest values(7205,'7205')
+;
+insert into IndexTest values(7398,'7398')
+;
+insert into IndexTest values(7556,'7556')
+;
+insert into IndexTest values(7669,'7669')
+;
+insert into IndexTest values(7672,'7672')
+;
+insert into IndexTest values(7722,'7722')
+;
+insert into IndexTest values(7971,'7971')
+;
+insert into IndexTest values(8117,'8117')
+;
+insert into IndexTest values(8235,'8235')
+;
+insert into IndexTest values(8282,'8282')
+;
+insert into IndexTest values(8324,'8324')
+;
+insert into IndexTest values(8538,'8538')
+;
+insert into IndexTest values(8542,'8542')
+;
+insert into IndexTest values(8581,'8581')
+;
+insert into IndexTest values(8860,'8860')
+;
+insert into IndexTest values(8872,'8872')
+;
+insert into IndexTest values(8902,'8902')
+;
+insert into IndexTest values(8933,'8933')
+;
+insert into IndexTest values(9016,'9016')
+;
+insert into IndexTest values(9097,'9097')
+;
+insert into IndexTest values(9117,'9117')
+;
+insert into IndexTest values(9188,'9188')
+;
+insert into IndexTest values(9211,'9211')
+;
+insert into IndexTest values(9365,'9365')
+;
+insert into IndexTest values(9441,'9441')
+;
+insert into IndexTest values(9485,'9485')
+;
+insert into IndexTest values(9503,'9503')
+;
+insert into IndexTest values(9610,'9610')
+;
+insert into IndexTest values(9859,'9859')
+;
+insert into IndexTest values(9933,'9933')
+;
+insert into IndexTest values(10012,'10012')
+;
+insert into IndexTest values(10097,'10097')
+;
+insert into IndexTest values(10197,'10197')
+;
+insert into IndexTest values(10253,'10253')
+;
+insert into IndexTest values(10294,'10294')
+;
+insert into IndexTest values(10498,'10498')
+;
+insert into IndexTest values(10537,'10537')
+;
+insert into IndexTest values(10563,'10563')
+;
+insert into IndexTest values(10699,'10699')
+;
+insert into IndexTest values(10873,'10873')
+;
+insert into IndexTest values(10991,'10991')
+;
+insert into IndexTest values(11017,'11017')
+;
+insert into IndexTest values(11127,'11127')
+;
+insert into IndexTest values(11131,'11131')
+;
+insert into IndexTest values(11305,'11305')
+;
+insert into IndexTest values(11340,'11340')
+;
+insert into IndexTest values(11388,'11388')
+;
+insert into IndexTest values(11574,'11574')
+;
+insert into IndexTest values(11705,'11705')
+;
+insert into IndexTest values(11776,'11776')
+;
+insert into IndexTest values(11783,'11783')
+;
+insert into IndexTest values(11898,'11898')
+;
+insert into IndexTest values(11899,'11899')
+;
+insert into IndexTest values(11972,'11972')
+;
+insert into IndexTest values(12183,'12183')
+;
+insert into IndexTest values(12297,'12297')
+;
+insert into IndexTest values(12350,'12350')
+;
+insert into IndexTest values(12399,'12399')
+;
+insert into IndexTest values(12497,'12497')
+;
+insert into IndexTest values(12902,'12902')
+;
+insert into IndexTest values(12924,'12924')
+;
+insert into IndexTest values(13073,'13073')
+;
+insert into IndexTest values(13173,'13173')
+;
+insert into IndexTest values(13202,'13202')
+;
+insert into IndexTest values(13258,'13258')
+;
+insert into IndexTest values(13563,'13563')
+;
+insert into IndexTest values(13750,'13750')
+;
+insert into IndexTest values(13773,'13773')
+;
+insert into IndexTest values(13784,'13784')
+;
+insert into IndexTest values(13810,'13810')
+;
+insert into IndexTest values(13926,'13926')
+;
+insert into IndexTest values(13929,'13929')
+;
+insert into IndexTest values(13970,'13970')
+;
+insert into IndexTest values(13996,'13996')
+;
+insert into IndexTest values(14030,'14030')
+;
+insert into IndexTest values(14412,'14412')
+;
+insert into IndexTest values(14500,'14500')
+;
+insert into IndexTest values(14613,'14613')
+;
+insert into IndexTest values(14639,'14639')
+;
+insert into IndexTest values(14653,'14653')
+;
+insert into IndexTest values(14677,'14677')
+;
+insert into IndexTest values(14769,'14769')
+;
+insert into IndexTest values(14904,'14904')
+;
+insert into IndexTest values(15334,'15334')
+;
+insert into IndexTest values(15350,'15350')
+;
+insert into IndexTest values(15434,'15434')
+;
+insert into IndexTest values(15667,'15667')
+;
+insert into IndexTest values(15720,'15720')
+;
+insert into IndexTest values(15775,'15775')
+;
+insert into IndexTest values(15797,'15797')
+;
+insert into IndexTest values(16124,'16124')
+;
+insert into IndexTest values(16127,'16127')
+;
+insert into IndexTest values(16437,'16437')
+;
+insert into IndexTest values(16466,'16466')
+;
+insert into IndexTest values(16539,'16539')
+;
+insert into IndexTest values(16649,'16649')
+;
+insert into IndexTest values(16931,'16931')
+;
+insert into IndexTest values(16949,'16949')
+;
+insert into IndexTest values(17276,'17276')
+;
+insert into IndexTest values(17445,'17445')
+;
+insert into IndexTest values(17462,'17462')
+;
+insert into IndexTest values(17505,'17505')
+;
+insert into IndexTest values(17567,'17567')
+;
+insert into IndexTest values(17647,'17647')
+;
+insert into IndexTest values(17721,'17721')
+;
+insert into IndexTest values(17955,'17955')
+;
+insert into IndexTest values(17988,'17988')
+;
+insert into IndexTest values(18004,'18004')
+;
+insert into IndexTest values(18149,'18149')
+;
+insert into IndexTest values(18157,'18157')
+;
+insert into IndexTest values(18184,'18184')
+;
+insert into IndexTest values(18189,'18189')
+;
+insert into IndexTest values(18418,'18418')
+;
+insert into IndexTest values(18456,'18456')
+;
+insert into IndexTest values(18593,'18593')
+;
+insert into IndexTest values(18606,'18606')
+;
+insert into IndexTest values(18627,'18627')
+;
+insert into IndexTest values(18657,'18657')
+;
+insert into IndexTest values(18776,'18776')
+;
+insert into IndexTest values(18808,'18808')
+;
+insert into IndexTest values(18944,'18944')
+;
+insert into IndexTest values(18996,'18996')
+;
+insert into IndexTest values(19080,'19080')
+;
+insert into IndexTest values(19125,'19125')
+;
+insert into IndexTest values(19218,'19218')
+;
+insert into IndexTest values(19301,'19301')
+;
+insert into IndexTest values(19379,'19379')
+;
+insert into IndexTest values(19529,'19529')
+;
+insert into IndexTest values(19582,'19582')
+;
+insert into IndexTest values(19593,'19593')
+;
+insert into IndexTest values(19756,'19756')
+;
+insert into IndexTest values(19805,'19805')
+;
+insert into IndexTest values(19847,'19847')
+;
+insert into IndexTest values(19934,'19934')
+;
+insert into IndexTest values(20059,'20059')
+;
+insert into IndexTest values(20090,'20090')
+;
+insert into IndexTest values(20127,'20127')
+;
+insert into IndexTest values(20483,'20483')
+;
+insert into IndexTest values(20504,'20504')
+;
+insert into IndexTest values(20709,'20709')
+;
+insert into IndexTest values(20853,'20853')
+;
+insert into IndexTest values(20925,'20925')
+;
+insert into IndexTest values(21120,'21120')
+;
+insert into IndexTest values(21244,'21244')
+;
+insert into IndexTest values(21269,'21269')
+;
+insert into IndexTest values(21308,'21308')
+;
+insert into IndexTest values(21396,'21396')
+;
+insert into IndexTest values(21530,'21530')
+;
+insert into IndexTest values(21648,'21648')
+;
+insert into IndexTest values(21703,'21703')
+;
+insert into IndexTest values(21729,'21729')
+;
+insert into IndexTest values(21801,'21801')
+;
+insert into IndexTest values(21860,'21860')
+;
+insert into IndexTest values(21993,'21993')
+;
+insert into IndexTest values(22071,'22071')
+;
+insert into IndexTest values(22090,'22090')
+;
+insert into IndexTest values(22197,'22197')
+;
+insert into IndexTest values(22227,'22227')
+;
+insert into IndexTest values(22325,'22325')
+;
+insert into IndexTest values(22404,'22404')
+;
+insert into IndexTest values(22532,'22532')
+;
+insert into IndexTest values(22535,'22535')
+;
+insert into IndexTest values(22573,'22573')
+;
+insert into IndexTest values(22604,'22604')
+;
+insert into IndexTest values(22842,'22842')
+;
+insert into IndexTest values(22846,'22846')
+;
+insert into IndexTest values(22862,'22862')
+;
+insert into IndexTest values(22954,'22954')
+;
+insert into IndexTest values(23058,'23058')
+;
+insert into IndexTest values(23205,'23205')
+;
+insert into IndexTest values(23311,'23311')
+;
+insert into IndexTest values(23382,'23382')
+;
+insert into IndexTest values(23428,'23428')
+;
+insert into IndexTest values(23506,'23506')
+;
+insert into IndexTest values(23618,'23618')
+;
+insert into IndexTest values(23875,'23875')
+;
+insert into IndexTest values(23943,'23943')
+;
+insert into IndexTest values(24030,'24030')
+;
+insert into IndexTest values(24176,'24176')
+;
+insert into IndexTest values(24286,'24286')
+;
+insert into IndexTest values(24566,'24566')
+;
+insert into IndexTest values(24914,'24914')
+;
+insert into IndexTest values(25171,'25171')
+;
+insert into IndexTest values(25210,'25210')
+;
+insert into IndexTest values(25218,'25218')
+;
+insert into IndexTest values(25433,'25433')
+;
+insert into IndexTest values(25578,'25578')
+;
+insert into IndexTest values(25661,'25661')
+;
+insert into IndexTest values(25849,'25849')
+;
+insert into IndexTest values(25857,'25857')
+;
+insert into IndexTest values(26057,'26057')
+;
+insert into IndexTest values(26087,'26087')
+;
+insert into IndexTest values(26272,'26272')
+;
+insert into IndexTest values(26304,'26304')
+;
+insert into IndexTest values(26309,'26309')
+;
+insert into IndexTest values(26312,'26312')
+;
+insert into IndexTest values(26340,'26340')
+;
+insert into IndexTest values(26505,'26505')
+;
+insert into IndexTest values(26607,'26607')
+;
+insert into IndexTest values(26621,'26621')
+;
+insert into IndexTest values(26651,'26651')
+;
+insert into IndexTest values(26652,'26652')
+;
+insert into IndexTest values(26717,'26717')
+;
+insert into IndexTest values(26808,'26808')
+;
+insert into IndexTest values(26815,'26815')
+;
+insert into IndexTest values(26924,'26924')
+;
+insert into IndexTest values(27088,'27088')
+;
+insert into IndexTest values(27284,'27284')
+;
+insert into IndexTest values(27321,'27321')
+;
+insert into IndexTest values(27335,'27335')
+;
+insert into IndexTest values(27684,'27684')
+;
+insert into IndexTest values(27814,'27814')
+;
+insert into IndexTest values(27828,'27828')
+;
+insert into IndexTest values(27955,'27955')
+;
+insert into IndexTest values(28023,'28023')
+;
+insert into IndexTest values(28067,'28067')
+;
+insert into IndexTest values(28202,'28202')
+;
+insert into IndexTest values(28205,'28205')
+;
+insert into IndexTest values(28398,'28398')
+;
+insert into IndexTest values(28444,'28444')
+;
+insert into IndexTest values(28458,'28458')
+;
+insert into IndexTest values(28577,'28577')
+;
+insert into IndexTest values(28624,'28624')
+;
+insert into IndexTest values(28794,'28794')
+;
+insert into IndexTest values(28804,'28804')
+;
+insert into IndexTest values(28946,'28946')
+;
+insert into IndexTest values(28993,'28993')
+;
+insert into IndexTest values(29150,'29150')
+;
+insert into IndexTest values(29204,'29204')
+;
+insert into IndexTest values(29320,'29320')
+;
+insert into IndexTest values(29689,'29689')
+;
+insert into IndexTest values(29904,'29904')
+;
+insert into IndexTest values(30019,'30019')
+;
+insert into IndexTest values(30126,'30126')
+;
+insert into IndexTest values(30297,'30297')
+;
+insert into IndexTest values(30443,'30443')
+;
+insert into IndexTest values(30639,'30639')
+;
+insert into IndexTest values(30690,'30690')
+;
+insert into IndexTest values(30857,'30857')
+;
+insert into IndexTest values(30886,'30886')
+;
+insert into IndexTest values(31011,'31011')
+;
+insert into IndexTest values(31233,'31233')
+;
+insert into IndexTest values(31326,'31326')
+;
+insert into IndexTest values(31491,'31491')
+;
+insert into IndexTest values(31536,'31536')
+;
+insert into IndexTest values(31626,'31626')
+;
+insert into IndexTest values(32002,'32002')
+;
+insert into IndexTest values(32036,'32036')
+;
+insert into IndexTest values(32133,'32133')
+;
+insert into IndexTest values(32172,'32172')
+;
+insert into IndexTest values(32231,'32231')
+;
+insert into IndexTest values(32290,'32290')
+;
+insert into IndexTest values(32460,'32460')
+;
+insert into IndexTest values(32871,'32871')
+;
+insert into IndexTest values(32919,'32919')
+;
+insert into IndexTest values(33002,'33002')
+;
+insert into IndexTest values(33069,'33069')
+;
+insert into IndexTest values(33074,'33074')
+;
+insert into IndexTest values(33149,'33149')
+;
+insert into IndexTest values(33333,'33333')
+;
+insert into IndexTest values(33367,'33367')
+;
+insert into IndexTest values(33378,'33378')
+;
+insert into IndexTest values(33417,'33417')
+;
+insert into IndexTest values(33452,'33452')
+;
+insert into IndexTest values(33459,'33459')
+;
+insert into IndexTest values(33483,'33483')
+;
+insert into IndexTest values(33518,'33518')
+;
+insert into IndexTest values(33589,'33589')
+;
+insert into IndexTest values(33681,'33681')
+;
+insert into IndexTest values(33890,'33890')
+;
+insert into IndexTest values(34022,'34022')
+;
+insert into IndexTest values(34047,'34047')
+;
+insert into IndexTest values(34225,'34225')
+;
+insert into IndexTest values(34471,'34471')
+;
+insert into IndexTest values(34481,'34481')
+;
+insert into IndexTest values(34713,'34713')
+;
+insert into IndexTest values(34945,'34945')
+;
+insert into IndexTest values(34994,'34994')
+;
+insert into IndexTest values(35021,'35021')
+;
+insert into IndexTest values(35128,'35128')
+;
+insert into IndexTest values(35189,'35189')
+;
+insert into IndexTest values(35217,'35217')
+;
+insert into IndexTest values(35325,'35325')
+;
+insert into IndexTest values(35379,'35379')
+;
+insert into IndexTest values(35568,'35568')
+;
+insert into IndexTest values(35710,'35710')
+;
+insert into IndexTest values(35821,'35821')
+;
+insert into IndexTest values(35928,'35928')
+;
+insert into IndexTest values(35990,'35990')
+;
+insert into IndexTest values(36029,'36029')
+;
+insert into IndexTest values(36159,'36159')
+;
+insert into IndexTest values(36226,'36226')
+;
+insert into IndexTest values(36327,'36327')
+;
+insert into IndexTest values(36429,'36429')
+;
+insert into IndexTest values(36503,'36503')
+;
+insert into IndexTest values(36610,'36610')
+;
+insert into IndexTest values(36784,'36784')
+;
+insert into IndexTest values(36836,'36836')
+;
+insert into IndexTest values(36840,'36840')
+;
+insert into IndexTest values(36873,'36873')
+;
+insert into IndexTest values(36915,'36915')
+;
+insert into IndexTest values(36987,'36987')
+;
+insert into IndexTest values(37457,'37457')
+;
+insert into IndexTest values(37525,'37525')
+;
+insert into IndexTest values(37732,'37732')
+;
+insert into IndexTest values(37764,'37764')
+;
+insert into IndexTest values(38046,'38046')
+;
+insert into IndexTest values(38082,'38082')
+;
+insert into IndexTest values(38097,'38097')
+;
+insert into IndexTest values(38283,'38283')
+;
+insert into IndexTest values(38335,'38335')
+;
+insert into IndexTest values(38377,'38377')
+;
+insert into IndexTest values(38701,'38701')
+;
+insert into IndexTest values(38722,'38722')
+;
+insert into IndexTest values(38839,'38839')
+;
+insert into IndexTest values(39006,'39006')
+;
+insert into IndexTest values(39021,'39021')
+;
+insert into IndexTest values(39036,'39036')
+;
+insert into IndexTest values(39214,'39214')
+;
+insert into IndexTest values(39299,'39299')
+;
+insert into IndexTest values(39390,'39390')
+;
+insert into IndexTest values(39507,'39507')
+;
+insert into IndexTest values(39529,'39529')
+;
+insert into IndexTest values(39668,'39668')
+;
+insert into IndexTest values(39811,'39811')
+;
+insert into IndexTest values(39848,'39848')
+;
+insert into IndexTest values(39862,'39862')
+;
+insert into IndexTest values(39932,'39932')
+;
+insert into IndexTest values(40049,'40049')
+;
+insert into IndexTest values(40084,'40084')
+;
+insert into IndexTest values(40528,'40528')
+;
+insert into IndexTest values(40713,'40713')
+;
+insert into IndexTest values(40743,'40743')
+;
+insert into IndexTest values(40795,'40795')
+;
+insert into IndexTest values(40865,'40865')
+;
+insert into IndexTest values(41081,'41081')
+;
+insert into IndexTest values(41222,'41222')
+;
+insert into IndexTest values(41312,'41312')
+;
+insert into IndexTest values(41421,'41421')
+;
+insert into IndexTest values(41500,'41500')
+;
+insert into IndexTest values(41723,'41723')
+;
+insert into IndexTest values(41805,'41805')
+;
+insert into IndexTest values(41873,'41873')
+;
+insert into IndexTest values(41888,'41888')
+;
+insert into IndexTest values(41892,'41892')
+;
+insert into IndexTest values(42062,'42062')
+;
+insert into IndexTest values(42587,'42587')
+;
+insert into IndexTest values(42590,'42590')
+;
+insert into IndexTest values(42618,'42618')
+;
+insert into IndexTest values(42698,'42698')
+;
+insert into IndexTest values(43181,'43181')
+;
+insert into IndexTest values(43324,'43324')
+;
+insert into IndexTest values(43376,'43376')
+;
+insert into IndexTest values(43437,'43437')
+;
+insert into IndexTest values(43555,'43555')
+;
+insert into IndexTest values(43768,'43768')
+;
+insert into IndexTest values(43921,'43921')
+;
+insert into IndexTest values(44043,'44043')
+;
+insert into IndexTest values(44234,'44234')
+;
+insert into IndexTest values(44266,'44266')
+;
+insert into IndexTest values(44500,'44500')
+;
+insert into IndexTest values(44599,'44599')
+;
+insert into IndexTest values(44729,'44729')
+;
+insert into IndexTest values(44818,'44818')
+;
+insert into IndexTest values(44822,'44822')
+;
+insert into IndexTest values(44878,'44878')
+;
+insert into IndexTest values(44918,'44918')
+;
+insert into IndexTest values(44919,'44919')
+;
+insert into IndexTest values(45053,'45053')
+;
+insert into IndexTest values(45082,'45082')
+;
+insert into IndexTest values(45196,'45196')
+;
+insert into IndexTest values(45486,'45486')
+;
+insert into IndexTest values(45550,'45550')
+;
+insert into IndexTest values(45630,'45630')
+;
+insert into IndexTest values(45691,'45691')
+;
+insert into IndexTest values(45729,'45729')
+;
+insert into IndexTest values(45791,'45791')
+;
+insert into IndexTest values(45830,'45830')
+;
+insert into IndexTest values(45884,'45884')
+;
+insert into IndexTest values(45894,'45894')
+;
+insert into IndexTest values(45975,'45975')
+;
+insert into IndexTest values(46081,'46081')
+;
+insert into IndexTest values(46139,'46139')
+;
+insert into IndexTest values(46228,'46228')
+;
+insert into IndexTest values(46491,'46491')
+;
+insert into IndexTest values(46619,'46619')
+;
+insert into IndexTest values(47084,'47084')
+;
+insert into IndexTest values(47178,'47178')
+;
+insert into IndexTest values(47255,'47255')
+;
+insert into IndexTest values(47283,'47283')
+;
+insert into IndexTest values(47386,'47386')
+;
+insert into IndexTest values(47468,'47468')
+;
+insert into IndexTest values(47625,'47625')
+;
+insert into IndexTest values(47641,'47641')
+;
+insert into IndexTest values(47643,'47643')
+;
+insert into IndexTest values(47686,'47686')
+;
+insert into IndexTest values(47739,'47739')
+;
+insert into IndexTest values(47793,'47793')
+;
+insert into IndexTest values(47796,'47796')
+;
+insert into IndexTest values(48036,'48036')
+;
+insert into IndexTest values(48094,'48094')
+;
+insert into IndexTest values(48142,'48142')
+;
+insert into IndexTest values(48365,'48365')
+;
+insert into IndexTest values(48412,'48412')
+;
+insert into IndexTest values(48518,'48518')
+;
+insert into IndexTest values(48522,'48522')
+;
+insert into IndexTest values(48566,'48566')
+;
+insert into IndexTest values(48626,'48626')
+;
+insert into IndexTest values(48720,'48720')
+;
+insert into IndexTest values(48829,'48829')
+;
+insert into IndexTest values(48899,'48899')
+;
+insert into IndexTest values(49122,'49122')
+;
+insert into IndexTest values(49157,'49157')
+;
+insert into IndexTest values(49250,'49250')
+;
+insert into IndexTest values(49291,'49291')
+;
+insert into IndexTest values(49299,'49299')
+;
+insert into IndexTest values(49314,'49314')
+;
+insert into IndexTest values(49614,'49614')
+;
+insert into IndexTest values(49676,'49676')
+;
+insert into IndexTest values(49797,'49797')
+;
+insert into IndexTest values(49908,'49908')
+;
+insert into IndexTest values(49958,'49958')
+;
+insert into IndexTest values(50253,'50253')
+;
+insert into IndexTest values(50262,'50262')
+;
+insert into IndexTest values(50270,'50270')
+;
+insert into IndexTest values(50543,'50543')
+;
+insert into IndexTest values(50551,'50551')
+;
+insert into IndexTest values(50573,'50573')
+;
+insert into IndexTest values(50774,'50774')
+;
+insert into IndexTest values(50846,'50846')
+;
+insert into IndexTest values(50907,'50907')
+;
+insert into IndexTest values(51136,'51136')
+;
+insert into IndexTest values(51432,'51432')
+;
+insert into IndexTest values(51434,'51434')
+;
+insert into IndexTest values(51476,'51476')
+;
+insert into IndexTest values(51528,'51528')
+;
+insert into IndexTest values(51659,'51659')
+;
+insert into IndexTest values(51746,'51746')
+;
+insert into IndexTest values(52040,'52040')
+;
+insert into IndexTest values(52274,'52274')
+;
+insert into IndexTest values(52298,'52298')
+;
+insert into IndexTest values(52433,'52433')
+;
+insert into IndexTest values(52506,'52506')
+;
+insert into IndexTest values(52528,'52528')
+;
+insert into IndexTest values(52551,'52551')
+;
+insert into IndexTest values(52715,'52715')
+;
+insert into IndexTest values(52805,'52805')
+;
+insert into IndexTest values(52926,'52926')
+;
+insert into IndexTest values(52959,'52959')
+;
+insert into IndexTest values(52996,'52996')
+;
+insert into IndexTest values(53144,'53144')
+;
+insert into IndexTest values(53195,'53195')
+;
+insert into IndexTest values(53275,'53275')
+;
+insert into IndexTest values(53414,'53414')
+;
+insert into IndexTest values(53516,'53516')
+;
+insert into IndexTest values(53541,'53541')
+;
+insert into IndexTest values(53714,'53714')
+;
+insert into IndexTest values(53826,'53826')
+;
+insert into IndexTest values(53865,'53865')
+;
+insert into IndexTest values(53895,'53895')
+;
+insert into IndexTest values(53959,'53959')
+;
+insert into IndexTest values(54010,'54010')
+;
+insert into IndexTest values(54081,'54081')
+;
+insert into IndexTest values(54098,'54098')
+;
+insert into IndexTest values(54116,'54116')
+;
+insert into IndexTest values(54154,'54154')
+;
+insert into IndexTest values(54259,'54259')
+;
+insert into IndexTest values(54340,'54340')
+;
+insert into IndexTest values(54538,'54538')
+;
+insert into IndexTest values(54552,'54552')
+;
+insert into IndexTest values(54586,'54586')
+;
+insert into IndexTest values(54603,'54603')
+;
+insert into IndexTest values(55081,'55081')
+;
+insert into IndexTest values(55115,'55115')
+;
+insert into IndexTest values(55199,'55199')
+;
+insert into IndexTest values(55306,'55306')
+;
+insert into IndexTest values(55340,'55340')
+;
+insert into IndexTest values(55422,'55422')
+;
+insert into IndexTest values(55542,'55542')
+;
+insert into IndexTest values(55590,'55590')
+;
+insert into IndexTest values(55629,'55629')
+;
+insert into IndexTest values(55736,'55736')
+;
+insert into IndexTest values(55763,'55763')
+;
+insert into IndexTest values(55805,'55805')
+;
+insert into IndexTest values(55936,'55936')
+;
+insert into IndexTest values(55939,'55939')
+;
+insert into IndexTest values(56042,'56042')
+;
+insert into IndexTest values(56190,'56190')
+;
+insert into IndexTest values(56429,'56429')
+;
+insert into IndexTest values(56552,'56552')
+;
+insert into IndexTest values(56620,'56620')
+;
+insert into IndexTest values(56682,'56682')
+;
+insert into IndexTest values(56728,'56728')
+;
+insert into IndexTest values(56851,'56851')
+;
+insert into IndexTest values(56856,'56856')
+;
+insert into IndexTest values(56970,'56970')
+;
+insert into IndexTest values(57034,'57034')
+;
+insert into IndexTest values(57199,'57199')
+;
+insert into IndexTest values(57522,'57522')
+;
+insert into IndexTest values(57753,'57753')
+;
+insert into IndexTest values(58025,'58025')
+;
+insert into IndexTest values(58031,'58031')
+;
+insert into IndexTest values(58109,'58109')
+;
+insert into IndexTest values(58270,'58270')
+;
+insert into IndexTest values(58390,'58390')
+;
+insert into IndexTest values(58440,'58440')
+;
+insert into IndexTest values(58660,'58660')
+;
+insert into IndexTest values(58699,'58699')
+;
+insert into IndexTest values(58955,'58955')
+;
+insert into IndexTest values(58969,'58969')
+;
+insert into IndexTest values(59211,'59211')
+;
+insert into IndexTest values(59231,'59231')
+;
+insert into IndexTest values(59355,'59355')
+;
+insert into IndexTest values(59415,'59415')
+;
+insert into IndexTest values(59426,'59426')
+;
+insert into IndexTest values(59470,'59470')
+;
+insert into IndexTest values(59479,'59479')
+;
+insert into IndexTest values(59708,'59708')
+;
+insert into IndexTest values(59956,'59956')
+;
+insert into IndexTest values(59999,'59999')
+;
+insert into IndexTest values(60008,'60008')
+;
+insert into IndexTest values(60028,'60028')
+;
+insert into IndexTest values(60049,'60049')
+;
+insert into IndexTest values(60099,'60099')
+;
+insert into IndexTest values(60235,'60235')
+;
+insert into IndexTest values(60269,'60269')
+;
+insert into IndexTest values(60280,'60280')
+;
+insert into IndexTest values(60289,'60289')
+;
+insert into IndexTest values(60336,'60336')
+;
+insert into IndexTest values(60358,'60358')
+;
+insert into IndexTest values(60378,'60378')
+;
+insert into IndexTest values(60379,'60379')
+;
+insert into IndexTest values(60492,'60492')
+;
+insert into IndexTest values(60756,'60756')
+;
+insert into IndexTest values(60910,'60910')
+;
+insert into IndexTest values(60997,'60997')
+;
+insert into IndexTest values(61041,'61041')
+;
+insert into IndexTest values(61152,'61152')
+;
+insert into IndexTest values(61237,'61237')
+;
+insert into IndexTest values(61313,'61313')
+;
+insert into IndexTest values(61393,'61393')
+;
+insert into IndexTest values(61682,'61682')
+;
+insert into IndexTest values(61796,'61796')
+;
+insert into IndexTest values(61886,'61886')
+;
+insert into IndexTest values(62009,'62009')
+;
+insert into IndexTest values(62504,'62504')
+;
+insert into IndexTest values(62600,'62600')
+;
+insert into IndexTest values(62754,'62754')
+;
+insert into IndexTest values(62806,'62806')
+;
+insert into IndexTest values(62949,'62949')
+;
+insert into IndexTest values(62951,'62951')
+;
+insert into IndexTest values(63291,'63291')
+;
+insert into IndexTest values(63368,'63368')
+;
+insert into IndexTest values(63827,'63827')
+;
+insert into IndexTest values(63858,'63858')
+;
+insert into IndexTest values(63920,'63920')
+;
+insert into IndexTest values(63950,'63950')
+;
+insert into IndexTest values(63981,'63981')
+;
+insert into IndexTest values(64285,'64285')
+;
+insert into IndexTest values(64370,'64370')
+;
+insert into IndexTest values(64443,'64443')
+;
+insert into IndexTest values(64524,'64524')
+;
+insert into IndexTest values(64683,'64683')
+;
+insert into IndexTest values(64819,'64819')
+;
+insert into IndexTest values(65084,'65084')
+;
+insert into IndexTest values(65100,'65100')
+;
+insert into IndexTest values(65123,'65123')
+;
+insert into IndexTest values(65193,'65193')
+;
+insert into IndexTest values(65404,'65404')
+;
+insert into IndexTest values(65421,'65421')
+;
+insert into IndexTest values(65782,'65782')
+;
+insert into IndexTest values(65818,'65818')
+;
+insert into IndexTest values(65984,'65984')
+;
+insert into IndexTest values(66127,'66127')
+;
+insert into IndexTest values(66143,'66143')
+;
+insert into IndexTest values(66189,'66189')
+;
+insert into IndexTest values(66249,'66249')
+;
+insert into IndexTest values(66328,'66328')
+;
+insert into IndexTest values(66342,'66342')
+;
+insert into IndexTest values(66413,'66413')
+;
+insert into IndexTest values(66601,'66601')
+;
+insert into IndexTest values(66748,'66748')
+;
+insert into IndexTest values(66761,'66761')
+;
+insert into IndexTest values(66950,'66950')
+;
+insert into IndexTest values(66996,'66996')
+;
+insert into IndexTest values(67057,'67057')
+;
+insert into IndexTest values(67269,'67269')
+;
+insert into IndexTest values(67372,'67372')
+;
+insert into IndexTest values(67587,'67587')
+;
+insert into IndexTest values(67605,'67605')
+;
+insert into IndexTest values(67621,'67621')
+;
+insert into IndexTest values(67637,'67637')
+;
+insert into IndexTest values(67770,'67770')
+;
+insert into IndexTest values(67818,'67818')
+;
+insert into IndexTest values(67857,'67857')
+;
+insert into IndexTest values(67868,'67868')
+;
+insert into IndexTest values(67917,'67917')
+;
+insert into IndexTest values(68139,'68139')
+;
+insert into IndexTest values(68363,'68363')
+;
+insert into IndexTest values(68690,'68690')
+;
+insert into IndexTest values(68825,'68825')
+;
+insert into IndexTest values(68850,'68850')
+;
+insert into IndexTest values(68858,'68858')
+;
+insert into IndexTest values(68977,'68977')
+;
+insert into IndexTest values(68980,'68980')
+;
+insert into IndexTest values(69086,'69086')
+;
+insert into IndexTest values(69179,'69179')
+;
+insert into IndexTest values(69633,'69633')
+;
+insert into IndexTest values(69786,'69786')
+;
+insert into IndexTest values(69841,'69841')
+;
+insert into IndexTest values(69911,'69911')
+;
+insert into IndexTest values(69917,'69917')
+;
+insert into IndexTest values(70072,'70072')
+;
+insert into IndexTest values(70124,'70124')
+;
+insert into IndexTest values(70163,'70163')
+;
+insert into IndexTest values(70337,'70337')
+;
+insert into IndexTest values(70347,'70347')
+;
+insert into IndexTest values(70460,'70460')
+;
+insert into IndexTest values(70478,'70478')
+;
+insert into IndexTest values(70492,'70492')
+;
+insert into IndexTest values(70688,'70688')
+;
+insert into IndexTest values(70888,'70888')
+;
+insert into IndexTest values(71043,'71043')
+;
+insert into IndexTest values(71087,'71087')
+;
+insert into IndexTest values(71137,'71137')
+;
+insert into IndexTest values(71155,'71155')
+;
+insert into IndexTest values(71232,'71232')
+;
+insert into IndexTest values(71338,'71338')
+;
+insert into IndexTest values(71559,'71559')
+;
+insert into IndexTest values(71692,'71692')
+;
+insert into IndexTest values(72231,'72231')
+;
+insert into IndexTest values(72260,'72260')
+;
+insert into IndexTest values(72261,'72261')
+;
+insert into IndexTest values(72353,'72353')
+;
+insert into IndexTest values(72379,'72379')
+;
+insert into IndexTest values(72555,'72555')
+;
+insert into IndexTest values(72641,'72641')
+;
+insert into IndexTest values(72661,'72661')
+;
+insert into IndexTest values(72757,'72757')
+;
+insert into IndexTest values(72813,'72813')
+;
+insert into IndexTest values(72890,'72890')
+;
+insert into IndexTest values(73059,'73059')
+;
+insert into IndexTest values(73109,'73109')
+;
+insert into IndexTest values(73168,'73168')
+;
+insert into IndexTest values(73303,'73303')
+;
+insert into IndexTest values(73317,'73317')
+;
+insert into IndexTest values(73416,'73416')
+;
+insert into IndexTest values(73622,'73622')
+;
+insert into IndexTest values(73730,'73730')
+;
+insert into IndexTest values(73743,'73743')
+;
+insert into IndexTest values(73788,'73788')
+;
+insert into IndexTest values(73793,'73793')
+;
+insert into IndexTest values(73813,'73813')
+;
+insert into IndexTest values(73850,'73850')
+;
+insert into IndexTest values(73940,'73940')
+;
+insert into IndexTest values(74067,'74067')
+;
+insert into IndexTest values(74232,'74232')
+;
+insert into IndexTest values(74570,'74570')
+;
+insert into IndexTest values(74580,'74580')
+;
+insert into IndexTest values(74762,'74762')
+;
+insert into IndexTest values(75011,'75011')
+;
+insert into IndexTest values(75055,'75055')
+;
+insert into IndexTest values(75105,'75105')
+;
+insert into IndexTest values(75198,'75198')
+;
+insert into IndexTest values(75223,'75223')
+;
+insert into IndexTest values(75266,'75266')
+;
+insert into IndexTest values(75321,'75321')
+;
+insert into IndexTest values(75407,'75407')
+;
+insert into IndexTest values(75569,'75569')
+;
+insert into IndexTest values(75579,'75579')
+;
+insert into IndexTest values(75640,'75640')
+;
+insert into IndexTest values(75776,'75776')
+;
+insert into IndexTest values(75856,'75856')
+;
+insert into IndexTest values(76091,'76091')
+;
+insert into IndexTest values(76121,'76121')
+;
+insert into IndexTest values(76229,'76229')
+;
+insert into IndexTest values(76335,'76335')
+;
+insert into IndexTest values(76348,'76348')
+;
+insert into IndexTest values(76376,'76376')
+;
+insert into IndexTest values(76590,'76590')
+;
+insert into IndexTest values(76787,'76787')
+;
+insert into IndexTest values(76882,'76882')
+;
+insert into IndexTest values(76965,'76965')
+;
+insert into IndexTest values(76982,'76982')
+;
+insert into IndexTest values(77017,'77017')
+;
+insert into IndexTest values(77084,'77084')
+;
+insert into IndexTest values(77217,'77217')
+;
+insert into IndexTest values(77373,'77373')
+;
+insert into IndexTest values(77375,'77375')
+;
+insert into IndexTest values(77560,'77560')
+;
+insert into IndexTest values(77685,'77685')
+;
+insert into IndexTest values(77856,'77856')
+;
+insert into IndexTest values(77888,'77888')
+;
+insert into IndexTest values(78042,'78042')
+;
+insert into IndexTest values(78050,'78050')
+;
+insert into IndexTest values(78130,'78130')
+;
+insert into IndexTest values(78179,'78179')
+;
+insert into IndexTest values(78206,'78206')
+;
+insert into IndexTest values(78224,'78224')
+;
+insert into IndexTest values(78611,'78611')
+;
+insert into IndexTest values(78736,'78736')
+;
+insert into IndexTest values(79107,'79107')
+;
+insert into IndexTest values(79207,'79207')
+;
+insert into IndexTest values(79262,'79262')
+;
+insert into IndexTest values(79292,'79292')
+;
+insert into IndexTest values(79296,'79296')
+;
+insert into IndexTest values(79444,'79444')
+;
+insert into IndexTest values(79497,'79497')
+;
+insert into IndexTest values(79567,'79567')
+;
+insert into IndexTest values(79802,'79802')
+;
+insert into IndexTest values(80154,'80154')
+;
+insert into IndexTest values(80226,'80226')
+;
+insert into IndexTest values(80308,'80308')
+;
+insert into IndexTest values(80524,'80524')
+;
+insert into IndexTest values(80540,'80540')
+;
+insert into IndexTest values(80570,'80570')
+;
+insert into IndexTest values(80595,'80595')
+;
+insert into IndexTest values(80928,'80928')
+;
+insert into IndexTest values(80952,'80952')
+;
+insert into IndexTest values(80967,'80967')
+;
+insert into IndexTest values(81095,'81095')
+;
+insert into IndexTest values(81486,'81486')
+;
+insert into IndexTest values(81494,'81494')
+;
+insert into IndexTest values(81776,'81776')
+;
+insert into IndexTest values(81936,'81936')
+;
+insert into IndexTest values(82030,'82030')
+;
+insert into IndexTest values(82134,'82134')
+;
+insert into IndexTest values(82195,'82195')
+;
+insert into IndexTest values(82338,'82338')
+;
+insert into IndexTest values(83303,'83303')
+;
+insert into IndexTest values(83426,'83426')
+;
+insert into IndexTest values(83898,'83898')
+;
+insert into IndexTest values(84172,'84172')
+;
+insert into IndexTest values(84278,'84278')
+;
+insert into IndexTest values(84421,'84421')
+;
+insert into IndexTest values(84812,'84812')
+;
+insert into IndexTest values(84850,'84850')
+;
+insert into IndexTest values(84857,'84857')
+;
+insert into IndexTest values(84930,'84930')
+;
+insert into IndexTest values(85054,'85054')
+;
+insert into IndexTest values(85147,'85147')
+;
+insert into IndexTest values(85238,'85238')
+;
+insert into IndexTest values(85273,'85273')
+;
+insert into IndexTest values(85386,'85386')
+;
+insert into IndexTest values(85404,'85404')
+;
+insert into IndexTest values(85644,'85644')
+;
+insert into IndexTest values(85795,'85795')
+;
+insert into IndexTest values(86059,'86059')
+;
+insert into IndexTest values(86248,'86248')
+;
+insert into IndexTest values(86593,'86593')
+;
+insert into IndexTest values(86708,'86708')
+;
+insert into IndexTest values(86715,'86715')
+;
+insert into IndexTest values(86763,'86763')
+;
+insert into IndexTest values(86990,'86990')
+;
+insert into IndexTest values(87090,'87090')
+;
+insert into IndexTest values(87131,'87131')
+;
+insert into IndexTest values(87190,'87190')
+;
+insert into IndexTest values(87343,'87343')
+;
+insert into IndexTest values(87483,'87483')
+;
+insert into IndexTest values(87516,'87516')
+;
+insert into IndexTest values(87560,'87560')
+;
+insert into IndexTest values(87677,'87677')
+;
+insert into IndexTest values(87743,'87743')
+;
+insert into IndexTest values(87764,'87764')
+;
+insert into IndexTest values(87770,'87770')
+;
+insert into IndexTest values(87981,'87981')
+;
+insert into IndexTest values(87982,'87982')
+;
+insert into IndexTest values(88027,'88027')
+;
+insert into IndexTest values(88209,'88209')
+;
+insert into IndexTest values(88228,'88228')
+;
+insert into IndexTest values(88355,'88355')
+;
+insert into IndexTest values(88464,'88464')
+;
+insert into IndexTest values(88574,'88574')
+;
+insert into IndexTest values(88711,'88711')
+;
+insert into IndexTest values(88777,'88777')
+;
+insert into IndexTest values(88819,'88819')
+;
+insert into IndexTest values(88954,'88954')
+;
+insert into IndexTest values(89114,'89114')
+;
+insert into IndexTest values(89126,'89126')
+;
+insert into IndexTest values(89159,'89159')
+;
+insert into IndexTest values(89172,'89172')
+;
+insert into IndexTest values(89224,'89224')
+;
+insert into IndexTest values(89368,'89368')
+;
+insert into IndexTest values(89383,'89383')
+;
+insert into IndexTest values(89412,'89412')
+;
+insert into IndexTest values(89435,'89435')
+;
+insert into IndexTest values(89438,'89438')
+;
+insert into IndexTest values(89528,'89528')
+;
+insert into IndexTest values(89618,'89618')
+;
+insert into IndexTest values(89672,'89672')
+;
+insert into IndexTest values(89683,'89683')
+;
+insert into IndexTest values(89685,'89685')
+;
+insert into IndexTest values(89744,'89744')
+;
+insert into IndexTest values(89772,'89772')
+;
+insert into IndexTest values(90000,'90000')
+;
+insert into IndexTest values(90027,'90027')
+;
+insert into IndexTest values(90032,'90032')
+;
+insert into IndexTest values(90071,'90071')
+;
+insert into IndexTest values(90179,'90179')
+;
+insert into IndexTest values(90181,'90181')
+;
+insert into IndexTest values(90358,'90358')
+;
+insert into IndexTest values(90360,'90360')
+;
+insert into IndexTest values(90364,'90364')
+;
+insert into IndexTest values(90368,'90368')
+;
+insert into IndexTest values(90415,'90415')
+;
+insert into IndexTest values(90417,'90417')
+;
+insert into IndexTest values(90428,'90428')
+;
+insert into IndexTest values(90596,'90596')
+;
+insert into IndexTest values(90613,'90613')
+;
+insert into IndexTest values(90675,'90675')
+;
+insert into IndexTest values(90783,'90783')
+;
+insert into IndexTest values(90868,'90868')
+;
+insert into IndexTest values(90930,'90930')
+;
+insert into IndexTest values(90964,'90964')
+;
+insert into IndexTest values(91100,'91100')
+;
+insert into IndexTest values(91171,'91171')
+;
+insert into IndexTest values(91281,'91281')
+;
+insert into IndexTest values(91298,'91298')
+;
+insert into IndexTest values(91309,'91309')
+;
+insert into IndexTest values(91521,'91521')
+;
+insert into IndexTest values(92122,'92122')
+;
+insert into IndexTest values(92292,'92292')
+;
+insert into IndexTest values(92350,'92350')
+;
+insert into IndexTest values(92379,'92379')
+;
+insert into IndexTest values(92393,'92393')
+;
+insert into IndexTest values(92622,'92622')
+;
+insert into IndexTest values(92685,'92685')
+;
+insert into IndexTest values(92735,'92735')
+;
+insert into IndexTest values(92754,'92754')
+;
+insert into IndexTest values(92777,'92777')
+;
+insert into IndexTest values(92921,'92921')
+;
+insert into IndexTest values(93093,'93093')
+;
+insert into IndexTest values(93368,'93368')
+;
+insert into IndexTest values(93451,'93451')
+;
+insert into IndexTest values(93499,'93499')
+;
+insert into IndexTest values(93512,'93512')
+;
+insert into IndexTest values(93529,'93529')
+;
+insert into IndexTest values(93584,'93584')
+;
+insert into IndexTest values(93614,'93614')
+;
+insert into IndexTest values(93740,'93740')
+;
+insert into IndexTest values(94018,'94018')
+;
+insert into IndexTest values(94324,'94324')
+;
+insert into IndexTest values(94395,'94395')
+;
+insert into IndexTest values(94427,'94427')
+;
+insert into IndexTest values(94428,'94428')
+;
+insert into IndexTest values(94583,'94583')
+;
+insert into IndexTest values(94892,'94892')
+;
+insert into IndexTest values(94977,'94977')
+;
+insert into IndexTest values(94984,'94984')
+;
+insert into IndexTest values(95021,'95021')
+;
+insert into IndexTest values(95060,'95060')
+;
+insert into IndexTest values(95151,'95151')
+;
+insert into IndexTest values(95343,'95343')
+;
+insert into IndexTest values(95367,'95367')
+;
+insert into IndexTest values(95368,'95368')
+;
+insert into IndexTest values(95425,'95425')
+;
+insert into IndexTest values(95436,'95436')
+;
+insert into IndexTest values(95499,'95499')
+;
+insert into IndexTest values(95528,'95528')
+;
+insert into IndexTest values(95746,'95746')
+;
+insert into IndexTest values(95788,'95788')
+;
+insert into IndexTest values(95820,'95820')
+;
+insert into IndexTest values(95994,'95994')
+;
+insert into IndexTest values(96157,'96157')
+;
+insert into IndexTest values(96431,'96431')
+;
+insert into IndexTest values(96532,'96532')
+;
+insert into IndexTest values(96658,'96658')
+;
+insert into IndexTest values(96776,'96776')
+;
+insert into IndexTest values(96892,'96892')
+;
+insert into IndexTest values(96963,'96963')
+;
+insert into IndexTest values(97278,'97278')
+;
+insert into IndexTest values(97281,'97281')
+;
+insert into IndexTest values(97301,'97301')
+;
+insert into IndexTest values(97314,'97314')
+;
+insert into IndexTest values(97369,'97369')
+;
+insert into IndexTest values(97467,'97467')
+;
+insert into IndexTest values(97487,'97487')
+;
+insert into IndexTest values(97488,'97488')
+;
+insert into IndexTest values(97490,'97490')
+;
+insert into IndexTest values(97525,'97525')
+;
+insert into IndexTest values(97539,'97539')
+;
+insert into IndexTest values(97697,'97697')
+;
+insert into IndexTest values(97713,'97713')
+;
+insert into IndexTest values(97763,'97763')
+;
+insert into IndexTest values(98167,'98167')
+;
+insert into IndexTest values(98285,'98285')
+;
+insert into IndexTest values(98315,'98315')
+;
+insert into IndexTest values(98338,'98338')
+;
+insert into IndexTest values(98382,'98382')
+;
+insert into IndexTest values(98490,'98490')
+;
+insert into IndexTest values(98506,'98506')
+;
+insert into IndexTest values(98537,'98537')
+;
+insert into IndexTest values(98571,'98571')
+;
+insert into IndexTest values(98586,'98586')
+;
+insert into IndexTest values(98814,'98814')
+;
+insert into IndexTest values(98898,'98898')
+;
+insert into IndexTest values(98927,'98927')
+;
+insert into IndexTest values(98976,'98976')
+;
+insert into IndexTest values(98987,'98987')
+;
+insert into IndexTest values(99051,'99051')
+;
+insert into IndexTest values(99134,'99134')
+;
+insert into IndexTest values(99170,'99170')
+;
+insert into IndexTest values(99181,'99181')
+;
+insert into IndexTest values(99228,'99228')
+;
+insert into IndexTest values(99336,'99336')
+;
+insert into IndexTest values(99631,'99631')
+;
+insert into IndexTest values(99708,'99708')
+;
+insert into IndexTest values(99754,'99754')
+;
+insert into IndexTest values(99759,'99759')
+;
+insert into IndexTest values(99904,'99904')
+;
+insert into IndexTest values(99932,'99932')
+;
+
+create index idx0 on IndexTest(k)
+;
+
+@UN_ORDERED_SELECT
+select * from IndexTest where k=100
+;
+
+@UN_ORDERED_SELECT
+select * from IndexTest where k=99932
+;
+
+@UN_ORDERED_SELECT
+select * from IndexTest where k=90000
+;
+
+@UN_ORDERED_SELECT
+select * from IndexTest where k=569
+;
+
+@UN_ORDERED_SELECT
+select * from IndexTest where k=81
+;

@@ -1,0 +1,39 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table Classes(
+	name char(50),
+	number int,
+	score int,
+	flag boolean,
+	date timeStamp)
+;
+insert into Classes values ('1991-01-11 11:12:00', 1, 2, true, '2009-01-11 11:12:00')
+;
+insert into Classes values ('1991-01-11 11:11:00', 2, 2, false, '2001-01-11 11:12:01')
+;
+insert into Classes values ('1911-01-11 11:13:00', 2, 2, true, '2005-01-11 11:12:02')
+;
+insert into Classes values ('1991-01-11 11:01:00', 2, 2, true, '2010-01-11 11:12:04')
+;
+insert into Classes values ('1991-01-11 11:11:00', 3, 2, false, '2001-01-11 11:12:01')
+;
+insert into Classes values ('1911-01-11 11:13:00', 3, 2, true, '2005-01-11 11:12:02')
+;
+insert into Classes values ('1991-01-11 11:01:00', 3, 2, true, '2010-01-11 11:12:04')
+;
+insert into Classes values ('1991-01-11 11:01:00', 6, 3, false, '2008-08-08 09:56:23')
+;
+
+@UN_ORDERED_SELECT
+select number, sum(score) from Classes as c where c.score in (select 1 + 1)
+group by c.number
+having c.number < 3
+order by c.number DESC
+;
+
+

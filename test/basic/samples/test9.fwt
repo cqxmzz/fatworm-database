@@ -1,0 +1,27 @@
+@NEW_THREAD
+drop database nano
+;
+create database nano
+;
+use nano
+;
+create table Classes(
+	name char(50),
+	number int,
+	score float,
+	date timeStamp)
+;
+insert into Classes values ('1991-01-11 11:12:00', 1, 2.1, '2009-01-11 11:12:00')
+;
+insert into Classes values ('1991-01-11 11:11:00', 2, 2.2, '2001-01-11 11:12:01')
+;
+insert into Classes values ('1911-01-11 11:13:00', 3, 2.4, '2005-01-11 11:12:02')
+;
+insert into Classes values ('1991-01-11 11:01:00', 5, 2.5, '2010-01-11 11:12:04')
+;
+insert into Classes values ('1991-01-11 11:01:00', 6, 3.5, '2010-01-11 11:12:04')
+;
+@UN_ORDERED_SELECT
+select date, sum(score) from Classes
+group by date
+;
