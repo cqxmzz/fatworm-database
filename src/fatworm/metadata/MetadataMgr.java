@@ -42,6 +42,7 @@ public class MetadataMgr implements Serializable
 			for (Table table : m.tables.values())
 			{
 				table.indexes = new HashMap<String, Index>();
+				//TODO don't use a new one, use the de-serialized one
 			}
 			return m;
 		} catch (Exception e)

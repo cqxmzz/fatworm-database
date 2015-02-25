@@ -37,8 +37,9 @@ public class MemIndex implements Index, Serializable
 	boolean unique;
 
 	TreeMap<Type, ArrayList<Record>> map;
+	//don't store records, store indexes(places)
 
-	transient Iterator<Type> iterator;// TODO
+	transient Iterator<Type> iterator;
 
 	Type currentType;
 

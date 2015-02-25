@@ -3,6 +3,7 @@ package fatworm.database;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import fatworm.FatwormDB;
 import fatworm.index.Index;
@@ -13,7 +14,13 @@ public class Table implements Serializable
 {
 	// public ArrayList<Record> map = new ArrayList<Record>();
 	public ArrayList<Integer> places = new ArrayList<Integer>();
+	//TODO change this to a linked list
+	
+	public LinkedList<Integer> emptyList = new LinkedList<Integer>();
+	//TODO use this when inserting
 
+	//public LinkedList<E>
+	
 	private DataBase dataBase;
 
 	public Schema schema;
@@ -25,6 +32,7 @@ public class Table implements Serializable
 	public int tail;
 
 	transient public HashMap<String, Index> indexes = new HashMap<String, Index>();
+	//TODO we need to serialize it
 
 	public Table(String n)
 	{
@@ -48,7 +56,6 @@ public class Table implements Serializable
 	{
 		Table table = DataBase.getDataBase().tables.get(n);
 		table.dropTable(DataBase.getDataBase());
-		FatwormDB.fileMgr().dropTable(n);
 	}
 
 	/*
@@ -67,7 +74,6 @@ public class Table implements Serializable
 	public void dropTable(DataBase d)
 	{
 		this.clearTable();
-		// TODO don't need this when finish physical
 		d.removeTable(this);
 	}
 

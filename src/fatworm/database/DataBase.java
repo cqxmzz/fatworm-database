@@ -16,8 +16,6 @@ public class DataBase implements Serializable
 
 	public transient Stack<Scan> openedScans = new Stack<Scan>();
 
-	// TODO file management
-	// TODO store matadata on file
 	public DataBase(String n)
 	{
 		name = n;

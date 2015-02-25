@@ -34,6 +34,7 @@ public class FatwormConnection extends Conn
 			try
 			{
 				FileInputStream ins = new FileInputStream(FatwormDB.fileMgr().dbName + "/" + "metadata");
+				//TODO store metadata two times for crash protection
 				ObjectInputStream ooi = new ObjectInputStream(ins);
 				MetadataMgr m = (MetadataMgr) (ooi.readObject());
 				FatwormDB.setMdMgr(m);
@@ -45,6 +46,7 @@ public class FatwormConnection extends Conn
 					for (Table table : MetadataMgr.currentDataBase.tables.values())
 					{
 						table.indexes = new HashMap<String, Index>();
+						//TODO don't use a new one, use the de-serialized one
 					}
 				}
 				FatwormDB.mdMgr().currentDataBase.openedScans = new Stack<Scan>();
@@ -83,6 +85,7 @@ public class FatwormConnection extends Conn
 			{
 				FatwormDB.mdMgr().put(FatwormDB.mdMgr().currentDataBase.name, FatwormDB.mdMgr().currentDataBase, true);
 			}
+			//TODO close random access files
 		} catch (Exception e)
 		{
 			e.printStackTrace();

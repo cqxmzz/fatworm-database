@@ -14,6 +14,7 @@ public class TableScan implements UpdateScan
 	// in RAM
 	// ArrayList<Record> values;
 	ArrayList<Integer> places;
+	//TODO change this to a linked list, and iterate through it using a curser.
 
 	int now = -1;
 

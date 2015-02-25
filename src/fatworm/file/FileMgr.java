@@ -22,7 +22,6 @@ public class FileMgr
 
 	private Map<String, RandomAccessFile> openFiles = new HashMap<String, RandomAccessFile>();
 
-	// TODO store this empty map?
 	public FileMgr(String dbname)
 	{
 		dbName = dbname;
