@@ -234,6 +234,7 @@ public class BufferMgr
 		int top = integer % FatwormDB.BLOCK_SIZE;
 		Block block;
 		Buffer buffer;
+		//TODO don't compute record length every time, use schema instead, and schema can cache the length
 		if (top + record.length() >= FatwormDB.BLOCK_SIZE)
 		{
 			block = new Block(name, integer / FatwormDB.BLOCK_SIZE + 1);

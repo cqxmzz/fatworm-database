@@ -11,12 +11,14 @@ import fatworm.scan.Scan;
 
 public class FatwormDB
 {
+	//parameters
 	public static int BUFFER_SIZE = 1024;
 
 	public static int BLOCK_SIZE = 4096*16;
 
 	public static boolean durability = false;
 	
+	//workers
 	private static Planner planner;
 
 	private static FileMgr fm;
