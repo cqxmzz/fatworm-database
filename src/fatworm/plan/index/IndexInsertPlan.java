@@ -37,12 +37,12 @@ public class IndexInsertPlan extends InsertPlan
 				}
 			}
 			record.setSchema(plan.schema());
-			tableScan.insert(record);
+			int tableTail = tableScan.insert(record);
 			for (Index index : table.indexes.values())
 			{
 				if (index != null)
 				{
-					index.insert(record.getValue(index.getColumn()), record);
+					index.insert(record.getValue(index.getColumn()), tableTail);
 				}
 			}
 		}

@@ -38,7 +38,7 @@ public class IndexUpdatePlan extends UpdatePlan
 				String string = schema.getName(i);
 				Column column = schema.getColumns().get(i);
 				Expr expr = iterator.next();
-				scan.setVal(string, column.castValue(expr.getValue(scan)));
+				int scanPlace = scan.setVal(string, column.castValue(expr.getValue(scan)));
 				for (Index index : table.indexes.values())
 				{
 					String string2 = index.getColumn();
@@ -50,13 +50,13 @@ public class IndexUpdatePlan extends UpdatePlan
 						Type type1 = scan.getVal(string2);
 						if (index != null)
 						{
-							index.delete(type1, scan.getRecord());
-							index.insert(type, scan.getRecord());
+							index.delete(type1, scanPlace);
+							index.insert(type, scanPlace);
 						}
 					}
 				}
 			}
-			scan.moveToBottom();
+//			scan.moveToBottom();
 			count++;
 		}
 		scan.close();

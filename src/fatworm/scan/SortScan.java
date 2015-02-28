@@ -18,8 +18,8 @@ public class SortScan implements Scan
 
 	Scan scan;
 
-	//TODO don't sort in RAM! How about only sort a sequence of integers representing there places.
-	//It will be just O(N) time and will use much lesser space 
+	//TODO don't sort in RAM! Use a temp table
+	//It will be just O(N) 
 	ArrayList<Record> values;
 
 	int now = -1;

@@ -31,9 +31,8 @@ public class Table implements Serializable
 
 	public int tail;
 
-	transient public HashMap<String, Index> indexes = new HashMap<String, Index>();
-	//TODO we need to serialize it
-
+	public HashMap<String, Index> indexes = new HashMap<String, Index>();
+	
 	public Table(String n)
 	{
 		name = n;
@@ -113,7 +112,7 @@ public class Table implements Serializable
 		for (int i : places)
 		{
 			Record record = FatwormDB.bufferMgr().get(this.name, i);
-			if (record != null) index.insert(record.getValue(column), record);
+			if (record != null) index.insert(record.getValue(column), i);
 		}
 		// ArrayList<Record> values = map;
 		// if (values != null)

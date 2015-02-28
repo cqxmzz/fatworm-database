@@ -43,11 +43,6 @@ public class FatwormConnection extends Conn
 				{
 					MetadataMgr.currentDataBase = FatwormDB.mdMgr().get(FatwormDB.mdMgr().currentDB);
 					FatwormDB.fileMgr().setDatabaseName(FatwormDB.mdMgr().currentDB);
-					for (Table table : MetadataMgr.currentDataBase.tables.values())
-					{
-						table.indexes = new HashMap<String, Index>();
-						//TODO don't use a new one, use the de-serialized one
-					}
 				}
 				FatwormDB.mdMgr().currentDataBase.openedScans = new Stack<Scan>();
 			} catch (Exception e)

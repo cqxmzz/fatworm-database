@@ -39,11 +39,6 @@ public class MetadataMgr implements Serializable
 			ObjectInputStream ooi = new ObjectInputStream(ins);
 			DataBase m = (DataBase) (ooi.readObject());
 			ooi.close();
-			for (Table table : m.tables.values())
-			{
-				table.indexes = new HashMap<String, Index>();
-				//TODO don't use a new one, use the de-serialized one
-			}
 			return m;
 		} catch (Exception e)
 		{

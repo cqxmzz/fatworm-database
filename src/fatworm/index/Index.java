@@ -1,12 +1,13 @@
 package fatworm.index;
 
+import java.io.Serializable;
 import java.util.List;
 
 import fatworm.file.Block;
 import fatworm.record.Record;
 import fatworm.types.Type;
 
-public interface Index
+public interface Index extends Serializable
 {
 	public void drop();
 
@@ -14,13 +15,11 @@ public interface Index
 
 	public boolean next();
 
-	public Block getDataRid();
+	public void insert(Type dataval, Integer integer);
 
-	public void insert(Type dataval, Record record);
+	public void delete(Type dataval, Integer integer);
 
-	public void delete(Type dataval, Record record);
-
-	List<Record> getRecords();
+	List<Integer> getRecords();
 
 	void between(Type type1, Type type2);
 

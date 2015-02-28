@@ -16,13 +16,13 @@ public class IndexSelectScan implements Scan
 
 	Index index;
 
-	Scan scan;
+	TableScan scan;
 
-	ArrayList<Record> records = null;
+	ArrayList<Integer> records = null;
 
 	int now = -1;
 
-	public IndexSelectScan(Scan scan, String column, Type leftType, Type rightType, Index index2)
+	public IndexSelectScan(TableScan scan, String column, Type leftType, Type rightType, Index index2)
 	{
 		this.scan = scan;
 		this.column = column;
@@ -47,7 +47,7 @@ public class IndexSelectScan implements Scan
 		while (records == null || now >= records.size() - 1)
 		{
 			if (!index.next()) return false;
-			records = (ArrayList<Record>) index.getRecords();
+			records = (ArrayList<Integer>) index.getRecords();
 			now = -1;
 		}
 		now++;
@@ -87,7 +87,7 @@ public class IndexSelectScan implements Scan
 	@Override
 	public Record getRecord()
 	{
-		return records.get(now);
+		return scan.getRecordFromIndex(records.get(now));
 	}
 
 	@Override

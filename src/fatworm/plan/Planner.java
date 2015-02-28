@@ -365,7 +365,7 @@ public class Planner
 									{
 										if (index.getColumn().equals(string))
 										{
-											plan = new IndexSelectPlan(sonsonPlan, string, cop2.rgtExpr.getValue(null), cop1.rgtExpr.getValue(null), index);
+											plan = new IndexSelectPlan((TablePlan)sonsonPlan, string, cop2.rgtExpr.getValue(null), cop1.rgtExpr.getValue(null), index);
 										}
 									}
 								}

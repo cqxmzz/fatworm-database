@@ -35,26 +35,19 @@ public class BTreeIndex implements Index
 	}
 
 	@Override
-	public Block getDataRid()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void insert(Type dataval, Record record)
+	public void insert(Type dataval, Integer integer)
 	{
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void delete(Type dataval, Record record)
+	public void delete(Type dataval, Integer integer)
 	{
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public LinkedList<Record> getRecords()
+	public LinkedList<Integer> getRecords()
 	{
 		// TODO Auto-generated method stub
 		return null;

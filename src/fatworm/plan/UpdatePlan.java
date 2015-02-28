@@ -50,7 +50,7 @@ public class UpdatePlan implements Plan
 				Expr expr = iterator.next();
 				scan.setVal(string, column.castValue(expr.getValue(scan)));
 			}
-			scan.moveToBottom();
+//			scan.moveToBottom();
 			count++;
 		}
 		scan.close();

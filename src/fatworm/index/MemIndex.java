@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 import fatworm.database.Table;
@@ -36,9 +37,9 @@ public class MemIndex implements Index, Serializable
 
 	boolean unique;
 
-	TreeMap<Type, ArrayList<Record>> map;
-	//don't store records, store indexes(places)
+	TreeMap<Type, ArrayList<Integer>> map;
 
+	// don't store records, store indexes(places)
 	transient Iterator<Type> iterator;
 
 	Type currentType;
@@ -50,7 +51,7 @@ public class MemIndex implements Index, Serializable
 		table = t;
 		column = c;
 		unique = u;
-		map = new TreeMap<Type, ArrayList<Record>>(new MyComp());
+		map = new TreeMap<Type, ArrayList<Integer>>(new MyComp());
 		iterator = null;
 	}
 
@@ -78,40 +79,34 @@ public class MemIndex implements Index, Serializable
 	}
 
 	@Override
-	public ArrayList<Record> getRecords()
+	public ArrayList<Integer> getRecords()
 	{
 		return map.get(currentType);
 	}
 
 	@Override
-	public void insert(Type dataval, Record record)
+	public void insert(Type dataval, Integer integer)
 	{
 		if (!map.containsKey(dataval))
 		{
-			map.put(dataval, new ArrayList<Record>());
+			map.put(dataval, new ArrayList<Integer>());
 		}
-		map.get(dataval).add(record);
+		map.get(dataval).add(integer);
 	}
 
 	@Override
-	public void delete(Type dataval, Record record)
+	public void delete(Type dataval, Integer integer)
 	{
-		ArrayList<Record> list = map.get(dataval);
-		if (list != null) for (Record r : list)
-		{
-			if (r.equals(record))
+		ArrayList<Integer> list = map.get(dataval);
+		if (list != null) 
+			for (int i = 0; i < list.size(); ++i)
 			{
-				map.get(dataval).remove(r);
-				return;
+				if (integer == list.get(i))
+				{
+					map.get(dataval).remove(i);
+					return;
+				}
 			}
-		}
-	}
-
-	@Override
-	public Block getDataRid()
-	{
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

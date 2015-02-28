@@ -34,20 +34,23 @@ public class TableScan implements UpdateScan
 		size = places.size();
 	}
 
-	public void insert(Record r)
+	public int insert(Record r)
 	{
 		// values.add(r);
 		places.add(table.tail);
 		table.tail = FatwormDB.bufferMgr().insert(table.name, r);
+		return table.tail; 
 	}
 
-	public void delete()
+	public int delete()
 	{
 		// values.remove(now);
 		// now--;
 		// FatwormDB.bufferMgr().delete(table.name, places.get(now));
+		int ret = places.get(now);
 		places.remove(places.get(now));
 		now--;
+		return ret;
 	}
 
 	@Override
@@ -88,11 +91,11 @@ public class TableScan implements UpdateScan
 		return null;
 	}
 
-	public boolean setVal(String fldname, Type type)
+	public int setVal(String fldname, Type type)
 	{
 		getRecord().setValue(table.getSchema().getNames().lastIndexOf(fldname), type);
 		FatwormDB.bufferMgr().write(table.name, places.get(now), record);
-		return true;
+		return places.get(now);
 	}
 
 	@Override
@@ -152,16 +155,22 @@ public class TableScan implements UpdateScan
 		return getRecord().getValue(i);
 	}
 
-	@Override
-	public void moveToBottom()
+//	@Override
+//	public void moveToBottom()
+//	{
+//		// values.add(values.get(now));
+//		// values.remove(now);
+//		// now--;
+//		places.add(table.tail);
+//		table.tail = FatwormDB.bufferMgr().insert(table.name, FatwormDB.bufferMgr().get(table.name, places.get(now)));
+//		// FatwormDB.bufferMgr().delete(table.name, places.get(now));
+//		places.remove(places.get(now));
+//		now--;
+//	}
+
+	public Record getRecordFromIndex(Integer integer)
 	{
-		// values.add(values.get(now));
-		// values.remove(now);
-		// now--;
-		places.add(table.tail);
-		table.tail = FatwormDB.bufferMgr().insert(table.name, FatwormDB.bufferMgr().get(table.name, places.get(now)));
-		// FatwormDB.bufferMgr().delete(table.name, places.get(now));
-		places.remove(places.get(now));
-		now--;
+		Record record = FatwormDB.bufferMgr().get(table.name, places.get(integer));
+		return record;
 	}
 }

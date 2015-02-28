@@ -34,13 +34,13 @@ public class IndexDeletePlan extends DeletePlan
 		while (scan.next())
 		{
 			Record record = scan.getRecord();
-			scan.delete();
+			int deletePlace = scan.delete();
 			count++;
 			for (Index index : table.indexes.values())
 			{
 				if (index != null)
 				{
-					index.delete(record.getValue(index.getColumn()), record);
+					index.delete(record.getValue(index.getColumn()), deletePlace);
 				}
 			}
 		}

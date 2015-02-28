@@ -47,10 +47,10 @@ public class SelectScan implements UpdateScan
 		return scan.getVal(fldname);
 	}
 
-	public boolean setVal(String fldname, Type type)
+	public int setVal(String fldname, Type type)
 	{
 		if (scan instanceof UpdateScan) return ((UpdateScan) scan).setVal(fldname, type);
-		return false;
+		return -1;
 	}
 
 	@Override
@@ -59,9 +59,11 @@ public class SelectScan implements UpdateScan
 		return scan.getRecord();
 	}
 
-	public void delete()
+	public int delete()
 	{
-		if (scan instanceof UpdateScan) ((UpdateScan) scan).delete();
+		if (scan instanceof UpdateScan) 
+			return ((UpdateScan) scan).delete();
+		return -1;
 	}
 
 	@Override
@@ -94,9 +96,9 @@ public class SelectScan implements UpdateScan
 		return scan.getVal(i);
 	}
 
-	@Override
-	public void moveToBottom()
-	{
-		if (scan instanceof UpdateScan) ((UpdateScan) scan).moveToBottom();
-	}
+//	@Override
+//	public void moveToBottom()
+//	{
+//		if (scan instanceof UpdateScan) ((UpdateScan) scan).moveToBottom();
+//	}
 }

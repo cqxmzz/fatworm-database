@@ -5,13 +5,15 @@ import java.util.LinkedList;
 import fatworm.database.Schema;
 import fatworm.index.Index;
 import fatworm.plan.Plan;
+import fatworm.plan.TablePlan;
 import fatworm.scan.IndexSelectScan;
 import fatworm.scan.Scan;
+import fatworm.scan.TableScan;
 import fatworm.types.Type;
 
 public class IndexSelectPlan implements Plan
 {
-	private Plan plan;
+	private TablePlan plan;
 
 	Plan fatherPlan;
 
@@ -23,7 +25,7 @@ public class IndexSelectPlan implements Plan
 
 	Index index;
 
-	public IndexSelectPlan(Plan p, String string, Type constantType, Type constantType2, Index index)
+	public IndexSelectPlan(TablePlan p, String string, Type constantType, Type constantType2, Index index)
 	{
 		plan = p;
 		plan.setFather(this);
@@ -36,7 +38,7 @@ public class IndexSelectPlan implements Plan
 	@Override
 	public Scan open()
 	{
-		Scan scan = plan.open();
+		TableScan scan = (TableScan) plan.open();
 		return new IndexSelectScan(scan, column, leftType, rightType, index);
 	}
 
@@ -57,7 +59,7 @@ public class IndexSelectPlan implements Plan
 	@Override
 	public void setSon(LinkedList<Plan> plans)
 	{
-		plan = plans.get(0);
+		plan = (TablePlan)plans.get(0);
 	}
 
 	@Override
