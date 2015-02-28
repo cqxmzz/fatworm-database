@@ -20,7 +20,7 @@ public class GroupScan implements Scan
 
 	String tblname;
 
-	//TODO don't sort in RAM! Use a temp table
+	//TODO don't group in RAM! Use a temp table
 	HashMap<Type, Record> map;
 
 	LinkedList<Type> keys;

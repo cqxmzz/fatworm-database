@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 
 import fatworm.FatwormDB;
 import fatworm.index.Index;
@@ -12,12 +13,9 @@ import fatworm.record.Record;
 
 public class Table implements Serializable
 {
-	// public ArrayList<Record> map = new ArrayList<Record>();
 	public LinkedList<Integer> places = new LinkedList<Integer>();
 	
-	public LinkedList<Integer> emptyList = new LinkedList<Integer>();
-	//TODO use this when inserting
-	//write to dirty pages first, then new pages in empty list, then add to tail
+	public PriorityQueue<Integer> emptyList = new PriorityQueue<Integer>();
 	
 	private DataBase dataBase;
 
@@ -43,7 +41,6 @@ public class Table implements Serializable
 		table.schema = s;
 		DataBase.getDataBase().addTable(table);
 		FatwormDB.fileMgr().newTable(n);
-		// DataBase.getDataBase().getTable(n).map = new ArrayList<Record>();
 		DataBase.getDataBase().getTable(n).places = new LinkedList<Integer>();
 		DataBase.getDataBase().getTable(n).tail = 0;
 		return table;
@@ -77,7 +74,6 @@ public class Table implements Serializable
 	private void clearTable()
 	{
 		FatwormDB.fileMgr().dropTable(name);
-		// map.clear();
 	}
 
 	public DataBase getDataBase()
@@ -112,14 +108,6 @@ public class Table implements Serializable
 			Record record = FatwormDB.bufferMgr().get(this.name, i);
 			if (record != null) index.insert(record.getValue(column), i);
 		}
-		// ArrayList<Record> values = map;
-		// if (values != null)
-		// {
-		// for (Record record: values)
-		// {
-		// index.insert(record.getValue(column), record);
-		// }
-		// }
 	}
 
 	public void dropIndex(String name)

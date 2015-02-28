@@ -17,7 +17,6 @@ public class TableScan implements UpdateScan
 	private Table table;
 
 	LinkedList<Integer> places;
-	//TODO change this to a linked list, and iterate through it using a curser.
 	
 	Record record;
 
@@ -48,7 +47,7 @@ public class TableScan implements UpdateScan
 				table.tail = tail;
 			return oldTail;
 		}
-		int place = table.emptyList.removeFirst();
+		int place = table.emptyList.poll();
 		places.add(place);
 		int tail = FatwormDB.bufferMgr().insert(table.name, r, place);
 		if (table.tail < tail)

@@ -19,7 +19,7 @@ public class SortScan implements Scan
 	Scan scan;
 
 	//TODO don't sort in RAM! Use a temp table
-	//It will be just O(N) 
+	//It will be just O(N) writes to build a temp table 
 	ArrayList<Record> values;
 
 	int now = -1;
@@ -46,9 +46,6 @@ public class SortScan implements Scan
 		{
 			Record point1 = (Record) obj1;
 			Record point2 = (Record) obj2;
-			// System.out.println(point1.getValues());
-			// System.out.println(point1.schema().getNames());
-			// System.out.println(point1.schema().getTableNames());
 			for (int i = 0; i < ascs.size(); ++i)
 			{
 				if (ascs.get(i))
