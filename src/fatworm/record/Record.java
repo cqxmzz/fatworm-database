@@ -359,11 +359,6 @@ public class Record implements Serializable
 
 	public int length()
 	{
-		int ret = 0;
-		for (Column c : schema.getColumns())
-		{
-			ret += (c.getType().length() + 5);
-		}
-		return ret;
+		return schema.length();
 	}
 }

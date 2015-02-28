@@ -15,6 +15,8 @@ public class TableScan implements UpdateScan
 	// ArrayList<Record> values;
 	ArrayList<Integer> places;
 	//TODO change this to a linked list, and iterate through it using a curser.
+	
+	//TODO write to dirty pages first, then new pages in empty list, then add to tail
 
 	int now = -1;
 

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+import sun.security.util.Length;
 import fatworm.expr.Expr;
 import fatworm.expr.FieldExpr;
 
@@ -14,6 +15,8 @@ public class Schema implements Serializable
 	private LinkedList<String> tableNames;
 
 	private LinkedList<String> names;
+	
+	int length = -1;
 
 	public Schema()
 	{
@@ -91,6 +94,7 @@ public class Schema implements Serializable
 
 	public void add(Column c, String s1, String s2)
 	{
+		length = -1;
 		columns.add(c);
 		tableNames.add(s1);
 		names.add(s2);
@@ -207,5 +211,17 @@ public class Schema implements Serializable
 			}
 		}
 		return ret;
+	}
+
+	public int length()
+	{
+		if (length != -1)
+			return length;
+		length = 0;
+		for (Column c : getColumns())
+		{
+			length += (c.getType().length() + 5);
+		}
+		return length;
 	}
 }

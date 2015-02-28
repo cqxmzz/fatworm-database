@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeMap;
 
+import javax.jws.soap.SOAPBinding.Use;
+
 import fatworm.FatwormDB;
 import fatworm.database.DataBase;
 import fatworm.database.Schema;
@@ -24,6 +26,8 @@ public class BufferMgr
 {
 	static Buffer[] buffers;
 
+	//filename+blockNum => index in findTree
+	//Use TreeMap to optimize space use
 	TreeMap<String, Integer> findTree = new TreeMap<String, Integer>();
 
 	Random rand = new Random();
@@ -79,73 +83,6 @@ public class BufferMgr
 		}
 		Buffer ret = getLRUBuffer(blk);
 		return ret;
-	}
-
-	public void deleteRecord(Buffer buf)
-	{
-		buf.setInt(0, 0);
-	}
-
-	public Buffer append(String filename, ByteBuffer bb)
-	{
-		if (FatwormDB.fileMgr().size(filename) == 0)
-		{
-			Block blk = new Block(filename, 1);
-			FatwormDB.fileMgr().write(blk, bb);
-			Buffer ret = getBuffer(blk);
-			ret.setInt(0, 1);
-			return ret;
-		}
-		else
-		{
-			Block blk = new Block(filename, FatwormDB.fileMgr().size(filename));
-			FatwormDB.fileMgr().write(blk, bb);
-			Buffer ret = getBuffer(blk);
-			ret.setInt(0, 1);
-			return ret;
-		}
-	}
-
-	public Buffer Tempappend(String filename, ByteBuffer bb)
-	{
-		if (FatwormDB.fileMgr().Tempsize(filename) == 0)
-		{
-			Block blk = new Block(filename, 1);
-			FatwormDB.fileMgr().Tempwrite(blk, bb);
-			Buffer ret = getBuffer(blk);
-			ret.setInt(0, 1);
-			return ret;
-		}
-		else
-		{
-			Block blk = new Block(filename, FatwormDB.fileMgr().Tempsize(filename));
-			FatwormDB.fileMgr().Tempwrite(blk, bb);
-			Buffer ret = getBuffer(blk);
-			ret.setInt(0, 1);
-			return ret;
-		}
-	}
-
-	public Buffer getHead(String filename)
-	{
-		Buffer head = getBuffer(new Block(filename, 0));
-		if (FatwormDB.fileMgr().size(filename) == 0)
-		{
-			head.setInt(0, 0);
-		}
-		return head;
-	}
-
-	public Buffer getNextRecord(Buffer buf)
-	{
-		Block blk = buf.block();
-		while (blk.blkNumber() < FatwormDB.fileMgr().size(blk.fileName()))
-		{
-			Buffer ret = getBuffer(new Block(blk.fileName(), blk.blkNumber() + 1));
-			if (ret.getInt(0) == 1) return ret;
-			blk = ret.block();
-		}
-		return null;
 	}
 
 	public int insert(String name, Record r) // return new tail
@@ -235,7 +172,6 @@ public class BufferMgr
 		Block block;
 		Buffer buffer;
 		int recordLength = record.length();
-		//TODO don't compute record length every time, use schema instead, and schema can cache the length
 		if (top + recordLength >= FatwormDB.BLOCK_SIZE)
 		{
 			block = new Block(name, integer / FatwormDB.BLOCK_SIZE + 1);
