@@ -87,7 +87,7 @@ public class IndexSelectScan implements Scan
 	@Override
 	public Record getRecord()
 	{
-		return scan.getRecordFromIndex(records.get(now));
+		return scan.getRecordFromPlace(records.get(now));
 	}
 
 	@Override

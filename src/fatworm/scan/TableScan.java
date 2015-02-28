@@ -1,6 +1,11 @@
 package fatworm.scan;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import fatworm.FatwormDB;
 import fatworm.database.Table;
@@ -11,68 +16,74 @@ public class TableScan implements UpdateScan
 {
 	private Table table;
 
-	// in RAM
-	// ArrayList<Record> values;
-	ArrayList<Integer> places;
+	LinkedList<Integer> places;
 	//TODO change this to a linked list, and iterate through it using a curser.
 	
-	//TODO write to dirty pages first, then new pages in empty list, then add to tail
-
-	int now = -1;
-
 	Record record;
 
 	int size;
 
-	int count = 0;
-
+	ListIterator<Integer> iterator;
+	
+	int placeNow;
+	
 	public TableScan(Table t)
 	{
-		now = -1;
 		table = t;
-		// values = table.map;
 		places = table.places;
-		// size = values.size();
 		size = places.size();
+		placeNow = -1;
+		iterator = places.listIterator();
 	}
 
+	//return the place inserted
 	public int insert(Record r)
 	{
-		// values.add(r);
-		places.add(table.tail);
-		table.tail = FatwormDB.bufferMgr().insert(table.name, r);
-		return table.tail; 
+		if (table.emptyList.isEmpty())
+		{
+			int oldTail = table.tail;
+			places.add(oldTail);
+			int tail = FatwormDB.bufferMgr().insert(table.name, r, oldTail);
+			if (table.tail < tail)
+				table.tail = tail;
+			return oldTail;
+		}
+		int place = table.emptyList.removeFirst();
+		places.add(place);
+		int tail = FatwormDB.bufferMgr().insert(table.name, r, place);
+		if (table.tail < tail)
+			table.tail = tail;
+		return place; 
 	}
 
 	public int delete()
 	{
-		// values.remove(now);
-		// now--;
-		// FatwormDB.bufferMgr().delete(table.name, places.get(now));
-		int ret = places.get(now);
-		places.remove(places.get(now));
-		now--;
+		int ret = -1;
+		if (iterator.hasNext())
+		{
+			iterator.previous();
+			iterator.remove();
+		}
 		return ret;
 	}
 
 	@Override
 	public void beforeFirst()
 	{
-		now = -1;
-		count = 0;
+		placeNow = -1;
+		iterator = places.listIterator();
 	}
 
 	@Override
 	public boolean next()
 	{
-		// if (now < values.size() - 1 && now < size - 1 && count < size)
-		if (now < places.size() - 1 && now < size - 1 && count < size)
+		boolean ret = iterator.hasNext();
+		if (ret)
 		{
-			now++;
-			count++;
-			return true;
+			placeNow = iterator.next();
+			record = FatwormDB.bufferMgr().get(table.name, placeNow);
 		}
-		return false;
+		return ret;
 	}
 
 	@Override
@@ -84,7 +95,7 @@ public class TableScan implements UpdateScan
 	@Override
 	public Type getVal(String fldname)
 	{
-		if (now == -1)
+		if (placeNow == -1)
 		{
 			return null;
 		}
@@ -96,14 +107,13 @@ public class TableScan implements UpdateScan
 	public int setVal(String fldname, Type type)
 	{
 		getRecord().setValue(table.getSchema().getNames().lastIndexOf(fldname), type);
-		FatwormDB.bufferMgr().write(table.name, places.get(now), record);
-		return places.get(now);
+		FatwormDB.bufferMgr().write(table.name, placeNow, record);
+		return placeNow;
 	}
 
 	@Override
 	public Record getRecord()
 	{
-		record = FatwormDB.bufferMgr().get(table.name, places.get(now));
 		return record;
 	}
 
@@ -135,7 +145,7 @@ public class TableScan implements UpdateScan
 				getRecord().setValue(i, type);
 			}
 		}
-		FatwormDB.bufferMgr().write(table.name, places.get(now), record);
+		FatwormDB.bufferMgr().write(table.name, placeNow, record);
 		return false;
 	}
 
@@ -170,9 +180,9 @@ public class TableScan implements UpdateScan
 //		now--;
 //	}
 
-	public Record getRecordFromIndex(Integer integer)
+	public Record getRecordFromPlace(Integer place)
 	{
-		Record record = FatwormDB.bufferMgr().get(table.name, places.get(integer));
+		Record record = FatwormDB.bufferMgr().get(table.name, place);
 		return record;
 	}
 }

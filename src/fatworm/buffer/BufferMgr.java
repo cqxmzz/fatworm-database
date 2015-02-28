@@ -85,9 +85,9 @@ public class BufferMgr
 		return ret;
 	}
 
-	public int insert(String name, Record r) // return new tail
+	public int insert(String name, Record r, int place) // return new tail
 	{
-		return write(name, DataBase.getDataBase().getTable(name).tail, r);
+		return write(name, place, r);
 	}
 
 	public Record get(String name, int integer)
@@ -233,7 +233,6 @@ public class BufferMgr
 				buffer.setString(top, type.toString());
 			}
 			top += sche.getColumns().get(i).getType().length();
-			//TODO make varchar storage beter
 		}
 		if (integer % FatwormDB.BLOCK_SIZE + recordLength >= FatwormDB.BLOCK_SIZE)
 		{

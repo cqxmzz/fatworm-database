@@ -13,13 +13,11 @@ import fatworm.record.Record;
 public class Table implements Serializable
 {
 	// public ArrayList<Record> map = new ArrayList<Record>();
-	public ArrayList<Integer> places = new ArrayList<Integer>();
-	//TODO change this to a linked list
+	public LinkedList<Integer> places = new LinkedList<Integer>();
 	
 	public LinkedList<Integer> emptyList = new LinkedList<Integer>();
 	//TODO use this when inserting
-
-	//public LinkedList<E>
+	//write to dirty pages first, then new pages in empty list, then add to tail
 	
 	private DataBase dataBase;
 
@@ -46,7 +44,7 @@ public class Table implements Serializable
 		DataBase.getDataBase().addTable(table);
 		FatwormDB.fileMgr().newTable(n);
 		// DataBase.getDataBase().getTable(n).map = new ArrayList<Record>();
-		DataBase.getDataBase().getTable(n).places = new ArrayList<Integer>();
+		DataBase.getDataBase().getTable(n).places = new LinkedList<Integer>();
 		DataBase.getDataBase().getTable(n).tail = 0;
 		return table;
 	}

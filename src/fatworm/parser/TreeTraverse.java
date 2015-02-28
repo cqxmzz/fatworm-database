@@ -49,7 +49,7 @@ public class TreeTraverse
 		}
 	}
 
-	//TODO disgusting code, I should use visitor pattern, but I don't have much time to fix it
+	// disgusting code, I should use visitor pattern, but I don't have much time to fix it
 	@SuppressWarnings("unchecked")
 	void traverse(CommonTree tree)
 	{

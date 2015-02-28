@@ -439,7 +439,7 @@ public class Planner
 
 	public void setPlan(Plan plan)
 	{
-		//TODO propergate those optimization into subqueries. no hurry, this is not that urgent
+		// propergate those optimization into subqueries. no hurry, this is not that urgent
 		plan = devideWhereOr(plan);
 		plan = devideWhereAnd(plan);
 		plan = pushCopSelectPlan(plan);
