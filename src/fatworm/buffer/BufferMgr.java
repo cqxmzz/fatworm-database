@@ -234,8 +234,9 @@ public class BufferMgr
 		int top = integer % FatwormDB.BLOCK_SIZE;
 		Block block;
 		Buffer buffer;
+		int recordLength = record.length();
 		//TODO don't compute record length every time, use schema instead, and schema can cache the length
-		if (top + record.length() >= FatwormDB.BLOCK_SIZE)
+		if (top + recordLength >= FatwormDB.BLOCK_SIZE)
 		{
 			block = new Block(name, integer / FatwormDB.BLOCK_SIZE + 1);
 			buffer = getBuffer(block);
@@ -246,7 +247,7 @@ public class BufferMgr
 		{
 			block = new Block(name, integer / FatwormDB.BLOCK_SIZE);
 			buffer = getBuffer(block);
-			integer = integer += record.length();
+			integer = integer += recordLength;
 		}
 		for (int i = 0; i < sche.getColumns().size(); ++i)
 		{
@@ -296,8 +297,9 @@ public class BufferMgr
 				buffer.setString(top, type.toString());
 			}
 			top += sche.getColumns().get(i).getType().length();
+			//TODO make varchar storage beter
 		}
-		if (integer % FatwormDB.BLOCK_SIZE + record.length() >= FatwormDB.BLOCK_SIZE)
+		if (integer % FatwormDB.BLOCK_SIZE + recordLength >= FatwormDB.BLOCK_SIZE)
 		{
 			integer = integer - integer % FatwormDB.BLOCK_SIZE + FatwormDB.BLOCK_SIZE;
 		}
