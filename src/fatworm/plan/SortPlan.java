@@ -31,7 +31,7 @@ public class SortPlan implements Plan
 	@Override
 	public Scan open()
 	{
-		return new SortScan(col_name, tbl_name, ascent, plan.open());
+		return new SortScan(col_name, tbl_name, ascent, plan.open(), plan.schema());
 	}
 
 	@Override

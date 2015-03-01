@@ -4,7 +4,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import fatworm.FatwormDB;
 import fatworm.database.Schema;
+import fatworm.database.Table;
+import fatworm.metadata.MetadataMgr;
 import fatworm.record.Record;
 import fatworm.types.DECIMAL;
 import fatworm.types.INT;
@@ -14,31 +17,37 @@ public class GroupScan implements Scan
 {
 	Schema schema;
 
-	Scan scan;
+	Scan scan; 
 
 	String colname;
 
 	String tblname;
 
-	//TODO don't group in RAM! Use a temp table
-	HashMap<Type, Record> map;
+	HashMap<Type, Integer> map;
 
 	LinkedList<Type> keys;
 
 	int now = -1;
 
 	int size;
+	
+	TableScan tableScan;
 
 	public GroupScan(Schema s, Scan sc, String groupColName, String groupTableName)
 	{
 		schema = s;
 		scan = sc;
-		map = new HashMap<Type, Record>();
+		map = new HashMap<Type, Integer>();
 		colname = groupColName;
 		tblname = groupTableName;
 		scan.beforeFirst();
 		keys = new LinkedList<Type>();
 		boolean flag = true;
+		
+		Table table = Table.createTable("TEMP_" + MetadataMgr.tempTableNum, schema);
+		MetadataMgr.tempTableNum++;
+		tableScan = new TableScan(table);
+		
 		if (scan.next() == false)
 		{
 			flag = false;
@@ -61,7 +70,8 @@ public class GroupScan implements Scan
 					vals.add(scan.getVal(st));
 				}
 			}
-			map.put(null, new Record(vals, schema));
+			int place = tableScan.insert(new Record(vals, schema));
+			map.put(null, place);
 			keys.add(null);
 		}
 		scan.beforeFirst();
@@ -104,12 +114,13 @@ public class GroupScan implements Scan
 							vals.add(scan.getVal(st));
 						}
 					}
-					map.put(type, new Record(vals, schema));
+					int place = tableScan.insert(new Record(vals, schema));
+					map.put(type, place);
 					keys.add(type);
 				}
 				else
 				{
-					Record record = map.get(type);
+					Record record = tableScan.getRecordFromPlace(map.get(type));
 					for (int i = 0; i < schema.getNames().size(); ++i)
 					{
 						String st = schema.getName(i);
@@ -137,6 +148,7 @@ public class GroupScan implements Scan
 							if (object instanceof BigDecimal) record.setValue(i, record.getValue(i).add(new DECIMAL((BigDecimal) object)));
 						}
 					}
+					tableScan.setRecordFromPlace(map.get(type), record);
 				}
 			}
 			else
@@ -161,18 +173,24 @@ public class GroupScan implements Scan
 							if (object instanceof BigDecimal) vals.add(new DECIMAL((BigDecimal) object));
 						}
 						else if (st.startsWith("avg("))
-							vals.add(null);
+						{
+							Object object = scan.getVal(st.substring(4, st.length() - 1)).getValue();
+							if (object instanceof Integer) vals.add(new DECIMAL(((Integer) object).floatValue()));
+							if (object instanceof Float) vals.add(new DECIMAL((Float) object));
+							if (object instanceof BigDecimal) vals.add(new DECIMAL((BigDecimal) object));
+						}
 						else
 						{
 							vals.add(scan.getVal(st));
 						}
 					}
-					map.put(null, new Record(vals, schema));
+					int place = tableScan.insert(new Record(vals, schema));
+					map.put(null, place);
 					keys.add(null);
 				}
 				else
 				{
-					Record record = map.get(null);
+					Record record = tableScan.getRecordFromPlace(map.get(null));
 					for (int i = 0; i < schema.getNames().size(); ++i)
 					{
 						String st = schema.getName(i);
@@ -200,11 +218,13 @@ public class GroupScan implements Scan
 							if (object instanceof BigDecimal) record.setValue(i, record.getValue(i).add(new DECIMAL((BigDecimal) object)));
 						}
 					}
+					tableScan.setRecordFromPlace(map.get(null), record);
 				}
 			}
 		}
-		if (flag) for (Record record : map.values())
+		if (flag) for (Integer integer : map.values())
 		{
+			Record record = tableScan.getRecordFromPlace(integer);
 			for (int i = 0; i < schema.getNames().size(); ++i)
 			{
 				String st = schema.getName(i);
@@ -215,6 +235,7 @@ public class GroupScan implements Scan
 					record.setValue(i, type);
 				}
 			}
+			tableScan.setRecordFromPlace(integer, record);
 		}
 		size = map.size();
 	}
@@ -244,25 +265,25 @@ public class GroupScan implements Scan
 	@Override
 	public Type getVal(String fldname)
 	{
-		return map.get(keys.get(now)).getValue(fldname);
+		return getRecord().getValue(fldname);
 	}
 
 	@Override
 	public Record getRecord()
 	{
-		return map.get(keys.get(now));
+		return tableScan.getRecordFromPlace(map.get(keys.get(now)));
 	}
 
 	@Override
 	public Type getVal(String tblname, String fldname)
 	{
-		return map.get(keys.get(now)).getValue(fldname, tblname);
+		return getRecord().getValue(fldname, tblname);
 	}
 
 	@Override
 	public Type getFirstVal()
 	{
-		return map.get(keys.get(now)).getValue(0);
+		return getRecord().getValue(0);
 	}
 
 	@Override
@@ -274,6 +295,6 @@ public class GroupScan implements Scan
 	@Override
 	public Type getVal(int i)
 	{
-		return map.get(keys.get(now)).getValue(i);
+		return getRecord().getValue(i);
 	}
 }

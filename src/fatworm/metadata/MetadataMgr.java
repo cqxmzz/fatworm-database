@@ -21,6 +21,8 @@ public class MetadataMgr implements Serializable
 	public String currentDB = null;
 
 	public static DataBase currentDataBase = null;
+	
+	public static int tempTableNum = -1;
 
 	public MetadataMgr()
 	{

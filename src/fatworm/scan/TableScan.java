@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import apple.laf.JRSUIConstants.Size;
+
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import fatworm.FatwormDB;
@@ -14,13 +16,9 @@ import fatworm.types.Type;
 
 public class TableScan implements UpdateScan
 {
-	private Table table;
+	protected Table table;
 
-	LinkedList<Integer> places;
-	
 	Record record;
-
-	int size;
 
 	ListIterator<Integer> iterator;
 	
@@ -29,10 +27,8 @@ public class TableScan implements UpdateScan
 	public TableScan(Table t)
 	{
 		table = t;
-		places = table.places;
-		size = places.size();
 		placeNow = -1;
-		iterator = places.listIterator();
+		iterator = table.places.listIterator();
 	}
 
 	//return the place inserted
@@ -41,14 +37,14 @@ public class TableScan implements UpdateScan
 		if (table.emptyList.isEmpty())
 		{
 			int oldTail = table.tail;
-			places.add(oldTail);
+			table.places.add(oldTail);
 			int tail = FatwormDB.bufferMgr().insert(table.name, r, oldTail);
 			if (table.tail < tail)
 				table.tail = tail;
 			return oldTail;
 		}
 		int place = table.emptyList.poll();
-		places.add(place);
+		table.places.add(place);
 		int tail = FatwormDB.bufferMgr().insert(table.name, r, place);
 		if (table.tail < tail)
 			table.tail = tail;
@@ -60,7 +56,7 @@ public class TableScan implements UpdateScan
 		int ret = -1;
 		if (iterator.hasNext())
 		{
-			iterator.previous();
+			ret = iterator.previous();
 			iterator.remove();
 		}
 		return ret;
@@ -70,7 +66,8 @@ public class TableScan implements UpdateScan
 	public void beforeFirst()
 	{
 		placeNow = -1;
-		iterator = places.listIterator();
+		iterator = table.places.listIterator();
+		record = null;
 	}
 
 	@Override
@@ -91,6 +88,11 @@ public class TableScan implements UpdateScan
 		// buffer save on disk on connection close
 	}
 
+	public int size()
+	{
+		return table.places.size();
+	}
+	
 	@Override
 	public Type getVal(String fldname)
 	{
@@ -183,5 +185,10 @@ public class TableScan implements UpdateScan
 	{
 		Record record = FatwormDB.bufferMgr().get(table.name, place);
 		return record;
+	}
+	
+	public void setRecordFromPlace(Integer place, Record record)
+	{
+		FatwormDB.bufferMgr().insert(table.name, record, place);
 	}
 }
