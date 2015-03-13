@@ -8,6 +8,7 @@ import java.util.Stack;
 import fatworm.FatwormDB;
 import fatworm.scan.Scan;
 
+//TODO HashMap is every where! Synchronize them well or change to concurrentHashMap!!!
 public class DataBase implements Serializable
 {
 	public String name;
