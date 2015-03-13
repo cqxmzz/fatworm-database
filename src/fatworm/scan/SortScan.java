@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import antlr.MakeGrammar;
+
 import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
 
 import fatworm.FatwormDB;
@@ -93,6 +95,7 @@ public class SortScan implements Scan
 		
 		scan = s;
 		scan.beforeFirst();
+		//TODO make counting of the tempTableNum synchronized
 		Table table = Table.createTable("TEMP_" + MetadataMgr.tempTableNum, sc);
 		MetadataMgr.tempTableNum++;
 		tableScan = new TableScan(table);

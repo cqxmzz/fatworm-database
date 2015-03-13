@@ -43,7 +43,7 @@ public class GroupScan implements Scan
 		scan.beforeFirst();
 		keys = new LinkedList<Type>();
 		boolean flag = true;
-		
+		//TODO make counting of the tempTableNum synchronized
 		Table table = Table.createTable("TEMP_" + MetadataMgr.tempTableNum, schema);
 		MetadataMgr.tempTableNum++;
 		tableScan = new TableScan(table);

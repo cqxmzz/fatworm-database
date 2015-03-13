@@ -42,6 +42,7 @@ public class Planner
 			if (DataBase.getDataBase() != null && DataBase.getDataBase().getOpenedScans() != null) DataBase.getDataBase().getOpenedScans().clear();
 			if (rootPlan == null)
 			{
+				//TODO check this code, should use saveMdMgr
 				FileOutputStream fos = new FileOutputStream(FatwormDB.fileMgr().dbName + "/" + "metadata");
 				ObjectOutputStream oos = new ObjectOutputStream(fos);
 				oos.writeObject(FatwormDB.mdMgr());

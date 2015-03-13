@@ -23,6 +23,9 @@ public class FatwormConnection extends Conn
 {
 	public FatwormConnection(String url, Properties prop) throws IOException, ClassNotFoundException
 	{
+		//TODO for concurrency, don't need init every time.
+		//TODO if a meta-data is already opened, use it
+		//TODO but remember to make it synchronized, and store it every time a connection is closed
 		FatwormDB.init(url);
 		File file = new File(FatwormDB.fileMgr().dbName + "/" + "metadata1");
 		File file2 = new File(FatwormDB.fileMgr().dbName + "/" + "metadata2");
