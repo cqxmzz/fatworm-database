@@ -13,14 +13,16 @@ public class TableScan implements UpdateScan
 
 	//TODO change these things into a curser
 	Record record;
-	ListIterator<Integer> iterator;
+	int now;
 	int placeNow;
+	int length;
 	
 	public TableScan(Table t)
 	{
 		table = t;
 		placeNow = -1;
-		iterator = table.places.listIterator();
+		now = -1;
+		length = table.places.size();
 	}
 
 	//return the place inserted
@@ -35,21 +37,32 @@ public class TableScan implements UpdateScan
 				table.tail = tail;
 			return oldTail;
 		}
-		int place = table.emptyList.poll();
-		table.places.add(place);
-		int tail = FatwormDB.bufferMgr().insert(table.name, r, place);
-		if (table.tail < tail)
-			table.tail = tail;
+		Integer place;
+		synchronized (table.emptyList)
+		{
+			place = table.emptyList.first();
+			table.emptyList.remove(place);
+			table.places.add(place);
+			int tail = FatwormDB.bufferMgr().insert(table.name, r, place);
+			if (table.tail < tail)
+				table.tail = tail;
+		}
 		return place; 
 	}
 
 	public int delete()
 	{
 		int ret = -1;
-		if (iterator.hasNext())
+		synchronized (table.emptyList)
 		{
-			ret = iterator.previous();
-			iterator.remove();
+			if (++now < length)
+			{
+				table.places.remove(now);
+				--now;
+				--length;
+				placeNow = table.places.get(now);
+				table.emptyList.add(ret);
+			}
 		}
 		return ret;
 	}
@@ -58,31 +71,32 @@ public class TableScan implements UpdateScan
 	public void beforeFirst()
 	{
 		placeNow = -1;
-		iterator = table.places.listIterator();
+		now = -1;
 		record = null;
 	}
 
 	@Override
 	public boolean next()
 	{
-		boolean ret = iterator.hasNext();
-		if (ret)
+		++now;
+		if (now < length)
 		{
-			placeNow = iterator.next();
+			placeNow = table.places.get(now);
 			record = FatwormDB.bufferMgr().get(table.name, placeNow);
+			return true;	
 		}
-		return ret;
+		return false;
 	}
 
 	@Override
 	public void close()
 	{
-		// buffer save on disk on connection close
+		// buffer will be saved on disk on connection close
 	}
 
 	public int size()
 	{
-		return table.places.size();
+		return length;
 	}
 	
 	@Override

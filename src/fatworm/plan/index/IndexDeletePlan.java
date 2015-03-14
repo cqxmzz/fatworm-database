@@ -2,6 +2,7 @@ package fatworm.plan.index;
 
 import fatworm.database.Table;
 import fatworm.index.Index;
+import fatworm.metadata.MetadataMgr;
 import fatworm.plan.DeletePlan;
 import fatworm.plan.Plan;
 import fatworm.plan.SelectPlan;
@@ -31,6 +32,7 @@ public class IndexDeletePlan extends DeletePlan
 			scan = (UpdateScan) p.open();
 		}
 		int count = 0;
+		MetadataMgr.readLock.lock();
 		while (scan.next())
 		{
 			Record record = scan.getRecord();
@@ -45,6 +47,7 @@ public class IndexDeletePlan extends DeletePlan
 			}
 		}
 		scan.close();
+		MetadataMgr.readLock.unlock();
 		return count;
 	}
 }

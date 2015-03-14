@@ -2,6 +2,7 @@ package fatworm.plan.index;
 
 import fatworm.database.Table;
 import fatworm.index.Index;
+import fatworm.metadata.MetadataMgr;
 import fatworm.plan.InsertPlan;
 import fatworm.plan.Plan;
 import fatworm.plan.TablePlan;
@@ -24,6 +25,7 @@ public class IndexInsertPlan extends InsertPlan
 		plan = new TablePlan(table);
 		TableScan tableScan = (TableScan) plan.open();
 		Scan scan = plan2.open();
+		MetadataMgr.readLock.lock();
 		while (scan.next())
 		{
 			Record record = scan.getRecord();
@@ -46,6 +48,8 @@ public class IndexInsertPlan extends InsertPlan
 				}
 			}
 		}
+		scan.close();
+		MetadataMgr.readLock.unlock();
 		return 1;
 	}
 }

@@ -2,10 +2,15 @@ package fatworm.database;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import fatworm.FatwormDB;
 import fatworm.index.Index;
@@ -15,11 +20,10 @@ import fatworm.record.Record;
 
 public class Table implements Serializable
 {
-	//TODO not thread safe
-	public LinkedList<Integer> places = new LinkedList<Integer>();
+	//TODO add lock for table
+	public CopyOnWriteArrayList<Integer> places = new CopyOnWriteArrayList<Integer>();
 	
-	//TODO not thread safe
-	public PriorityQueue<Integer> emptyList = new PriorityQueue<Integer>();
+	public SortedSet<Integer> emptyList = Collections.synchronizedSortedSet(new TreeSet<Integer>());
 	
 	private DataBase dataBase;
 
@@ -46,7 +50,7 @@ public class Table implements Serializable
 		table.schema = s;
 		DataBase.getDataBase().addTable(table);
 		FatwormDB.fileMgr().newTable(n);
-		DataBase.getDataBase().getTable(n).places = new LinkedList<Integer>();
+		DataBase.getDataBase().getTable(n).places = new CopyOnWriteArrayList<Integer>();
 		DataBase.getDataBase().getTable(n).tail = 0;
 		MetadataMgr.readLock.unlock();
 		return table;
@@ -55,7 +59,8 @@ public class Table implements Serializable
 	static public void dropTable(String n)
 	{
 		Table table = DataBase.getDataBase().tables.get(n);
-		table.dropTable(DataBase.getDataBase());
+		if (table != null)
+			table.dropTable(DataBase.getDataBase());
 	}
 
 	/*

@@ -99,6 +99,7 @@ public class FatwormDB
 			FatwormDB.fileMgr().setDatabaseName(DataBase.getDataBase().name);
 			DataBase.getDataBase().openedScans = new ThreadLocal<Stack<Scan>>();
 			DataBase.getDataBase().openedScans.set(new Stack<Scan>());
+			mdm.openedDataBases = new ConcurrentHashMap<String, DataBase>();
 		}
 	}
 

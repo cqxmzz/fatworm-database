@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 
+import sun.awt.windows.ThemeReader;
 import fatworm.database.Table;
 import fatworm.types.Type;
 
@@ -36,8 +37,7 @@ public class MemIndex implements Index, Serializable
 
 	ConcurrentSkipListMap<Type, ArrayList<Integer>> map;
 
-	//TODO thread local
-	transient Iterator<Type> iterator;
+	transient ThreadLocal<Iterator<Type>> iterator;
 
 	Type currentType;
 
@@ -61,15 +61,16 @@ public class MemIndex implements Index, Serializable
 	@Override
 	public void beforeFirst()
 	{
-		iterator = map.keySet().iterator();
+		iterator = new ThreadLocal<Iterator<Type>>();
+		iterator.set(map.keySet().iterator());
 	}
 
 	@Override
 	public boolean next()
 	{
-		if (iterator.hasNext())
+		if (iterator.get().hasNext())
 		{
-			currentType = iterator.next();
+			currentType = iterator.get().next();
 			return true;
 		}
 		return false;
@@ -116,6 +117,7 @@ public class MemIndex implements Index, Serializable
 	public void between(Type type1, Type type2)
 	{
 		if (type1.greaterThan(type2)) return;
-		iterator = map.subMap(type1, true, type2, true).keySet().iterator();
+		iterator = new ThreadLocal<Iterator<Type>>();
+		iterator.set(map.subMap(type1, true, type2, true).keySet().iterator());
 	}
 }

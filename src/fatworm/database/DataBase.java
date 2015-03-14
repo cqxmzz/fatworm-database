@@ -46,10 +46,9 @@ public class DataBase implements Serializable
 		{
 			FatwormDB.mdMgr().put(getDataBase().name, getDataBase(), true);
 		}
-		if (!FatwormDB.mdMgr().openedDataBases.containsKey(getDataBase()))
+		if (!FatwormDB.mdMgr().openedDataBases.containsKey(n))
 		{
 			setDataBase(FatwormDB.mdMgr().get(n));
-			MetadataMgr.readLock.lock();
 			FatwormDB.mdMgr().openedDataBases.put(n, getDataBase());
 		}
 		else
@@ -63,7 +62,8 @@ public class DataBase implements Serializable
 
 	static public DataBase getDataBase()
 	{
-		if (FatwormDB.mdMgr().currentDataBase == null) return null;
+		if (FatwormDB.mdMgr().currentDataBase == null)
+			return null;
 		return FatwormDB.mdMgr().currentDataBase.get();
 	}
 

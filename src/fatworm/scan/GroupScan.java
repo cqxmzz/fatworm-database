@@ -49,6 +49,7 @@ public class GroupScan implements Scan
 		
 		synchronized (FatwormDB.mdMgr().tempTableNum)
 		{
+			Table.dropTable("TEMP_" + FatwormDB.mdMgr().tempTableNum);
 			tempTable = Table.createTable("TEMP_" + FatwormDB.mdMgr().tempTableNum, schema);
 			FatwormDB.mdMgr().tempTableNum = (FatwormDB.mdMgr().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
 		}
@@ -114,7 +115,12 @@ public class GroupScan implements Scan
 							if (object instanceof BigDecimal) vals.add(new DECIMAL((BigDecimal) object));
 						}
 						else if (st.startsWith("avg("))
-							vals.add(null);
+						{
+							Object object = scan.getVal(st.substring(4, st.length() - 1)).getValue();
+							if (object instanceof Integer) vals.add(new DECIMAL(((Integer) object).floatValue()));
+							if (object instanceof Float) vals.add(new DECIMAL((Float) object));
+							if (object instanceof BigDecimal) vals.add(new DECIMAL((BigDecimal) object));
+						}
 						else
 						{
 							vals.add(scan.getVal(st));
