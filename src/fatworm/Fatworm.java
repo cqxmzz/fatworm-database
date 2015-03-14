@@ -8,7 +8,6 @@ public class Fatworm
 {
 	public static void main(String[] args)
 	{
-		//TODO concurrency
 		try
 		{
 			System.out.println("FATWORM GO TO HELL!!!");

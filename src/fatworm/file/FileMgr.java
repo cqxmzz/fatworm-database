@@ -8,6 +8,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import fatworm.FatwormDB;
 import fatworm.database.Table;
@@ -20,7 +21,7 @@ public class FileMgr
 
 	String databaseName;
 
-	private Map<String, RandomAccessFile> openFiles = new HashMap<String, RandomAccessFile>();
+	private ConcurrentHashMap<String, RandomAccessFile> openFiles = new ConcurrentHashMap<String, RandomAccessFile>();
 
 	public FileMgr(String dbname)
 	{
@@ -76,9 +77,9 @@ public class FileMgr
 		return dir.delete();
 	}
 
-	public void setDatabaseName(String dbn)
+	public void setDatabaseName(String name)
 	{
-		databaseName = dbn;
+		databaseName = name;
 	}
 
 	public String getFileName(Table table)

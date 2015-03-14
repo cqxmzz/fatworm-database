@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Scanner;
-import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import fatworm.database.Table;
-import fatworm.file.Block;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class MemIndex implements Index, Serializable
@@ -37,9 +34,9 @@ public class MemIndex implements Index, Serializable
 
 	boolean unique;
 
-	TreeMap<Type, ArrayList<Integer>> map;
+	ConcurrentSkipListMap<Type, ArrayList<Integer>> map;
 
-	// don't store records, store indexes(places)
+	//TODO thread local
 	transient Iterator<Type> iterator;
 
 	Type currentType;
@@ -51,7 +48,7 @@ public class MemIndex implements Index, Serializable
 		table = t;
 		column = c;
 		unique = u;
-		map = new TreeMap<Type, ArrayList<Integer>>(new MyComp());
+		map = new ConcurrentSkipListMap<Type, ArrayList<Integer>>(new MyComp());
 		iterator = null;
 	}
 

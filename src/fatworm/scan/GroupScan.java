@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 import fatworm.FatwormDB;
+import fatworm.database.DataBase;
 import fatworm.database.Schema;
 import fatworm.database.Table;
 import fatworm.metadata.MetadataMgr;
@@ -32,6 +33,8 @@ public class GroupScan implements Scan
 	int size;
 	
 	TableScan tableScan;
+	
+	Table tempTable;
 
 	public GroupScan(Schema s, Scan sc, String groupColName, String groupTableName)
 	{
@@ -43,10 +46,13 @@ public class GroupScan implements Scan
 		scan.beforeFirst();
 		keys = new LinkedList<Type>();
 		boolean flag = true;
-		//TODO make counting of the tempTableNum synchronized
-		Table table = Table.createTable("TEMP_" + MetadataMgr.tempTableNum, schema);
-		MetadataMgr.tempTableNum++;
-		tableScan = new TableScan(table);
+		
+		synchronized (FatwormDB.mdMgr().tempTableNum)
+		{
+			tempTable = Table.createTable("TEMP_" + FatwormDB.mdMgr().tempTableNum, schema);
+			FatwormDB.mdMgr().tempTableNum = (FatwormDB.mdMgr().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
+		}
+		tableScan = new TableScan(tempTable);
 		
 		if (scan.next() == false)
 		{
@@ -260,6 +266,8 @@ public class GroupScan implements Scan
 	@Override
 	public void close()
 	{
+		tableScan.close();
+		DataBase.getDataBase().removeTable(tableScan.table);
 	}
 
 	@Override

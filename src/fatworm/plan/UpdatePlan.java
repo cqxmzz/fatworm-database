@@ -8,6 +8,7 @@ import fatworm.database.DataBase;
 import fatworm.database.Schema;
 import fatworm.database.Table;
 import fatworm.expr.Expr;
+import fatworm.metadata.MetadataMgr;
 import fatworm.pred.Predicate;
 import fatworm.scan.Scan;
 import fatworm.scan.UpdateScan;

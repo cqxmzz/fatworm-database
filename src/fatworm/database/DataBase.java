@@ -4,88 +4,114 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
 
 import fatworm.FatwormDB;
+import fatworm.FatwormException;
+import fatworm.metadata.MetadataMgr;
 import fatworm.scan.Scan;
 
-//TODO HashMap is every where! Synchronize them well or change to concurrentHashMap!!!
 public class DataBase implements Serializable
 {
 	public String name;
 
-	public HashMap<String, Table> tables = new HashMap<String, Table>();
+	public ConcurrentHashMap<String, Table> tables = new ConcurrentHashMap<String, Table>();
 
-	public transient Stack<Scan> openedScans = new Stack<Scan>();
+	public transient ThreadLocal<Stack<Scan>> openedScans = new ThreadLocal<Stack<Scan>>();
 
 	public DataBase(String n)
 	{
 		name = n;
 		FatwormDB.mdMgr().put(n, this, true);
+		openedScans.set(new Stack<Scan>());
 	}
 
 	static public void createDataBase(String n)
 	{
+		MetadataMgr.readLock.lock();
 		FatwormDB.fileMgr().dropDatabasePath(n);
 		FatwormDB.fileMgr().newDatabasePath(n);
 		FatwormDB.mdMgr().allDataBase.add(n);
+		MetadataMgr.readLock.unlock();
 		FatwormDB.mdMgr().put(n, new DataBase(n), true);
 	}
 
-	static public void useDataBase(String n)
+	static public void useDataBase(String n) throws FatwormException
 	{
-		if (FatwormDB.mdMgr().currentDataBase == null)
+		if (!FatwormDB.mdMgr().allDataBase.contains(n))
+			throw new FatwormException("No Such DB");
+		if (getDataBase() != null && DataBase.getDataBase().name.equals(n))
+			return;
+		if (getDataBase() != null)
 		{
-			FatwormDB.mdMgr().currentDataBase = FatwormDB.mdMgr().get(n);
-			FatwormDB.fileMgr().setDatabaseName(n);
-			FatwormDB.mdMgr().currentDB = n;
-			FatwormDB.mdMgr().currentDataBase.openedScans = new Stack<Scan>();
+			FatwormDB.mdMgr().put(getDataBase().name, getDataBase(), true);
 		}
-		if (!FatwormDB.mdMgr().currentDataBase.name.equals(n))
+		if (!FatwormDB.mdMgr().openedDataBases.containsKey(getDataBase()))
 		{
-			FatwormDB.mdMgr().put(FatwormDB.mdMgr().currentDataBase.name, FatwormDB.mdMgr().currentDataBase, true);
-			FatwormDB.fileMgr().setDatabaseName(n);
-			FatwormDB.mdMgr().currentDB = n;
-			FatwormDB.mdMgr().currentDataBase = FatwormDB.mdMgr().get(n);
-			FatwormDB.mdMgr().currentDataBase.openedScans = new Stack<Scan>();
+			setDataBase(FatwormDB.mdMgr().get(n));
+			MetadataMgr.readLock.lock();
+			FatwormDB.mdMgr().openedDataBases.put(n, getDataBase());
 		}
+		else
+		{
+			setDataBase(FatwormDB.mdMgr().openedDataBases.get(n));
+		}
+		FatwormDB.fileMgr().setDatabaseName(n);
+		getDataBase().openedScans = new ThreadLocal<Stack<Scan>>();
+		DataBase.getDataBase().openedScans.set(new Stack<Scan>());
 	}
 
 	static public DataBase getDataBase()
 	{
-		return FatwormDB.mdMgr().currentDataBase;
+		if (FatwormDB.mdMgr().currentDataBase == null) return null;
+		return FatwormDB.mdMgr().currentDataBase.get();
+	}
+
+	static public void setDataBase(DataBase db)
+	{
+		if (db == null)
+			FatwormDB.mdMgr().currentDataBase = null;
+		if (FatwormDB.mdMgr().currentDataBase == null) 
+			FatwormDB.mdMgr().currentDataBase = new ThreadLocal<DataBase>();
+		FatwormDB.mdMgr().currentDataBase.set(db);
 	}
 
 	static public void dropDataBase(String n)
 	{
-		if (!FatwormDB.mdMgr().allDataBase.contains(n)) return;
+		if (!FatwormDB.mdMgr().allDataBase.contains(n)) 
+			return;
+		MetadataMgr.readLock.lock();
 		FatwormDB.fileMgr().dropDatabasePath(n);
 		FatwormDB.mdMgr().allDataBase.remove(n);
-		if (FatwormDB.mdMgr().currentDataBase != null && FatwormDB.mdMgr().currentDataBase.name.equals(n))
-		{
-			FatwormDB.mdMgr().currentDataBase = null;
-			FatwormDB.mdMgr().currentDB = null;
-		}
+		FatwormDB.mdMgr().openedDataBases.remove(n);
+		if (getDataBase() != null && getDataBase().name.equals(n))
+			setDataBase(null);
+		MetadataMgr.readLock.unlock();
 	}
 
-	private void clearDataBase()
-	{
-		while (tables.size() != 0)
-		{
-			Iterator<Table> it = tables.values().iterator();
-			Table table = it.next();
-			table.dropTable(this);
-		}
-		FatwormDB.fileMgr().dropDatabasePath(name);
-	}
+//	private void clearDataBase()
+//	{
+//		while (tables.size() != 0)
+//		{
+//			Iterator<Table> it = tables.values().iterator();
+//			Table table = it.next();
+//			table.dropTable(this);
+//		}
+//		FatwormDB.fileMgr().dropDatabasePath(name);
+//	}
 
 	public void addTable(Table table)
 	{
+		MetadataMgr.readLock.lock();
 		tables.put(table.name, table);
+		MetadataMgr.readLock.unlock();
 	}
 
 	public void removeTable(Table table)
 	{
+		MetadataMgr.readLock.lock();
 		tables.remove(table.name);
+		MetadataMgr.readLock.unlock();
 	}
 
 	static public boolean include(String name)
@@ -107,6 +133,6 @@ public class DataBase implements Serializable
 
 	public Stack<Scan> getOpenedScans()
 	{
-		return openedScans;
+		return openedScans.get();
 	}
 }

@@ -238,6 +238,8 @@ public class BufferMgr
 		{
 			integer = integer - integer % FatwormDB.BLOCK_SIZE + FatwormDB.BLOCK_SIZE;
 		}
+		if (FatwormDB.durability)
+			buffer.write();
 		return integer;
 	}
 }

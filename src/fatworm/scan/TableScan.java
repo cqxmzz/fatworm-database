@@ -1,13 +1,6 @@
 package fatworm.scan;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.ListIterator;
-
-import apple.laf.JRSUIConstants.Size;
-
-import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import fatworm.FatwormDB;
 import fatworm.database.Table;
@@ -18,10 +11,9 @@ public class TableScan implements UpdateScan
 {
 	protected Table table;
 
+	//TODO change these things into a curser
 	Record record;
-
 	ListIterator<Integer> iterator;
-	
 	int placeNow;
 	
 	public TableScan(Table t)

@@ -12,16 +12,15 @@ public class FatwormStatement extends Stat
 	public boolean execute(String sql)
 	{
 		setResultSet(null);
-		//TODO for parsing and planing, just make it synchronized
-		//TODO because it is not the bottleneck, it will be fast
-		Parse parser = new Parse();
-		if (!parser.parse(sql))
+		synchronized (FatwormDB.parser)
 		{
-			return false;
+			if (!FatwormDB.parser.parse(sql))
+			{
+				return false;
+			}
 		}
 		try
 		{
-			//TODO but not for executing
 			FatwormDB.planner().execute();
 			return true;
 		} catch (Exception e)

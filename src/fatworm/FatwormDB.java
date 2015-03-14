@@ -1,11 +1,16 @@
 package fatworm;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Stack;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 import fatworm.buffer.BufferMgr;
+import fatworm.database.DataBase;
 import fatworm.file.FileMgr;
 import fatworm.metadata.MetadataMgr;
+import fatworm.parser.Parse;
 import fatworm.plan.Planner;
 import fatworm.scan.Scan;
 
@@ -14,30 +19,39 @@ public class FatwormDB
 	//parameters
 	public static int BUFFER_SIZE = 1024;
 
-	public static int BLOCK_SIZE = 4096*16;
+	public static int BLOCK_SIZE = 8192*8;
 
 	public static boolean durability = false;
 	
+	public static int MAX_TEMP_TABLE_COUNT = 64;
+	
 	//workers
-	private static Planner planner;
+	private static ThreadLocal<Planner> planner;
 
 	private static FileMgr fm;
 
 	private static BufferMgr bm;
 
 	private static MetadataMgr mdm;
+	
+	public static Parse parser = new Parse();
 
-	public static void init(String dirname)
+	public static void init(String dirname) throws Exception
 	{
-		initPlanner();
-		initMetadataMgr(dirname);
-		initFileMgr(dirname);
-		initBufferMgr(dirname);
+		if (planner == null)
+			initPlanner();
+		if (fm == null)
+			initFileMgr(dirname);
+		if (mdm == null)
+			initMetadataMgr(dirname);
+		if (bm == null)
+			initBufferMgr(dirname);
 	}
 
 	public static void initPlanner()
 	{
-		planner = new Planner();
+		planner = new ThreadLocal<Planner>();
+		planner.set(new Planner());
 	}
 
 	public static void initBufferMgr(String dirname)
@@ -50,9 +64,10 @@ public class FatwormDB
 		fm = new FileMgr(dirname);
 	}
 
-	public static void initMetadataMgr(String dirname)
+	public static void initMetadataMgr(String dirname) throws Exception
 	{
 		mdm = new MetadataMgr();
+		mdm.init();
 	}
 
 	public static FileMgr fileMgr()
@@ -76,17 +91,19 @@ public class FatwormDB
 		if (m == null)
 		{
 			mdm = new MetadataMgr();
-			mdm.allDataBase = new LinkedList<String>();
+			mdm.allDataBase = new CopyOnWriteArraySet<String>();
+			mdm.openedDataBases = new ConcurrentHashMap<String, DataBase>();
 		}
-		if (mdm.currentDataBase != null)
+		if (DataBase.getDataBase() != null)
 		{
-			FatwormDB.fileMgr().setDatabaseName(mdm.currentDataBase.name);
-			mdm.currentDataBase.openedScans = new Stack<Scan>();
+			FatwormDB.fileMgr().setDatabaseName(DataBase.getDataBase().name);
+			DataBase.getDataBase().openedScans = new ThreadLocal<Stack<Scan>>();
+			DataBase.getDataBase().openedScans.set(new Stack<Scan>());
 		}
 	}
 
 	public static Planner planner()
 	{
-		return planner;
+		return planner.get();
 	}
 }

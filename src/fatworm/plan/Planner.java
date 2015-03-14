@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.antlr.runtime.tree.CommonTree;
 
@@ -29,7 +30,7 @@ import fatworm.pred.Predicate;
 
 public class Planner
 {
-	private static Plan rootPlan;
+	private Plan rootPlan;
 
 	public Planner()
 	{
@@ -42,16 +43,7 @@ public class Planner
 			if (DataBase.getDataBase() != null && DataBase.getDataBase().getOpenedScans() != null) DataBase.getDataBase().getOpenedScans().clear();
 			if (rootPlan == null)
 			{
-				//TODO check this code, should use saveMdMgr
-				FileOutputStream fos = new FileOutputStream(FatwormDB.fileMgr().dbName + "/" + "metadata");
-				ObjectOutputStream oos = new ObjectOutputStream(fos);
-				oos.writeObject(FatwormDB.mdMgr());
-				oos.flush();
-				oos.close();
-				if (FatwormDB.mdMgr().currentDB != null)
-				{
-					FatwormDB.mdMgr().put(FatwormDB.mdMgr().currentDataBase.name, FatwormDB.mdMgr().currentDataBase, true);
-				}
+				FatwormDB.mdMgr().save();
 				return 0;
 			}
 			if (rootPlan instanceof InsertPlan)
@@ -59,9 +51,9 @@ public class Planner
 				int ret = ((InsertPlan) rootPlan).execute();
 				if (FatwormDB.durability)
 				{
-					if (FatwormDB.mdMgr().currentDB != null)
+					if (DataBase.getDataBase() != null)
 					{
-						FatwormDB.mdMgr().put(FatwormDB.mdMgr().currentDataBase.name, FatwormDB.mdMgr().currentDataBase, false);
+						FatwormDB.mdMgr().put(DataBase.getDataBase().name, DataBase.getDataBase(), false);
 					}
 				}
 				return ret;
@@ -71,9 +63,9 @@ public class Planner
 				int ret = ((DeletePlan) rootPlan).execute();
 				if (FatwormDB.durability)
 				{
-					if (FatwormDB.mdMgr().currentDB != null)
+					if (DataBase.getDataBase() != null)
 					{
-						FatwormDB.mdMgr().put(FatwormDB.mdMgr().currentDataBase.name, FatwormDB.mdMgr().currentDataBase, false);
+						FatwormDB.mdMgr().put(DataBase.getDataBase().name, DataBase.getDataBase(), false);
 					}
 					FatwormDB.bufferMgr().writeAll();
 				}
@@ -349,7 +341,7 @@ public class Planner
 				{
 					Predicate pred1 = ((SelectPlan) plan).predicate;
 					Predicate pred2 = ((SelectPlan) sonPlan).predicate;
-					HashMap<String, Index> indexes = ((TablePlan) sonsonPlan).table.indexes;
+					ConcurrentHashMap<String, Index> indexes = ((TablePlan) sonsonPlan).table.indexes;
 					if (pred1 instanceof CopPred && pred2 instanceof CopPred)
 					{
 						CopPred cop1 = (CopPred) pred1;
@@ -449,7 +441,5 @@ public class Planner
 		plan = indexOptimizeInPred(plan);
 		// if (plan != null) System.out.println(plan.tostring());
 		rootPlan = plan;
-		if (rootPlan != null)
-		System.out.println(rootPlan.tostring());
 	}
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import fatworm.database.Schema;
 import fatworm.database.Table;
+import fatworm.metadata.MetadataMgr;
 import fatworm.record.Record;
 import fatworm.scan.Scan;
 import fatworm.scan.TableScan;
@@ -31,6 +32,7 @@ public class InsertPlan implements Plan
 		plan = new TablePlan(table);
 		TableScan tableScan = (TableScan) plan.open();
 		Scan scan = plan2.open();
+		MetadataMgr.readLock.lock();
 		while (scan.next())
 		{
 			Record record = scan.getRecord();
@@ -45,6 +47,9 @@ public class InsertPlan implements Plan
 			}
 			tableScan.insert(record);
 		}
+		scan.close();
+		tableScan.close();
+		MetadataMgr.readLock.unlock();
 		return 1;
 	}
 

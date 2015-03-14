@@ -34,6 +34,8 @@ public class SortScan implements Scan
 	int size;
 	
 	TableScan tableScan;
+	
+	Table tempTable;
 
 	@SuppressWarnings("rawtypes")
 	class Sorter implements Comparator
@@ -95,10 +97,14 @@ public class SortScan implements Scan
 		
 		scan = s;
 		scan.beforeFirst();
-		//TODO make counting of the tempTableNum synchronized
-		Table table = Table.createTable("TEMP_" + MetadataMgr.tempTableNum, sc);
-		MetadataMgr.tempTableNum++;
-		tableScan = new TableScan(table);
+		
+		synchronized (FatwormDB.mdMgr().tempTableNum)
+		{
+			tempTable = Table.createTable("TEMP_" + FatwormDB.mdMgr().tempTableNum, sc);
+			FatwormDB.mdMgr().tempTableNum = (FatwormDB.mdMgr().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
+		}
+		tableScan = new TableScan(tempTable);
+		
 		while (scan.next())
 		{
 			tableScan.insert(scan.getRecord());
@@ -130,8 +136,6 @@ public class SortScan implements Scan
 	{
 		tableScan.close();
 		DataBase.getDataBase().removeTable(tableScan.table);
-		FatwormDB.mdMgr();
-		MetadataMgr.tempTableNum++;
 	}
 
 	@Override

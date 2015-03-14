@@ -2,8 +2,10 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
+import fatworm.FatwormDB;
 import fatworm.database.Schema;
 import fatworm.database.Table;
+import fatworm.metadata.MetadataMgr;
 import fatworm.pred.Predicate;
 import fatworm.scan.Scan;
 import fatworm.scan.UpdateScan;
@@ -39,12 +41,14 @@ public class DeletePlan implements Plan
 			scan = (UpdateScan) p.open();
 		}
 		int count = 0;
+		MetadataMgr.readLock.lock();
 		while (scan.next())
 		{
 			scan.delete();
 			count++;
 		}
 		scan.close();
+		MetadataMgr.readLock.unlock();
 		return count;
 	}
 
