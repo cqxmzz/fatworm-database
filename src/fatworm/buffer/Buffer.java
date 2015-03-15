@@ -1,5 +1,8 @@
 package fatworm.buffer;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 import fatworm.FatwormDB;
 import fatworm.file.Block;
 import fatworm.file.Page;
@@ -11,6 +14,10 @@ public class Buffer
 	Block block = null;
 
 	boolean dirty = false;
+	
+	ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+	protected Lock readLock = rwLock.readLock();
+	protected Lock writeLock = rwLock.writeLock();
 
 	public Buffer()
 	{

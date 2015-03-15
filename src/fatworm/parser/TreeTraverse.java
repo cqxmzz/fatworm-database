@@ -100,7 +100,7 @@ public class TreeTraverse
 				if (child0.getType() == 49)
 				{
 					String db_name = child0.toString().toLowerCase();
-					FatwormDB.bufferMgr().flushAll();
+					FatwormDB.bufferMgr().writeAll();
 					if (DataBase.include(db_name))
 					{
 						DataBase.dropDataBase(db_name);

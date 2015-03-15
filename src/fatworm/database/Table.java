@@ -20,7 +20,6 @@ import fatworm.record.Record;
 
 public class Table implements Serializable
 {
-	//TODO add lock for table
 	public CopyOnWriteArrayList<Integer> places = new CopyOnWriteArrayList<Integer>();
 	
 	public SortedSet<Integer> emptyList = Collections.synchronizedSortedSet(new TreeSet<Integer>());

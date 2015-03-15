@@ -11,7 +11,6 @@ public class TableScan implements UpdateScan
 {
 	protected Table table;
 
-	//TODO change these things into a curser
 	Record record;
 	int now;
 	int placeNow;
@@ -28,18 +27,18 @@ public class TableScan implements UpdateScan
 	//return the place inserted
 	public int insert(Record r)
 	{
-		if (table.emptyList.isEmpty())
-		{
-			int oldTail = table.tail;
-			table.places.add(oldTail);
-			int tail = FatwormDB.bufferMgr().insert(table.name, r, oldTail);
-			if (table.tail < tail)
-				table.tail = tail;
-			return oldTail;
-		}
 		Integer place;
 		synchronized (table.emptyList)
 		{
+			if (table.emptyList.isEmpty())
+			{
+				int oldTail = table.tail;
+				table.places.add(oldTail);
+				int tail = FatwormDB.bufferMgr().insert(table.name, r, oldTail);
+				if (table.tail < tail)
+					table.tail = tail;
+				return oldTail;
+			}
 			place = table.emptyList.first();
 			table.emptyList.remove(place);
 			table.places.add(place);

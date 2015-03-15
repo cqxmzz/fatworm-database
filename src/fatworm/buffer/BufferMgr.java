@@ -4,6 +4,9 @@ import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import javax.jws.soap.SOAPBinding.Use;
 
@@ -28,10 +31,14 @@ public class BufferMgr
 
 	//filename+blockNum => index in findTree
 	//Use TreeMap to optimize space use
-	TreeMap<String, Integer> findTree = new TreeMap<String, Integer>();
-
+	ConcurrentSkipListMap<String, Integer> findTree = new ConcurrentSkipListMap<String, Integer>();
+	
 	Random rand = new Random();
-
+	
+	ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+	protected Lock readLock = rwLock.readLock();
+	protected Lock writeLock = rwLock.writeLock();
+	
 	public BufferMgr()
 	{
 		buffers = new Buffer[FatwormDB.BUFFER_SIZE];
@@ -43,6 +50,7 @@ public class BufferMgr
 
 	public void flushAll()
 	{
+		writeLock.lock();
 		LinkedList<String> list = new LinkedList<String>();
 		for (String i : findTree.keySet())
 		{
@@ -50,10 +58,12 @@ public class BufferMgr
 		}
 		for (String i : list)
 			buffers[findTree.get(i)].flush();
+		writeLock.unlock();
 	}
 	
 	public void writeAll()
 	{
+		readLock.lock();
 		LinkedList<String> list = new LinkedList<String>();
 		for (String i : findTree.keySet())
 		{
@@ -61,6 +71,7 @@ public class BufferMgr
 		}
 		for (String i : list)
 			buffers[findTree.get(i)].write();
+		readLock.unlock();
 	}
 
 	Buffer getLRUBuffer(Block blk)
@@ -77,17 +88,20 @@ public class BufferMgr
 
 	public Buffer getBuffer(Block blk)
 	{
+		writeLock.lock();
 		if (findTree.containsKey(blk.toString()))
 		{
 			return buffers[findTree.get(blk.toString())];
 		}
 		Buffer ret = getLRUBuffer(blk);
+		writeLock.unlock();
 		return ret;
 	}
 
 	public int insert(String name, Record r, int place) // return new tail
 	{
-		return write(name, place, r);
+		int ret = write(name, place, r);
+		return ret;
 	}
 
 	public Record get(String name, int integer)
@@ -95,6 +109,14 @@ public class BufferMgr
 		Schema sche = DataBase.getDataBase().getTable(name).getSchema();
 		Block block = new Block(name, integer / FatwormDB.BLOCK_SIZE);
 		Buffer buffer = getBuffer(block);
+		readLock.lock();
+		while (!buffer.block.equals(block))
+		{
+			readLock.unlock();
+			buffer = getBuffer(block);
+			readLock.lock();
+		}
+		buffer.readLock.lock();
 		LinkedList<Type> list = new LinkedList<Type>();
 		int top = integer % FatwormDB.BLOCK_SIZE;
 		for (int i = 0; i < sche.getColumns().size(); ++i)
@@ -162,6 +184,8 @@ public class BufferMgr
 			list.add(type);
 			top += temp;
 		}
+		buffer.readLock.unlock();
+		readLock.unlock();
 		return new Record(list, sche);
 	}
 
@@ -185,6 +209,14 @@ public class BufferMgr
 			buffer = getBuffer(block);
 			integer = integer += recordLength;
 		}
+		readLock.lock();
+		while (!buffer.block.equals(block))
+		{
+			readLock.unlock();
+			buffer = getBuffer(block);
+			readLock.lock();
+		}
+		buffer.writeLock.lock();
 		for (int i = 0; i < sche.getColumns().size(); ++i)
 		{
 			Type type = record.getValue(i);
@@ -240,6 +272,8 @@ public class BufferMgr
 		}
 		if (FatwormDB.durability)
 			buffer.write();
+		buffer.writeLock.unlock();
+		readLock.unlock();
 		return integer;
 	}
 }

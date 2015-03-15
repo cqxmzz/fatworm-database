@@ -17,13 +17,15 @@ import fatworm.scan.Scan;
 public class FatwormDB
 {
 	//parameters
+	/* gratuity: page */
+	/* page size = block size */
 	public static int BUFFER_SIZE = 1024;
 
-	public static int BLOCK_SIZE = 8192*8;
+	public static int BLOCK_SIZE = 8 * 1024 * 8;
 
 	public static boolean durability = false;
 	
-	public static int MAX_TEMP_TABLE_COUNT = 64;
+	public static int MAX_TEMP_TABLE_COUNT = 256;
 	
 	//workers
 	private static ThreadLocal<Planner> planner;

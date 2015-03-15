@@ -24,10 +24,10 @@ import fatworm.scan.Scan;
 
 public class MetadataMgr implements Serializable
 {
-	//read lock for reading meta data in memory
+	//read lock for reading/writing meta data in memory, every data structure on disk is synchronized
+	//write lock for writing/reading meta data on disk
+	
 	public static transient Lock readLock;
-	//write lock for writing meta data to memory
-	//or for writing/reading meta data on disk
 	public static transient Lock writeLock;
 	
 	public transient ThreadLocal<DataBase> currentDataBase;
@@ -81,7 +81,7 @@ public class MetadataMgr implements Serializable
 		{
 			writeLock.lock();
 			if (flush)
-				FatwormDB.bufferMgr().flushAll();
+				FatwormDB.bufferMgr().writeAll();
 			else
 				FatwormDB.bufferMgr().writeAll();
 			FileOutputStream fos = new FileOutputStream(FatwormDB.fileMgr().dbName + "/" + n + "/" + "DBdata");
