@@ -6,10 +6,9 @@ import java.util.LinkedList;
 
 import fatworm.FatwormDB;
 import fatworm.database.DataBase;
+import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.database.Table;
-import fatworm.metadata.MetadataMgr;
-import fatworm.record.Record;
 import fatworm.types.DECIMAL;
 import fatworm.types.INT;
 import fatworm.types.Type;

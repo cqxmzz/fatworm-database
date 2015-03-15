@@ -2,6 +2,7 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
+import fatworm.FatwormException;
 import fatworm.database.Schema;
 import fatworm.database.Table;
 import fatworm.scan.TableScan;
@@ -15,7 +16,7 @@ public class TablePlan implements Plan
 
 	public TablePlan(Table t) throws Exception
 	{
-		if (t == null) throw new Exception("don't have that table");
+		if (t == null) throw new FatwormException("don't have that table");
 		table = t;
 	}
 

@@ -2,8 +2,8 @@ package fatworm.scan;
 
 import java.util.ArrayList;
 
+import fatworm.database.Record;
 import fatworm.index.Index;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class IndexSelectScan implements Scan

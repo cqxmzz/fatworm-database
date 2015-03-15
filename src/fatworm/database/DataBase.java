@@ -1,8 +1,6 @@
 package fatworm.database;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -11,6 +9,7 @@ import fatworm.FatwormException;
 import fatworm.metadata.MetadataMgr;
 import fatworm.scan.Scan;
 
+@SuppressWarnings("serial")
 public class DataBase implements Serializable
 {
 	public String name;

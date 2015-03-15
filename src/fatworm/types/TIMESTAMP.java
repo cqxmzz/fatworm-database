@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+@SuppressWarnings("serial")
 public class TIMESTAMP extends BasicType
 {
 	private Timestamp value;

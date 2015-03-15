@@ -1,5 +1,8 @@
 package fatworm.types;
 
+import fatworm.FatwormException;
+
+@SuppressWarnings("serial")
 public class VARCHAR extends BasicType
 {
 	private String value;
@@ -32,7 +35,7 @@ public class VARCHAR extends BasicType
 		length = value.length();
 		if (value.length() > capacity)
 		{
-			throw new Exception("string longer than capacity!");
+			throw new FatwormException("string longer than capacity!");
 		}
 	}
 

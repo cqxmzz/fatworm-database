@@ -1,10 +1,8 @@
 package fatworm.scan;
 
-import java.util.ListIterator;
-
 import fatworm.FatwormDB;
+import fatworm.database.Record;
 import fatworm.database.Table;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class TableScan implements UpdateScan

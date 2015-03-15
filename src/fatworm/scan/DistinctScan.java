@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.TreeSet;
 
-import fatworm.record.Record;
+import fatworm.database.Record;
 import fatworm.types.Type;
 
 public class DistinctScan implements Scan
@@ -37,7 +37,6 @@ public class DistinctScan implements Scan
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public DistinctScan(Scan s)
 	{
 		scan = s;

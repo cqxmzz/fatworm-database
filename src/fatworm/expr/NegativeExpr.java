@@ -2,6 +2,7 @@ package fatworm.expr;
 
 import java.math.BigDecimal;
 
+import fatworm.FatwormException;
 import fatworm.database.Schema;
 import fatworm.scan.Scan;
 import fatworm.types.DECIMAL;
@@ -45,11 +46,10 @@ public class NegativeExpr implements Expr
 				ret.setFLOAT(-((FLOAT) value).getFLOAT());
 				return ret;
 			}
-			throw new Exception();
+			throw new FatwormException("Type not accepted");
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			System.out.println("some thing wrong when calculating expression while casting types");
 			return null;
 		}
 	}

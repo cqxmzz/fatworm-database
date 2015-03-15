@@ -2,6 +2,7 @@ package fatworm.expr;
 
 import java.util.Stack;
 
+import fatworm.FatwormException;
 import fatworm.database.DataBase;
 import fatworm.database.Schema;
 import fatworm.scan.Scan;
@@ -83,7 +84,7 @@ public class FuncExpr implements Expr
 		{
 			try
 			{
-				throw new Exception("can't find this field in the select-expr");
+				throw new FatwormException("can't find this field in the select-expr");
 			} catch (Exception e)
 			{
 				e.printStackTrace();

@@ -1,15 +1,12 @@
-package fatworm.record;
+package fatworm.database;
 
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.sql.Timestamp;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import fatworm.FatwormDB;
-import fatworm.database.Column;
-import fatworm.database.Schema;
-import fatworm.database.Table;
+import fatworm.FatwormException;
 import fatworm.types.BOOLEAN;
 import fatworm.types.CHAR;
 import fatworm.types.DATETIME;
@@ -20,7 +17,7 @@ import fatworm.types.TIMESTAMP;
 import fatworm.types.Type;
 import fatworm.types.VARCHAR;
 
-public class Record implements Serializable
+public class Record
 {
 	private LinkedList<Type> values = new LinkedList<Type>();
 
@@ -38,7 +35,7 @@ public class Record implements Serializable
 			{
 				try
 				{
-					throw new Exception("autoincrement should on primary key");
+					throw new FatwormException("autoincrement should on primary key");
 				} catch (Exception e)
 				{
 					e.printStackTrace();
@@ -48,7 +45,7 @@ public class Record implements Serializable
 			{
 				try
 				{
-					throw new Exception("autoincrement should on INT");
+					throw new FatwormException("autoincrement should on INT");
 				} catch (Exception e)
 				{
 					e.printStackTrace();

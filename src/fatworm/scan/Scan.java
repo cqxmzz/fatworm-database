@@ -1,6 +1,6 @@
 package fatworm.scan;
 
-import fatworm.record.Record;
+import fatworm.database.Record;
 import fatworm.types.Type;
 
 public interface Scan

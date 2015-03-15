@@ -1,15 +1,10 @@
 package fatworm.driver;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import javax.media.jai.operator.MeanDescriptor;
-
 import fatworm.FatwormDB;
-import fatworm.metadata.MetadataMgr;
 
 public class FatwormConnection extends Conn
 {

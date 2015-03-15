@@ -1,5 +1,6 @@
 package fatworm.types;
 
+@SuppressWarnings("serial")
 public class INT extends BasicType
 {
 	private int value;

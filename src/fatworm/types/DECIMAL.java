@@ -2,6 +2,7 @@ package fatworm.types;
 
 import java.math.BigDecimal;
 
+@SuppressWarnings("serial")
 public class DECIMAL extends BasicType
 {
 	private int effective;
@@ -206,6 +207,7 @@ public class DECIMAL extends BasicType
 		return new DECIMAL(getDECIMAL().add(((DECIMAL) t).getDECIMAL()));
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public Type devideBy(int count)
 	{

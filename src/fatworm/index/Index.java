@@ -3,8 +3,6 @@ package fatworm.index;
 import java.io.Serializable;
 import java.util.List;
 
-import fatworm.file.Block;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public interface Index extends Serializable

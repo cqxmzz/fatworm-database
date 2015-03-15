@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import fatworm.FatwormDB;
@@ -28,11 +26,6 @@ public class FileMgr
 		dbName = dbname;
 		dbDirectory = new File(dbname);
 		dbDirectory.mkdir();
-	}
-
-	public void newMetadata(String n)
-	{
-		File metadataDirectory = new File(dbDirectory.getAbsolutePath(), "metadata");
 	}
 
 	public void newDatabasePath(String n)

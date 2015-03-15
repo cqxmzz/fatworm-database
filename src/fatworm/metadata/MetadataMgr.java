@@ -6,22 +6,15 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import com.sun.corba.se.spi.ior.Writeable;
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 import fatworm.FatwormDB;
-import fatworm.FatwormException;
 import fatworm.database.DataBase;
-import fatworm.scan.Scan;
 
+@SuppressWarnings("serial")
 public class MetadataMgr implements Serializable
 {
 	//read lock for reading/writing meta data in memory, every data structure on disk is synchronized

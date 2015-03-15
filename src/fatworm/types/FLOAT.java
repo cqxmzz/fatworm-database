@@ -2,6 +2,7 @@ package fatworm.types;
 
 import java.math.BigDecimal;
 
+@SuppressWarnings("serial")
 public class FLOAT extends BasicType
 {
 	private BigDecimal value;
@@ -160,6 +161,7 @@ public class FLOAT extends BasicType
 		return new FLOAT(value.add(((FLOAT) t).getBigDecimal()));
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public Type devideBy(int count)
 	{

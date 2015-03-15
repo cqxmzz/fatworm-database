@@ -1,20 +1,16 @@
 package fatworm.buffer;
 
-import java.nio.ByteBuffer;
 import java.util.LinkedList;
 import java.util.Random;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.jws.soap.SOAPBinding.Use;
-
 import fatworm.FatwormDB;
 import fatworm.database.DataBase;
+import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.file.Block;
-import fatworm.record.Record;
 import fatworm.types.BOOLEAN;
 import fatworm.types.CHAR;
 import fatworm.types.DATETIME;

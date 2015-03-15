@@ -1,5 +1,8 @@
 package fatworm.types;
 
+import fatworm.FatwormException;
+
+@SuppressWarnings("serial")
 public class CHAR extends BasicType
 {
 	private int capacity;
@@ -23,7 +26,7 @@ public class CHAR extends BasicType
 		capacity = n;
 		if (value.length() > n)
 		{
-			throw new Exception("string longer than capacity!");
+			throw new FatwormException("string longer than capacity!");
 		}
 	}
 

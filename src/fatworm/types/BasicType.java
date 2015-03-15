@@ -2,6 +2,7 @@ package fatworm.types;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class BasicType implements Type, Serializable
 {
 	boolean isNULL = true;

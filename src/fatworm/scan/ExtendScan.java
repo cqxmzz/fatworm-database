@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fatworm.database.DataBase;
+import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.expr.Expr;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class ExtendScan implements Scan

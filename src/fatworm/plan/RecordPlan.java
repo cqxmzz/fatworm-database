@@ -2,8 +2,8 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
+import fatworm.database.Record;
 import fatworm.database.Schema;
-import fatworm.record.Record;
 import fatworm.scan.RecordScan;
 import fatworm.scan.Scan;
 

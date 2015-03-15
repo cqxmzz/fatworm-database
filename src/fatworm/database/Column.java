@@ -2,16 +2,10 @@ package fatworm.database;
 
 import java.io.Serializable;
 
-import fatworm.types.BOOLEAN;
-import fatworm.types.CHAR;
-import fatworm.types.DATETIME;
-import fatworm.types.DECIMAL;
-import fatworm.types.FLOAT;
-import fatworm.types.INT;
-import fatworm.types.TIMESTAMP;
-import fatworm.types.Type;
-import fatworm.types.VARCHAR;
+import fatworm.FatwormException;
+import fatworm.types.*;
 
+@SuppressWarnings("serial")
 public class Column implements Serializable
 {
 	private Type type;
@@ -56,6 +50,11 @@ public class Column implements Serializable
 	{
 		return hasDefault;
 	}
+	
+	public boolean notNull()
+	{
+		return notNull;
+	}
 
 	public Type getConstValue()
 	{
@@ -78,7 +77,7 @@ public class Column implements Serializable
 		if (t.isINT()) return new INT(c);
 		if (t.isTIMESTAMP()) return new TIMESTAMP(c);
 		if (t.isVARCHAR()) return new VARCHAR(((VARCHAR) t).getCapacity(), c);
-		throw new Exception("can't cast const value " + c);
+		throw new FatwormException("can't cast const value " + c);
 	}
 
 	public Type getType()

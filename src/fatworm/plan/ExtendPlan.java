@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fatworm.database.Column;
+import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.expr.Expr;
-import fatworm.record.Record;
 import fatworm.scan.ExtendScan;
 import fatworm.scan.RecordScan;
 import fatworm.scan.Scan;

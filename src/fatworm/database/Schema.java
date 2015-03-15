@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import sun.security.util.Length;
 import fatworm.expr.Expr;
 import fatworm.expr.FieldExpr;
 
+@SuppressWarnings("serial")
 public class Schema implements Serializable
 {
 	private LinkedList<Column> columns;

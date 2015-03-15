@@ -1,8 +1,8 @@
 package fatworm.scan;
 
 import fatworm.database.DataBase;
+import fatworm.database.Record;
 import fatworm.pred.Predicate;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class SelectScan implements UpdateScan

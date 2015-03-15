@@ -3,8 +3,8 @@ package fatworm.scan;
 import java.util.LinkedList;
 import java.util.List;
 
+import fatworm.database.Record;
 import fatworm.database.Schema;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class ProjectScan implements Scan

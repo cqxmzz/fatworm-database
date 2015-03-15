@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import fatworm.database.Record;
 import fatworm.expr.FieldExpr;
 import fatworm.pred.CopPred;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class ProductEqualSelectScan implements Scan

@@ -3,7 +3,6 @@ package fatworm.driver;
 import java.sql.ResultSet;
 
 import fatworm.FatwormDB;
-import fatworm.parser.Parse;
 
 public class FatwormStatement extends Stat
 {

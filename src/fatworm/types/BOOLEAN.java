@@ -1,5 +1,6 @@
 package fatworm.types;
 
+@SuppressWarnings("serial")
 public class BOOLEAN extends BasicType
 {
 	private boolean value;

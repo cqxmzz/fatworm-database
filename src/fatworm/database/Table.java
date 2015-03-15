@@ -1,12 +1,8 @@
 package fatworm.database;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,8 +12,8 @@ import fatworm.FatwormDB;
 import fatworm.index.Index;
 import fatworm.index.MemIndex;
 import fatworm.metadata.MetadataMgr;
-import fatworm.record.Record;
 
+@SuppressWarnings("serial")
 public class Table implements Serializable
 {
 	public CopyOnWriteArrayList<Integer> places = new CopyOnWriteArrayList<Integer>();

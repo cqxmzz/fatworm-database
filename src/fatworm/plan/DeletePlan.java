@@ -2,7 +2,6 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
-import fatworm.FatwormDB;
 import fatworm.database.Schema;
 import fatworm.database.Table;
 import fatworm.metadata.MetadataMgr;

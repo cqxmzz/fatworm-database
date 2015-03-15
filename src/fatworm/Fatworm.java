@@ -1,8 +1,5 @@
 package fatworm;
 
-import java.util.HashMap;
-
-import com.sun.xml.internal.bind.v2.TODO;
 
 public class Fatworm
 {

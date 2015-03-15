@@ -2,10 +2,10 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
+import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.database.Table;
 import fatworm.metadata.MetadataMgr;
-import fatworm.record.Record;
 import fatworm.scan.Scan;
 import fatworm.scan.TableScan;
 import fatworm.types.CHAR;

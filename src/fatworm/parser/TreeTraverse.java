@@ -9,12 +9,48 @@ import java.util.List;
 import org.antlr.runtime.tree.CommonTree;
 
 import fatworm.FatwormDB;
-import fatworm.database.*;
-import fatworm.expr.*;
-import fatworm.plan.*;
-import fatworm.pred.*;
-import fatworm.record.Record;
-import fatworm.types.*;
+import fatworm.FatwormException;
+import fatworm.database.Column;
+import fatworm.database.DataBase;
+import fatworm.database.Record;
+import fatworm.database.Schema;
+import fatworm.database.Table;
+import fatworm.expr.BinaryExpr;
+import fatworm.expr.ConstantExpr;
+import fatworm.expr.Expr;
+import fatworm.expr.FieldExpr;
+import fatworm.expr.FuncExpr;
+import fatworm.expr.NegativeExpr;
+import fatworm.expr.SubqueryExpr;
+import fatworm.plan.DistinctPlan;
+import fatworm.plan.ExtendPlan;
+import fatworm.plan.GroupPlan;
+import fatworm.plan.Plan;
+import fatworm.plan.ProductPlan;
+import fatworm.plan.ProjectPlan;
+import fatworm.plan.RecordPlan;
+import fatworm.plan.RenamePlan;
+import fatworm.plan.SelectPlan;
+import fatworm.plan.SortPlan;
+import fatworm.plan.TablePlan;
+import fatworm.pred.AllPred;
+import fatworm.pred.AndPred;
+import fatworm.pred.AnyPred;
+import fatworm.pred.CopPred;
+import fatworm.pred.ExistsPred;
+import fatworm.pred.InPred;
+import fatworm.pred.NotExistsPred;
+import fatworm.pred.OrPred;
+import fatworm.pred.Predicate;
+import fatworm.types.BOOLEAN;
+import fatworm.types.CHAR;
+import fatworm.types.DATETIME;
+import fatworm.types.DECIMAL;
+import fatworm.types.FLOAT;
+import fatworm.types.INT;
+import fatworm.types.TIMESTAMP;
+import fatworm.types.Type;
+import fatworm.types.VARCHAR;
 
 public class TreeTraverse
 {
@@ -66,7 +102,7 @@ public class TreeTraverse
 					String db_name = child0.toString().toLowerCase();
 					if (DataBase.include(db_name))
 					{
-						throw new Exception("can't create, already have that database");
+						throw new FatwormException("can't create, already have that database");
 					}
 					else
 					{
@@ -88,7 +124,7 @@ public class TreeTraverse
 					}
 					else
 					{
-						throw new Exception("can't use, don't have that database");
+						throw new FatwormException("can't use, don't have that database");
 					}
 				}
 			}
@@ -129,7 +165,7 @@ public class TreeTraverse
 						tbl_name = child0.toString().toLowerCase();
 						if (DataBase.getDataBase().includeTable(tbl_name))
 						{
-							throw new Exception("can't create, already have that table");
+							throw new FatwormException("can't create, already have that table");
 						}
 					}
 					// create_definition -> CREATE_DEFINITION col_name data_type
@@ -153,7 +189,7 @@ public class TreeTraverse
 								name = child1.toString().toLowerCase();
 								if (colNameStrings.contains(name))
 								{
-									throw new Exception("can't create, duplicate column name");
+									throw new FatwormException("can't create, duplicate column name");
 								}
 							}
 							// column_definition_suffix -> AUTO_INCREMENT
@@ -169,7 +205,7 @@ public class TreeTraverse
 								{
 									if (notNull)
 									{
-										throw new Exception("can't create, not null- null conflict");
+										throw new FatwormException("can't create, not null- null conflict");
 									}
 									else
 									{
@@ -184,7 +220,7 @@ public class TreeTraverse
 										// column_definition_suffix -> NOT NULL
 										if (isNull)
 										{
-											throw new Exception("can't create, not null- null conflict");
+											throw new FatwormException("can't create, not null- null conflict");
 										}
 										else
 										{
@@ -251,7 +287,7 @@ public class TreeTraverse
 						else
 						{
 							// throw new
-							// Exception("can't drop, don't have that table");
+							// FatwormException("can't drop, don't have that table");
 						}
 					}
 				}
@@ -526,10 +562,8 @@ public class TreeTraverse
 		}
 	}
 
-	private Type getValue(CommonTree valueTree, Column c) throws Exception // for
-																			// insert
-																			// and
-																			// update
+	// for insert and update
+	private Type getValue(CommonTree valueTree, Column c) throws Exception
 	{
 		if (valueTree.getType() == 70)
 		{
@@ -541,6 +575,10 @@ public class TreeTraverse
 		if (valueTree.getType() == 28)
 		{
 			return null;
+		}
+		if (c.notNull() && c.getType().isNULL())
+		{
+			throw new FatwormException("Insert null on NOTNULL colum");
 		}
 		if (c.autoIncrement() && c.getType() instanceof INT)
 		{

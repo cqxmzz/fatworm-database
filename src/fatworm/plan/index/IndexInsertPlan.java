@@ -1,12 +1,12 @@
 package fatworm.plan.index;
 
+import fatworm.database.Record;
 import fatworm.database.Table;
 import fatworm.index.Index;
 import fatworm.metadata.MetadataMgr;
 import fatworm.plan.InsertPlan;
 import fatworm.plan.Plan;
 import fatworm.plan.TablePlan;
-import fatworm.record.Record;
 import fatworm.scan.Scan;
 import fatworm.scan.TableScan;
 import fatworm.types.CHAR;

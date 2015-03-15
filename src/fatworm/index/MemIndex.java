@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-import sun.awt.windows.ThemeReader;
 import fatworm.database.Table;
 import fatworm.types.Type;
 
+@SuppressWarnings("serial")
 public class MemIndex implements Index, Serializable
 {
 	@SuppressWarnings("rawtypes")

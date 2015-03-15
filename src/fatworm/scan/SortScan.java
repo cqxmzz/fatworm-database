@@ -5,16 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import antlr.MakeGrammar;
-
-import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
-
 import fatworm.FatwormDB;
 import fatworm.database.DataBase;
+import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.database.Table;
-import fatworm.metadata.MetadataMgr;
-import fatworm.record.Record;
 import fatworm.types.Type;
 
 public class SortScan implements Scan

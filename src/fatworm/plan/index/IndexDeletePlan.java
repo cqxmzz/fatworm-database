@@ -1,5 +1,6 @@
 package fatworm.plan.index;
 
+import fatworm.database.Record;
 import fatworm.database.Table;
 import fatworm.index.Index;
 import fatworm.metadata.MetadataMgr;
@@ -7,7 +8,6 @@ import fatworm.plan.DeletePlan;
 import fatworm.plan.Plan;
 import fatworm.plan.SelectPlan;
 import fatworm.pred.Predicate;
-import fatworm.record.Record;
 import fatworm.scan.UpdateScan;
 
 public class IndexDeletePlan extends DeletePlan

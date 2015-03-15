@@ -1,7 +1,5 @@
 package fatworm;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
