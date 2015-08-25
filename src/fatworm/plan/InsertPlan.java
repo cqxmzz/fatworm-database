@@ -2,6 +2,7 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
+import fatworm.FatwormException;
 import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.database.Table;
@@ -27,7 +28,7 @@ public class InsertPlan implements Plan
 		plan2.setFather(this);
 	}
 
-	public int execute() throws Exception
+	public int execute() throws FatwormException
 	{
 		plan = new TablePlan(table);
 		TableScan tableScan = (TableScan) plan.open();
@@ -38,11 +39,11 @@ public class InsertPlan implements Plan
 			Record record = scan.getRecord();
 			for (int j = 0; j < record.getValues().size(); ++j)
 			{
-				if (record.getValue(j) instanceof CHAR && plan.schema().getIndex(j).getType() instanceof VARCHAR)
+				if (record.getValue(j) instanceof CHAR && plan.schema().getColumn(j).getType() instanceof VARCHAR)
 				{
-					Type type = plan.schema().getIndex(j).getType();
+					Type type = plan.schema().getColumn(j).getType();
 					record.setValue(j, new VARCHAR(((VARCHAR) type).getCapacity(), ((CHAR) record.getValue(j)).getCHAR()));
-					record.schema().getIndex(j).setType(type);
+					record.schema().getColumn(j).setType(type);
 				}
 			}
 			tableScan.insert(record);

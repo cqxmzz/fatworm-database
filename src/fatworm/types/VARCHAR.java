@@ -22,7 +22,7 @@ public class VARCHAR extends BasicType
 		length = 0;
 	}
 
-	public VARCHAR(int n, String s) throws Exception
+	public VARCHAR(int n, String s) throws FatwormException
 	{
 		setNotNULL();
 		if (s.equals("null"))
@@ -44,7 +44,7 @@ public class VARCHAR extends BasicType
 		try
 		{
 			return new VARCHAR(length, "'" + value + "'");
-		} catch (Exception e)
+		} catch (FatwormException e)
 		{
 			e.printStackTrace();
 			return null;

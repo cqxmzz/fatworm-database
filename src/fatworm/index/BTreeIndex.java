@@ -6,6 +6,7 @@ import fatworm.database.Column;
 import fatworm.database.Table;
 import fatworm.types.Type;
 
+//TODO Btree
 @SuppressWarnings("serial")
 public class BTreeIndex implements Index
 {

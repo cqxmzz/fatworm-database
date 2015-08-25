@@ -24,8 +24,12 @@ public class Block
 
 	public boolean equals(Object obj)
 	{
-		Block blk = (Block) obj;
-		return fileName.equals(blk.fileName) && blkNumber == blk.blkNumber;
+		if (obj instanceof Block)
+		{
+			Block blk = (Block) obj;
+			return fileName.equals(blk.fileName) && blkNumber == blk.blkNumber;
+		}
+		return false;
 	}
 
 	public String toString()

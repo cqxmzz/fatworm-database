@@ -14,7 +14,7 @@ public class CHAR extends BasicType
 		capacity = n;
 	}
 
-	public CHAR(int n, String s) throws Exception
+	public CHAR(int n, String s) throws FatwormException
 	{
 		setNotNULL();
 		if (s.equals("null"))
@@ -35,7 +35,7 @@ public class CHAR extends BasicType
 		try
 		{
 			return new CHAR(capacity, "'" + value + "'");
-		} catch (Exception e)
+		} catch (FatwormException e)
 		{
 			e.printStackTrace();
 			return null;

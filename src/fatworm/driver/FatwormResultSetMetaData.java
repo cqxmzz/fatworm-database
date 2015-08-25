@@ -3,15 +3,7 @@ package fatworm.driver;
 import java.sql.Types;
 
 import fatworm.database.Schema;
-import fatworm.types.BOOLEAN;
-import fatworm.types.CHAR;
-import fatworm.types.DATETIME;
-import fatworm.types.DECIMAL;
-import fatworm.types.FLOAT;
-import fatworm.types.INT;
-import fatworm.types.TIMESTAMP;
-import fatworm.types.Type;
-import fatworm.types.VARCHAR;
+import fatworm.types.*;
 
 public class FatwormResultSetMetaData extends ResuSetMetaData
 {
@@ -30,7 +22,7 @@ public class FatwormResultSetMetaData extends ResuSetMetaData
 
 	public int getColumnType(int columnIndex)
 	{
-		Type type = schema.getIndex(columnIndex - 1).getType();
+		Type type = schema.getColumn(columnIndex - 1).getType();
 		if (type instanceof BOOLEAN) return Types.BOOLEAN;
 		if (type instanceof CHAR) return Types.CHAR;
 		if (type instanceof DATETIME) return Types.TIMESTAMP;

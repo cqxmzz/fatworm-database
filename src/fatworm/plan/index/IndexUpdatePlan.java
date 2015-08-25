@@ -3,6 +3,7 @@ package fatworm.plan.index;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import fatworm.FatwormException;
 import fatworm.database.Column;
 import fatworm.database.DataBase;
 import fatworm.database.Schema;
@@ -18,12 +19,12 @@ import fatworm.types.Type;
 
 public class IndexUpdatePlan extends UpdatePlan
 {
-	public IndexUpdatePlan(Table t, Predicate pred, LinkedList<Expr> exprs, Schema s) throws Exception
+	public IndexUpdatePlan(Table t, Predicate pred, LinkedList<Expr> exprs, Schema s) throws FatwormException
 	{
 		super(t, pred, exprs, s);
 	}
 
-	public int execute() throws Exception
+	public int execute() throws FatwormException
 	{
 		Plan p = plan;
 		if (predicate != null) p = new SelectPlan(plan, predicate);

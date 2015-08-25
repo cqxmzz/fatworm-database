@@ -7,5 +7,5 @@ public interface Predicate
 {
 	public boolean isSatisfied(Scan scan);
 
-	public boolean notNeed(Schema schema);
+	public boolean dontNeedSchema(Schema schema);
 }

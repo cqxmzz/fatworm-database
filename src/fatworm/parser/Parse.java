@@ -13,7 +13,7 @@ public class Parse
 	{
 	}
 
-	public boolean parse(String str)
+	synchronized public boolean parse(String str)
 	{
 		try
 		{

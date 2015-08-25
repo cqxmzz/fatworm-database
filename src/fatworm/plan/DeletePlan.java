@@ -2,6 +2,7 @@ package fatworm.plan;
 
 import java.util.LinkedList;
 
+import fatworm.FatwormException;
 import fatworm.database.Schema;
 import fatworm.database.Table;
 import fatworm.metadata.MetadataMgr;
@@ -17,7 +18,7 @@ public class DeletePlan implements Plan
 
 	protected Predicate predicate;
 
-	public DeletePlan(Table t, Predicate p) throws Exception
+	public DeletePlan(Table t, Predicate p) throws FatwormException
 	{
 		table = t;
 		plan = new TablePlan(table);
@@ -25,7 +26,7 @@ public class DeletePlan implements Plan
 		predicate = p;
 	}
 
-	public int execute() throws Exception
+	public int execute() throws FatwormException
 	{
 		Plan p;
 		UpdateScan scan;

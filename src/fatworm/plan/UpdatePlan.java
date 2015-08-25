@@ -3,6 +3,7 @@ package fatworm.plan;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import fatworm.FatwormException;
 import fatworm.database.Column;
 import fatworm.database.DataBase;
 import fatworm.database.Schema;
@@ -24,7 +25,7 @@ public class UpdatePlan implements Plan
 
 	protected Schema schema;
 
-	public UpdatePlan(Table t, Predicate pred, LinkedList<Expr> exps, Schema s) throws Exception
+	public UpdatePlan(Table t, Predicate pred, LinkedList<Expr> exps, Schema s) throws FatwormException
 	{
 		table = t;
 		plan = new TablePlan(table);
@@ -33,7 +34,7 @@ public class UpdatePlan implements Plan
 		schema = s;
 	}
 
-	public int execute() throws Exception
+	public int execute() throws FatwormException
 	{
 		Plan p = plan;
 		if (predicate != null) p = new SelectPlan(plan, predicate);

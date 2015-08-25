@@ -14,7 +14,7 @@ public interface Expr
 
 	public String toString();
 
-	public boolean notNeed(Schema s);
+	public boolean dontNeedSchema(Schema s);
 
 	public boolean isConst();
 }

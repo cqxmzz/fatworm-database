@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import fatworm.FatwormDB;
+import fatworm.FatwormException;
 import fatworm.database.DataBase;
 import fatworm.database.Schema;
 import fatworm.database.Table;
@@ -35,7 +36,8 @@ public class Planner
 	{
 		try
 		{
-			if (DataBase.getDataBase() != null && DataBase.getDataBase().getOpenedScans() != null) DataBase.getDataBase().getOpenedScans().clear();
+			if (DataBase.getDataBase() != null && DataBase.getDataBase().getOpenedScans() != null)
+				DataBase.getDataBase().getOpenedScans().clear();
 			if (rootPlan == null)
 			{
 				FatwormDB.mdMgr().save();
@@ -77,7 +79,7 @@ public class Planner
 			}
 			FatwormStatement.setResultSet(new FatwormResultSet(rootPlan.open(), rootPlan.schema()));
 			FatwormDB.bufferMgr().writeAll();
-		} catch (Exception e)
+		} catch (FatwormException e)
 		{
 			e.printStackTrace();
 		}
@@ -371,12 +373,12 @@ public class Planner
 		rootPlan = new IndexInsertPlan(t, p);
 	}
 
-	public void createUpdatePlan(Table t, Predicate pred, LinkedList<Expr> exprs, Schema s) throws Exception
+	public void createUpdatePlan(Table t, Predicate pred, LinkedList<Expr> exprs, Schema s) throws FatwormException
 	{
 		rootPlan = new IndexUpdatePlan(t, pred, exprs, s);
 	}
 
-	public void createDeletePlan(Table t, Predicate p) throws Exception
+	public void createDeletePlan(Table t, Predicate p) throws FatwormException
 	{
 		rootPlan = new IndexDeletePlan(t, p);
 	}

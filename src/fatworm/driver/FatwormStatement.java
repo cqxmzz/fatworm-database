@@ -11,12 +11,9 @@ public class FatwormStatement extends Stat
 	public boolean execute(String sql)
 	{
 		setResultSet(null);
-		synchronized (FatwormDB.parser)
+		if (!FatwormDB.parser.parse(sql))
 		{
-			if (!FatwormDB.parser.parse(sql))
-			{
-				return false;
-			}
+			return false;
 		}
 		try
 		{

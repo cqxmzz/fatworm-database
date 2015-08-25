@@ -1,6 +1,5 @@
 package fatworm;
 
-
 public class Fatworm
 {
 	public static void main(String[] args)

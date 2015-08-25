@@ -2,6 +2,7 @@ package fatworm.pred;
 
 import java.math.BigDecimal;
 
+import fatworm.FatwormException;
 import fatworm.database.Schema;
 import fatworm.expr.Expr;
 import fatworm.scan.Scan;
@@ -103,7 +104,7 @@ public class CopPred implements Predicate
 			try
 			{
 				tmp = new VARCHAR(s.length(), "'" + s + "'");
-			} catch (Exception e)
+			} catch (FatwormException e)
 			{
 				tmp = null;
 				e.printStackTrace();
@@ -117,7 +118,7 @@ public class CopPred implements Predicate
 			try
 			{
 				tmp = new VARCHAR(s.length(), "'" + s + "'");
-			} catch (Exception e)
+			} catch (FatwormException e)
 			{
 				tmp = null;
 				e.printStackTrace();
@@ -168,8 +169,8 @@ public class CopPred implements Predicate
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
-		return lftExpr.notNeed(s) && rgtExpr.notNeed(s);
+		return lftExpr.dontNeedSchema(s) && rgtExpr.dontNeedSchema(s);
 	}
 }

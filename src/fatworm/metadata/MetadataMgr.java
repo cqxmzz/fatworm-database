@@ -12,6 +12,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import fatworm.FatwormDB;
+import fatworm.FatwormException;
 import fatworm.database.DataBase;
 
 @SuppressWarnings("serial")
@@ -29,8 +30,6 @@ public class MetadataMgr implements Serializable
 	
 	public CopyOnWriteArraySet<String> allDataBase;
 	
-	public Integer tempTableNum = -1;
-
 	public MetadataMgr()
 	{
 		createLocks();
@@ -53,7 +52,7 @@ public class MetadataMgr implements Serializable
 		}
 		try
 		{
-			writeLock.lock();
+			readLock.lock();
 			FileInputStream ins = new FileInputStream(FatwormDB.fileMgr().dbName + "/" + n + "/" + "DBdata");
 			ObjectInputStream ooi = new ObjectInputStream(ins);
 			DataBase m = (DataBase) (ooi.readObject());
@@ -64,7 +63,7 @@ public class MetadataMgr implements Serializable
 			e.printStackTrace();
 			return null;
 		}finally{
-			writeLock.unlock();
+			readLock.unlock();
 		}
 	}
 
@@ -74,7 +73,7 @@ public class MetadataMgr implements Serializable
 		{
 			writeLock.lock();
 			if (flush)
-				FatwormDB.bufferMgr().writeAll();
+				FatwormDB.bufferMgr().flushAll();
 			else
 				FatwormDB.bufferMgr().writeAll();
 			FileOutputStream fos = new FileOutputStream(FatwormDB.fileMgr().dbName + "/" + n + "/" + "DBdata");
@@ -90,7 +89,7 @@ public class MetadataMgr implements Serializable
 		}
 	}
 
-	public void init() throws Exception
+	public void init() throws FatwormException
 	{
 		if (allDataBase != null)
 			return;
@@ -125,11 +124,11 @@ public class MetadataMgr implements Serializable
 			}
 		} catch (Exception e)
 		{
-			throw e;
+			throw (FatwormException) e;
 		}
 	}	
 	
-	public void save() throws Exception
+	public void save() throws FatwormException
 	{
 		try
 		{
@@ -138,7 +137,7 @@ public class MetadataMgr implements Serializable
 			saveMdMgr(FatwormDB.fileMgr().dbName + "/" + "metadata2");
 		} catch (Exception e)
 		{
-			throw e;
+			throw (FatwormException) e;
 		}finally
 		{
 			writeLock.unlock();

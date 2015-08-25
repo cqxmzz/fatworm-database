@@ -7,15 +7,7 @@ import java.util.LinkedList;
 
 import fatworm.FatwormDB;
 import fatworm.FatwormException;
-import fatworm.types.BOOLEAN;
-import fatworm.types.CHAR;
-import fatworm.types.DATETIME;
-import fatworm.types.DECIMAL;
-import fatworm.types.FLOAT;
-import fatworm.types.INT;
-import fatworm.types.TIMESTAMP;
-import fatworm.types.Type;
-import fatworm.types.VARCHAR;
+import fatworm.types.*;
 
 public class Record
 {
@@ -36,7 +28,7 @@ public class Record
 				try
 				{
 					throw new FatwormException("autoincrement should on primary key");
-				} catch (Exception e)
+				} catch (FatwormException e)
 				{
 					e.printStackTrace();
 				}
@@ -46,7 +38,7 @@ public class Record
 				try
 				{
 					throw new FatwormException("autoincrement should on INT");
-				} catch (Exception e)
+				} catch (FatwormException e)
 				{
 					e.printStackTrace();
 				}
@@ -134,21 +126,21 @@ public class Record
 	{
 		if (p instanceof VARCHAR)
 		{
-			if (schema.getIndex(i).getType() instanceof CHAR)
+			if (schema.getColumn(i).getType() instanceof CHAR)
 			{
-				((VARCHAR) p).setCapacity(((CHAR) (schema.getIndex(i).getType())).getCapacity());
+				((VARCHAR) p).setCapacity(((CHAR) (schema.getColumn(i).getType())).getCapacity());
 			}
 			else
-				((VARCHAR) p).setCapacity(((VARCHAR) (schema.getIndex(i).getType())).getCapacity());
+				((VARCHAR) p).setCapacity(((VARCHAR) (schema.getColumn(i).getType())).getCapacity());
 		}
 		if (p instanceof CHAR)
 		{
-			if (schema.getIndex(i).getType() instanceof VARCHAR)
+			if (schema.getColumn(i).getType() instanceof VARCHAR)
 			{
-				((CHAR) p).setCapacity(((VARCHAR) (schema.getIndex(i).getType())).getCapacity());
+				((CHAR) p).setCapacity(((VARCHAR) (schema.getColumn(i).getType())).getCapacity());
 			}
 			else
-				((CHAR) p).setCapacity(((CHAR) (schema.getIndex(i).getType())).getCapacity());
+				((CHAR) p).setCapacity(((CHAR) (schema.getColumn(i).getType())).getCapacity());
 		}
 		values.set(i, p);
 	}
@@ -189,163 +181,6 @@ public class Record
 			}
 		}
 		return new Record(vals, ret);
-	}
-
-	public Record(ByteBuffer bb, Schema sche)
-	{
-		LinkedList<Type> list = new LinkedList<Type>();
-		int top = 12;
-		for (int i = 0; i < sche.getColumns().size(); ++i)
-		{
-			Type type = sche.getIndex(i).getType();
-			bb.position(top);
-			top += 4;
-			int place = bb.getInt();
-			if (place == -1)
-			{
-				list.add(null);
-				continue;
-			}
-			bb.position(place);
-			if (bb.getChar() == 'n')
-			{
-				type = type.clone();
-				list.add(type);
-				continue;
-			}
-			bb.position(place);
-			if (type instanceof BOOLEAN)
-			{
-				type = new BOOLEAN(bb.getChar());
-			}
-			if (type instanceof CHAR)
-			{
-				int len = bb.getInt();
-				byte[] byteval = new byte[len];
-				bb.get(byteval);
-				try
-				{
-					type = new CHAR(((CHAR) type).getCapacity(), "'" + (new String(byteval)) + "'");
-				} catch (Exception e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			if (type instanceof DATETIME)
-			{
-				int len = bb.getInt();
-				byte[] byteval = new byte[len];
-				bb.get(byteval);
-				type = new DATETIME("'" + (new String(byteval)) + "'");
-			}
-			if (type instanceof VARCHAR)
-			{
-				int len = bb.getInt();
-				byte[] byteval = new byte[len];
-				bb.get(byteval);
-				try
-				{
-					type = new VARCHAR(((VARCHAR) type).getCapacity(), "'" + (new String(byteval)) + "'");
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-				}
-			}
-			if (type instanceof DECIMAL)
-			{
-				int len = bb.getInt();
-				byte[] byteval = new byte[len];
-				bb.get(byteval);
-				type = new DECIMAL(((DECIMAL) type).getEffective(), ((DECIMAL) type).getDecimalSetting(), new String(byteval));
-			}
-			if (type instanceof FLOAT)
-			{
-				type = new FLOAT(bb.getFloat());
-			}
-			if (type instanceof INT)
-			{
-				type = new INT(bb.getInt());
-			}
-			if (type instanceof TIMESTAMP)
-			{
-				int len = bb.getInt();
-				byte[] byteval = new byte[len];
-				bb.get(byteval);
-				type = new TIMESTAMP("'" + (new String(byteval)) + "'");
-			}
-			list.add(type);
-		}
-		schema = sche;
-		values = list;
-	}
-
-	public ByteBuffer toByteBuffer()
-	{
-		ByteBuffer bb = ByteBuffer.allocateDirect(FatwormDB.BLOCK_SIZE);
-		int end = FatwormDB.BLOCK_SIZE;
-		int top = 12;
-		for (Type type : values)
-		{
-			if (type == null)
-			{
-				bb.putInt(top, -1);
-				top += 4;
-				continue;
-			}
-			end = end - type.length();
-			bb.putInt(top, end);
-			top += 4;
-			if (type.isNULL())
-			{
-				bb.putChar(end, 'n');
-				continue;
-			}
-			if (type instanceof BOOLEAN)
-			{
-				if (type.toString().startsWith("f")) bb.putChar(end, 'f');
-				if (type.toString().startsWith("t")) bb.putChar(end, 't');
-			}
-			if (type instanceof CHAR)
-			{
-				bb.putInt(end, type.toString().length());
-				bb.position(end + 4);
-				bb.put(type.toString().getBytes());
-			}
-			if (type instanceof DATETIME)
-			{
-				bb.putInt(end, type.toString().length());
-				bb.position(end + 4);
-				bb.put(type.toString().getBytes());
-			}
-			if (type instanceof VARCHAR)
-			{
-				bb.putInt(end, type.toString().length());
-				bb.position(end + 4);
-				bb.put(type.toString().getBytes());
-			}
-			if (type instanceof DECIMAL)
-			{
-				bb.putInt(end, type.toString().length());
-				bb.position(end + 4);
-				bb.put(type.toString().getBytes());
-			}
-			if (type instanceof FLOAT)
-			{
-				bb.putFloat(end, ((FLOAT) type).getFLOAT());
-			}
-			if (type instanceof INT)
-			{
-				bb.putInt(end, ((INT) type).getINT());
-			}
-			if (type instanceof TIMESTAMP)
-			{
-				bb.putInt(end, type.toString().length());
-				bb.position(end + 4);
-				bb.put(type.toString().getBytes());
-			}
-		}
-		return bb;
 	}
 
 	public Record rename(String name)

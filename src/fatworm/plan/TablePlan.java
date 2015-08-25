@@ -14,7 +14,7 @@ public class TablePlan implements Plan
 
 	Plan fatherPlan = null;
 
-	public TablePlan(Table t) throws Exception
+	public TablePlan(Table t) throws FatwormException
 	{
 		if (t == null) throw new FatwormException("don't have that table");
 		table = t;

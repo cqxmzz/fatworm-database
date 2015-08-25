@@ -46,11 +46,10 @@ public class GroupScan implements Scan
 		keys = new LinkedList<Type>();
 		boolean flag = true;
 		
-		synchronized (FatwormDB.mdMgr().tempTableNum)
+		synchronized (DataBase.getDataBase().tempTableNum)
 		{
-			Table.dropTable("TEMP_" + FatwormDB.mdMgr().tempTableNum);
-			tempTable = Table.createTable("TEMP_" + FatwormDB.mdMgr().tempTableNum, schema);
-			FatwormDB.mdMgr().tempTableNum = (FatwormDB.mdMgr().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
+			tempTable = Table.createTable("TEMP_" + DataBase.getDataBase().tempTableNum, schema);
+			DataBase.getDataBase().tempTableNum = (DataBase.getDataBase().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
 		}
 		tableScan = new TableScan(tempTable);
 		

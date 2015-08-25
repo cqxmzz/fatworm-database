@@ -32,7 +32,7 @@ public class TableScan implements UpdateScan
 			{
 				int oldTail = table.tail;
 				table.places.add(oldTail);
-				int tail = FatwormDB.bufferMgr().insert(table.name, r, oldTail);
+				int tail = FatwormDB.bufferMgr().write(table.name, oldTail, r);
 				if (table.tail < tail)
 					table.tail = tail;
 				return oldTail;
@@ -40,7 +40,7 @@ public class TableScan implements UpdateScan
 			place = table.emptyList.first();
 			table.emptyList.remove(place);
 			table.places.add(place);
-			int tail = FatwormDB.bufferMgr().insert(table.name, r, place);
+			int tail = FatwormDB.bufferMgr().write(table.name, place, r);
 			if (table.tail < tail)
 				table.tail = tail;
 		}
@@ -192,6 +192,6 @@ public class TableScan implements UpdateScan
 	
 	public void setRecordFromPlace(Integer place, Record record)
 	{
-		FatwormDB.bufferMgr().insert(table.name, record, place);
+		FatwormDB.bufferMgr().write(table.name, place, record);
 	}
 }

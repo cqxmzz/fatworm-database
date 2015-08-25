@@ -47,7 +47,7 @@ public class NegativeExpr implements Expr
 				return ret;
 			}
 			throw new FatwormException("Type not accepted");
-		} catch (Exception e)
+		} catch (FatwormException e)
 		{
 			e.printStackTrace();
 			return null;
@@ -72,9 +72,9 @@ public class NegativeExpr implements Expr
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
-		return expression.notNeed(s);
+		return expression.dontNeedSchema(s);
 	}
 
 	@Override

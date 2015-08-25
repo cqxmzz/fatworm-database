@@ -194,9 +194,9 @@ public class BinaryExpr implements Expr
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
-		return expression1.notNeed(s) && expression2.notNeed(s);
+		return expression1.dontNeedSchema(s) && expression2.dontNeedSchema(s);
 	}
 
 	@Override

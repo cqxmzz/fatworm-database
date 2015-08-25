@@ -2,6 +2,7 @@ package fatworm.pred;
 
 import java.math.BigDecimal;
 
+import fatworm.FatwormException;
 import fatworm.database.Schema;
 import fatworm.expr.Expr;
 import fatworm.plan.Plan;
@@ -90,7 +91,7 @@ public class InPred implements fatworm.pred.Predicate
 				try
 				{
 					tmp = new VARCHAR(s.length(), "'" + s + "'");
-				} catch (Exception e)
+				} catch (FatwormException e)
 				{
 					tmp = null;
 					e.printStackTrace();
@@ -104,7 +105,7 @@ public class InPred implements fatworm.pred.Predicate
 				try
 				{
 					tmp = new VARCHAR(s.length(), "'" + s + "'");
-				} catch (Exception e)
+				} catch (FatwormException e)
 				{
 					tmp = null;
 					e.printStackTrace();
@@ -150,7 +151,7 @@ public class InPred implements fatworm.pred.Predicate
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
 		return false;
 	}

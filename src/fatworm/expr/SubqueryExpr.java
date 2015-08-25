@@ -31,7 +31,7 @@ public class SubqueryExpr implements Expr
 	@Override
 	public Type getType(Schema s)
 	{
-		return subqueryPlan.schema().getIndex(0).getType();
+		return subqueryPlan.schema().getColumn(0).getType();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class SubqueryExpr implements Expr
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
 		return false;
 	}

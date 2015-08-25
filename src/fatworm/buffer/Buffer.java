@@ -14,9 +14,11 @@ public class Buffer
 	Block block = null;
 
 	boolean dirty = false;
-	
-	ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+
+	private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+
 	protected Lock readLock = rwLock.readLock();
+
 	protected Lock writeLock = rwLock.writeLock();
 
 	public Buffer()
@@ -61,19 +63,23 @@ public class Buffer
 		return block;
 	}
 
-	void flush()
+	protected void flush()
 	{
 		if (block != null && dirty)
 		{
 			page.write(block);
 		}
-		if (block != null) FatwormDB.bufferMgr().findTree.remove(block.toString());
+		if (block != null)
+		{
+			FatwormDB.bufferMgr().findTree.remove(block.toString());
+			FatwormDB.bufferMgr().lruQueue.remove(block.toString());
+		}
 		block = null;
 		page.flush();
 		dirty = false;
 	}
-	
-	void write()
+
+	protected void write()
 	{
 		if (block != null && dirty)
 		{
@@ -82,12 +88,10 @@ public class Buffer
 		dirty = false;
 	}
 
-	void assignToBlock(Block b)
+	protected void assignToBlock(Block b)
 	{
 		if (block != null && !b.equals(block))
-		{
 			flush();
-		}
 		block = b;
 		page.read(block);
 	}

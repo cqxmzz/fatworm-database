@@ -1,5 +1,6 @@
 package fatworm.plan.index;
 
+import fatworm.FatwormException;
 import fatworm.database.Record;
 import fatworm.database.Table;
 import fatworm.index.Index;
@@ -20,7 +21,7 @@ public class IndexInsertPlan extends InsertPlan
 		super(t, p);
 	}
 
-	public int execute() throws Exception
+	public int execute() throws FatwormException
 	{
 		plan = new TablePlan(table);
 		TableScan tableScan = (TableScan) plan.open();
@@ -31,11 +32,11 @@ public class IndexInsertPlan extends InsertPlan
 			Record record = scan.getRecord();
 			for (int j = 0; j < record.getValues().size(); ++j)
 			{
-				if (record.getValue(j) instanceof CHAR && plan.schema().getIndex(j).getType() instanceof VARCHAR)
+				if (record.getValue(j) instanceof CHAR && plan.schema().getColumn(j).getType() instanceof VARCHAR)
 				{
-					Type type = plan.schema().getIndex(j).getType();
+					Type type = plan.schema().getColumn(j).getType();
 					record.setValue(j, new VARCHAR(((VARCHAR) type).getCapacity(), "'" + ((CHAR) record.getValue(j)).getCHAR() + "'"));
-					record.schema().getIndex(j).setType(type);
+					record.schema().getColumn(j).setType(type);
 				}
 			}
 			record.setSchema(plan.schema());

@@ -139,7 +139,7 @@ public class FieldExpr implements Expr
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
 		for (int i = 0; i < s.getColumns().size(); ++i)
 		{

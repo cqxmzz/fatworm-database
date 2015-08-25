@@ -18,10 +18,11 @@ public class DataBase implements Serializable
 
 	public transient ThreadLocal<Stack<Scan>> openedScans = new ThreadLocal<Stack<Scan>>();
 
+	public Integer tempTableNum = 0;
+
 	public DataBase(String n)
 	{
 		name = n;
-		FatwormDB.mdMgr().put(n, this, true);
 		openedScans.set(new Stack<Scan>());
 	}
 

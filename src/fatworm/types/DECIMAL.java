@@ -2,6 +2,8 @@ package fatworm.types;
 
 import java.math.BigDecimal;
 
+import fatworm.FatwormException;
+
 @SuppressWarnings("serial")
 public class DECIMAL extends BasicType
 {
@@ -71,7 +73,7 @@ public class DECIMAL extends BasicType
 		return decimal;
 	}
 
-	public DECIMAL(String s, int v1) throws Exception
+	public DECIMAL(String s, int v1) throws FatwormException
 	{
 		setNotNULL();
 		if (s.equals("null"))

@@ -5,12 +5,16 @@ import java.sql.Statement;
 import java.util.Properties;
 
 import fatworm.FatwormDB;
+import fatworm.FatwormException;
 
 public class FatwormConnection extends Conn
 {
 	public FatwormConnection(String url, Properties prop) throws Exception
 	{
+		if (FatwormDB.CONNECTION_COUNT == FatwormDB.MAX_CONNECTION)
+			throw new FatwormException("Too many connection");
 		FatwormDB.init(url);
+		FatwormDB.CONNECTION_COUNT++;
 	}
 
 	public Statement createStatement() throws SQLException
@@ -30,6 +34,7 @@ public class FatwormConnection extends Conn
 		try
 		{
 			FatwormDB.mdMgr().save();
+			FatwormDB.CONNECTION_COUNT--;
 		} catch (Exception e)
 		{
 			e.printStackTrace();

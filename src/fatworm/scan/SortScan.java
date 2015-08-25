@@ -93,10 +93,10 @@ public class SortScan implements Scan
 		scan = s;
 		scan.beforeFirst();
 		
-		synchronized (FatwormDB.mdMgr().tempTableNum)
+		synchronized (DataBase.getDataBase())
 		{
-			tempTable = Table.createTable("TEMP_" + FatwormDB.mdMgr().tempTableNum, sc);
-			FatwormDB.mdMgr().tempTableNum = (FatwormDB.mdMgr().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
+			tempTable = Table.createTable("TEMP_" + DataBase.getDataBase().tempTableNum, sc);
+			DataBase.getDataBase().tempTableNum = (DataBase.getDataBase().tempTableNum + 1) % FatwormDB.MAX_TEMP_TABLE_COUNT;
 		}
 		tableScan = new TableScan(tempTable);
 		

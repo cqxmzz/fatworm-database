@@ -2,6 +2,8 @@ package fatworm.types;
 
 import java.math.BigDecimal;
 
+import fatworm.FatwormException;
+
 @SuppressWarnings("serial")
 public class FLOAT extends BasicType
 {
@@ -11,7 +13,7 @@ public class FLOAT extends BasicType
 	{
 	}
 
-	public FLOAT(String s) throws Exception
+	public FLOAT(String s) throws FatwormException
 	{
 		setNotNULL();
 		if (s.equals("null"))

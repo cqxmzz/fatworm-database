@@ -42,7 +42,7 @@ public class Schema implements Serializable
 		this.columns = columns;
 	}
 
-	public Column getIndex(int i)
+	public Column getColumn(int i)
 	{
 		return columns.get(i);
 	}
@@ -217,11 +217,12 @@ public class Schema implements Serializable
 	{
 		if (length != -1)
 			return length;
-		length = 0;
+		int temp = 0;
 		for (Column c : getColumns())
 		{
-			length += (c.getType().length() + 5);
+			temp += (c.getType().length() + 5);
 		}
-		return length;
+		length = temp;
+		return temp;
 	}
 }

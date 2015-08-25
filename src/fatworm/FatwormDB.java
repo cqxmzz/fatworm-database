@@ -17,13 +17,19 @@ public class FatwormDB
 	//parameters
 	/* gratuity: page */
 	/* page size = block size */
+	/* if number of connection come close to buffer size, there will be race condition */
+
 	public static int BUFFER_SIZE = 1024;
+
+	public static int MAX_CONNECTION = BUFFER_SIZE/4;
+
+	public static int CONNECTION_COUNT = 0;
 
 	public static int BLOCK_SIZE = 8 * 1024 * 8;
 
 	public static boolean durability = false;
 	
-	public static int MAX_TEMP_TABLE_COUNT = 256;
+	public static int MAX_TEMP_TABLE_COUNT = 1024;
 	
 	//workers
 	private static ThreadLocal<Planner> planner;
@@ -36,7 +42,7 @@ public class FatwormDB
 	
 	public static Parse parser = new Parse();
 
-	public static void init(String dirname) throws Exception
+	public static void init(String dirname) throws FatwormException
 	{
 		if (planner == null)
 			initPlanner();
@@ -64,7 +70,7 @@ public class FatwormDB
 		fm = new FileMgr(dirname);
 	}
 
-	public static void initMetadataMgr(String dirname) throws Exception
+	public static void initMetadataMgr(String dirname) throws FatwormException
 	{
 		mdm = new MetadataMgr();
 		mdm.init();

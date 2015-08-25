@@ -88,7 +88,7 @@ public class AnyPred implements Predicate
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
 		return false;
 	}

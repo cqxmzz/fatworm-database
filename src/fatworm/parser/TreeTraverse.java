@@ -10,47 +10,11 @@ import org.antlr.runtime.tree.CommonTree;
 
 import fatworm.FatwormDB;
 import fatworm.FatwormException;
-import fatworm.database.Column;
-import fatworm.database.DataBase;
-import fatworm.database.Record;
-import fatworm.database.Schema;
-import fatworm.database.Table;
-import fatworm.expr.BinaryExpr;
-import fatworm.expr.ConstantExpr;
-import fatworm.expr.Expr;
-import fatworm.expr.FieldExpr;
-import fatworm.expr.FuncExpr;
-import fatworm.expr.NegativeExpr;
-import fatworm.expr.SubqueryExpr;
-import fatworm.plan.DistinctPlan;
-import fatworm.plan.ExtendPlan;
-import fatworm.plan.GroupPlan;
-import fatworm.plan.Plan;
-import fatworm.plan.ProductPlan;
-import fatworm.plan.ProjectPlan;
-import fatworm.plan.RecordPlan;
-import fatworm.plan.RenamePlan;
-import fatworm.plan.SelectPlan;
-import fatworm.plan.SortPlan;
-import fatworm.plan.TablePlan;
-import fatworm.pred.AllPred;
-import fatworm.pred.AndPred;
-import fatworm.pred.AnyPred;
-import fatworm.pred.CopPred;
-import fatworm.pred.ExistsPred;
-import fatworm.pred.InPred;
-import fatworm.pred.NotExistsPred;
-import fatworm.pred.OrPred;
-import fatworm.pred.Predicate;
-import fatworm.types.BOOLEAN;
-import fatworm.types.CHAR;
-import fatworm.types.DATETIME;
-import fatworm.types.DECIMAL;
-import fatworm.types.FLOAT;
-import fatworm.types.INT;
-import fatworm.types.TIMESTAMP;
-import fatworm.types.Type;
-import fatworm.types.VARCHAR;
+import fatworm.database.*;
+import fatworm.expr.*;
+import fatworm.plan.*;
+import fatworm.pred.*;
+import fatworm.types.*;
 
 public class TreeTraverse
 {
@@ -85,7 +49,7 @@ public class TreeTraverse
 		}
 	}
 
-	// This code here is ugly as shit, I should use visitor pattern for parsing, but I don't have time to fix it
+	// This code here is ugly as shit, I should have used visitor pattern for parsing, but I don't have time to fix it
 	@SuppressWarnings("unchecked")
 	void traverse(CommonTree tree)
 	{
@@ -93,11 +57,11 @@ public class TreeTraverse
 		{
 			FatwormDB.planner().setPlan(null);
 			// statement -> database_statement -> CREATE_DATABASE db_name
-			if (tree.getType() == 19)
+			if (tree.getType() == FatwormLexer.CREATE_DATABASE)
 			{
 				// db_name -> name -> ID
 				CommonTree child0 = (CommonTree) tree.getChild(0);
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					String db_name = child0.toString().toLowerCase();
 					if (DataBase.include(db_name))
@@ -111,11 +75,11 @@ public class TreeTraverse
 				}
 			}
 			// statement -> database_statement -> USE_DATABASE db_name
-			if (tree.getType() == 95)
+			if (tree.getType() == FatwormLexer.USE_DATABASE)
 			{
 				// db_name -> name -> ID
 				CommonTree child0 = (CommonTree) tree.getChild(0);
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					String db_name = child0.toString().toLowerCase();
 					if (DataBase.include(db_name))
@@ -129,11 +93,11 @@ public class TreeTraverse
 				}
 			}
 			// statement -> table_statement -> DROP_DATABASE db_name
-			if (tree.getType() == 34)
+			if (tree.getType() == FatwormLexer.DROP_DATABASE)
 			{
 				// db_name -> name -> ID
 				CommonTree child0 = (CommonTree) tree.getChild(0);
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					String db_name = child0.toString().toLowerCase();
 					FatwormDB.bufferMgr().writeAll();
@@ -149,7 +113,7 @@ public class TreeTraverse
 			}
 			// statement -> table_statement -> CREATE_TABLE tbl_name
 			// create_definition*
-			if (tree.getType() == 22)
+			if (tree.getType() == FatwormLexer.CREATE_TABLE)
 			{
 				List<CommonTree> childTrees0 = tree.getChildren();
 				String tbl_name = null;
@@ -160,7 +124,7 @@ public class TreeTraverse
 				for (CommonTree child0 : childTrees0)
 				{
 					// tbl_name -> name -> ID
-					if (child0.getType() == 49)
+					if (child0.getType() == FatwormLexer.ID)
 					{
 						tbl_name = child0.toString().toLowerCase();
 						if (DataBase.getDataBase().includeTable(tbl_name))
@@ -170,7 +134,7 @@ public class TreeTraverse
 					}
 					// create_definition -> CREATE_DEFINITION col_name data_type
 					// column_definition_suffix*
-					if (child0.getType() == 20)
+					if (child0.getType() == FatwormLexer.CREATE_DEFINITION)
 					{
 						List<CommonTree> childTrees1 = child0.getChildren();
 						String name = null;
@@ -184,7 +148,7 @@ public class TreeTraverse
 						{
 							// col_name -> tbl_name '.'^ name (will not happen)
 							// col_name -> name -> ID
-							if (child1.getType() == 49)
+							if (child1.getType() == FatwormLexer.ID)
 							{
 								name = child1.toString().toLowerCase();
 								if (colNameStrings.contains(name))
@@ -193,12 +157,12 @@ public class TreeTraverse
 								}
 							}
 							// column_definition_suffix -> AUTO_INCREMENT
-							if (child1.getType() == 10)
+							if (child1.getType() == FatwormLexer.AUTO_INCREMENT)
 							{
 								autoIncrement = true;
 							}
 							// column_definition_suffix -> NOT? NULL
-							if (child1.getType() == 70)
+							if (child1.getType() == FatwormLexer.NULL)
 							{
 								// column_definition_suffix -> NULL
 								if (child1.getChildCount() == 0)
@@ -230,11 +194,11 @@ public class TreeTraverse
 								}
 							}
 							// column_definition_suffix -> DEFAULT CONST_VALUE
-							if (child1.getType() == 28)
+							if (child1.getType() == FatwormLexer.DEFAULT)
 							{
 								hasDefault = true;
 								CommonTree child2 = (CommonTree) child1.getChild(0);
-								if (child2.getType() == 70)
+								if (child2.getType() == FatwormLexer.NULL)
 								{
 									type.setNULL();
 								}
@@ -246,7 +210,7 @@ public class TreeTraverse
 								// CONST_VALUE -> ?
 								constValue = cv;
 							}
-							if (child1.getType() == 13 || child1.getType() == 16 || child1.getType() == 26 || child1.getType() == 27 || child1.getType() == 41 || child1.getType() == 56 || child1.getType() == 88 || child1.getType() == 98)
+							if (child1.getType() == FatwormLexer.BOOLEAN || child1.getType() == FatwormLexer.CHAR || child1.getType() == FatwormLexer.DATETIME || child1.getType() == FatwormLexer.DECIMAL || child1.getType() == FatwormLexer.FLOAT || child1.getType() == FatwormLexer.INT || child1.getType() == FatwormLexer.TIMESTAMP || child1.getType() == FatwormLexer.VARCHAR)
 							{
 								type = getType(child1);
 							}
@@ -257,12 +221,12 @@ public class TreeTraverse
 						tblNameStrings.addLast(tbl_name);
 					}
 					// create_definition -> PRIMARY_KEY col_name
-					if (child0.getType() == 77)
+					if (child0.getType() == FatwormLexer.PRIMARY_KEY)
 					{
 						// col_name -> tbl_name '.'^ name (will not happen)
 						CommonTree child1 = (CommonTree) child0.getChild(0);
 						// col_name -> name -> ID
-						if (child1.getType() == 49)
+						if (child1.getType() == FatwormLexer.ID)
 						{
 							primaryKey = child1.getText().toLowerCase();
 						}
@@ -272,13 +236,13 @@ public class TreeTraverse
 				table.setPrimaryKey(primaryKey);
 			}
 			// statement -> table_statement -> DROP_TABLE tbl_name*
-			if (tree.getType() == 36)
+			if (tree.getType() == FatwormLexer.DROP_TABLE)
 			{
 				List<CommonTree> childTrees0 = tree.getChildren();
 				for (CommonTree child0 : childTrees0)
 				{
 					// tbl_name -> name -> ID
-					if (child0.getType() == 49)
+					if (child0.getType() == FatwormLexer.ID)
 					{
 						if (DataBase.getDataBase().includeTable(child0.getText().toLowerCase()))
 						{
@@ -296,7 +260,7 @@ public class TreeTraverse
 			// values_clause (no func in value)
 			try
 			{
-				if (tree.getType() == 55)
+				if (tree.getType() == FatwormLexer.INSERT_VALUES)
 				{
 					Table t = null;
 					Record r = null;
@@ -305,14 +269,14 @@ public class TreeTraverse
 					for (CommonTree child0 : childTrees0)
 					{
 						// tbl_name -> name -> ID
-						if (child0.getType() == 49)
+						if (child0.getType() == FatwormLexer.ID)
 						{
 							tbl_name = child0.toString().toLowerCase();
 							t = DataBase.getDataBase().getTable(tbl_name);
 							r = new Record(t);
 						}
 						// values_clause -> VALUES value value*
-						if (child0.getType() == 97)
+						if (child0.getType() == FatwormLexer.VALUES)
 						{
 							Iterator<String> it = DataBase.getDataBase().getTable(tbl_name).getSchema().getNames().iterator();
 							List<CommonTree> childTrees1 = child0.getChildren();
@@ -329,14 +293,14 @@ public class TreeTraverse
 				// statement -> insert_statement -> INSERT_COLUMNS tbl_name
 				// col_name
 				// col_name* values_clause (no func in value)
-				if (tree.getType() == 53)
+				if (tree.getType() == FatwormLexer.INSERT_COLUMNS)
 				{
 					Table t = null;
 					Record r = null;
 					List<CommonTree> childTrees0 = tree.getChildren();
 					// tbl_name -> name -> ID
 					CommonTree child0 = childTrees0.get(0);
-					if (child0.getType() == 49)
+					if (child0.getType() == FatwormLexer.ID)
 					{
 						String tbl_name = child0.toString().toLowerCase();
 						t = DataBase.getDataBase().getTable(tbl_name);
@@ -349,13 +313,13 @@ public class TreeTraverse
 						child0 = childTrees0.get(i);
 						// col_name -> tbl_name '.'^ name (will not happen)
 						// col_name -> name -> ID
-						if (child0.getType() == 49)
+						if (child0.getType() == FatwormLexer.ID)
 						{
 							col_name = child0.toString().toLowerCase();
 							cols.add(col_name);
 						}
 						// values_clause -> VALUES value value*
-						if (child0.getType() == 97)
+						if (child0.getType() == FatwormLexer.VALUES)
 						{
 							Iterator<String> it = cols.iterator();
 							List<CommonTree> childTrees1 = child0.getChildren();
@@ -368,13 +332,13 @@ public class TreeTraverse
 					}
 					FatwormDB.planner().createInsertPlan(t, new RecordPlan(r));
 				}
-			} catch (Exception e)
+			} catch (FatwormException e)
 			{
 				e.printStackTrace();
 			}
 			// statement -> insert_statement -> INSERT_SUBQUERY tbl_name
 			// subquery
-			if (tree.getType() == 54)
+			if (tree.getType() == FatwormLexer.INSERT_SUBQUERY)
 			{
 				List<CommonTree> childTrees0 = tree.getChildren();
 				Table t = null;
@@ -382,7 +346,7 @@ public class TreeTraverse
 				for (CommonTree child0 : childTrees0)
 				{
 					// tbl_name -> name -> ID
-					if (child0.getType() == 49)
+					if (child0.getType() == FatwormLexer.ID)
 					{
 						String tbl_name = child0.toString().toLowerCase();
 						t = DataBase.getDataBase().getTable(tbl_name);
@@ -396,7 +360,7 @@ public class TreeTraverse
 				FatwormDB.planner().createInsertPlan(t, plan);
 			}
 			// statement -> delete_statement -> DELETE^ tbl_name where_clause?
-			if (tree.getType() == 29)
+			if (tree.getType() == FatwormLexer.DELETE)
 			{
 				Table t = null;
 				Predicate pred = null;
@@ -404,13 +368,13 @@ public class TreeTraverse
 				for (CommonTree child0 : childTrees0)
 				{
 					// tbl_name -> name -> ID
-					if (child0.getType() == 49)
+					if (child0.getType() == FatwormLexer.ID)
 					{
 						String tbl_name = child0.toString().toLowerCase();
 						t = DataBase.getDataBase().getTable(tbl_name);
 					}
 					// where_clause -> WHERE^ where_condition
-					if (child0.getType() == 100)
+					if (child0.getType() == FatwormLexer.WHERE)
 					{
 						pred = traverseWhere((CommonTree) child0.getChild(0));
 					}
@@ -419,7 +383,7 @@ public class TreeTraverse
 			}
 			// statement -> update_statement -> UPDATE^ tbl_name update_pair
 			// update_pair* where_clause?
-			if (tree.getType() == 92)
+			if (tree.getType() == FatwormLexer.UPDATE)
 			{
 				Table t = null;
 				Predicate pred = null;
@@ -433,20 +397,20 @@ public class TreeTraverse
 				for (CommonTree child0 : childTrees0)
 				{
 					// tbl_name -> name -> ID
-					if (child0.getType() == 49)
+					if (child0.getType() == FatwormLexer.ID)
 					{
 						tbl_name = child0.toString().toLowerCase();
 						t = DataBase.getDataBase().getTable(tbl_name);
 					}
 					// update_pair -> UPDATE_PAIR col_name value
-					if (child0.getType() == 93)
+					if (child0.getType() == FatwormLexer.UPDATE_PAIR)
 					{
 						List<CommonTree> childTrees1 = child0.getChildren();
 						CommonTree child1 = childTrees1.get(0);
 						// col_name -> tbl_name '.'^ name (will not happen)
 						// col_name -> name -> ID
 						String name = null;
-						if (child1.getType() == 49)
+						if (child1.getType() == FatwormLexer.ID)
 						{
 							name = child1.toString().toLowerCase();
 							column = t.getColumns().get(name);
@@ -459,7 +423,7 @@ public class TreeTraverse
 						exprs.add(expr);
 					}
 					// where_clause -> WHERE^ where_condition
-					if (child0.getType() == 100)
+					if (child0.getType() == FatwormLexer.WHERE)
 					{
 						pred = traverseWhere((CommonTree) child0.getChild(0));
 					}
@@ -469,7 +433,7 @@ public class TreeTraverse
 			}
 			// statement -> index_statement -> CREATE_INDEX index_name tbl_name
 			// col_name
-			if (tree.getType() == 21)
+			if (tree.getType() == FatwormLexer.CREATE_INDEX)
 			{
 				List<CommonTree> childTrees0 = tree.getChildren();
 				CommonTree child0 = (CommonTree) childTrees0.get(0);
@@ -477,20 +441,20 @@ public class TreeTraverse
 				String tbl_name = null;
 				String name = null;
 				// index_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					idx_name = child0.toString().toLowerCase();
 				}
 				child0 = (CommonTree) childTrees0.get(1);
 				// tbl_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					tbl_name = child0.toString().toLowerCase();
 				}
 				child0 = (CommonTree) childTrees0.get(2);
 				// col_name -> tbl_name '.'^ name (will not happen)
 				// col_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					name = child0.toString().toLowerCase();
 				}
@@ -499,7 +463,7 @@ public class TreeTraverse
 			}
 			// statement -> index_statement -> CREATE_UNIQUE_INDEX index_name
 			// tbl_name col_name
-			if (tree.getType() == 23)
+			if (tree.getType() == FatwormLexer.CREATE_UNIQUE_INDEX)
 			{
 				List<CommonTree> childTrees0 = tree.getChildren();
 				CommonTree child0 = (CommonTree) childTrees0.get(0);
@@ -507,20 +471,20 @@ public class TreeTraverse
 				String tbl_name = null;
 				String name = null;
 				// index_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					idx_name = child0.toString().toLowerCase();
 				}
 				child0 = (CommonTree) childTrees0.get(1);
 				// tbl_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					tbl_name = child0.toString().toLowerCase();
 				}
 				child0 = (CommonTree) childTrees0.get(2);
 				// col_name -> tbl_name '.'^ name (will not happen)
 				// col_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					name = child0.toString().toLowerCase();
 				}
@@ -528,20 +492,20 @@ public class TreeTraverse
 				table.createIndex(idx_name, name, true);
 			}
 			// statement -> index_statement -> DROP_INDEX index_name tbl_name
-			if (tree.getType() == 35)
+			if (tree.getType() == FatwormLexer.DROP_INDEX)
 			{
 				List<CommonTree> childTrees0 = tree.getChildren();
 				CommonTree child0 = (CommonTree) childTrees0.get(0);
 				String idx_name = null;
 				String tbl_name = null;
 				// index_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					idx_name = child0.toString().toLowerCase();
 				}
 				child0 = (CommonTree) childTrees0.get(1);
 				// tbl_name -> name -> ID
-				if (child0.getType() == 49)
+				if (child0.getType() == FatwormLexer.ID)
 				{
 					tbl_name = child0.toString().toLowerCase();
 				}
@@ -552,27 +516,27 @@ public class TreeTraverse
 			// select_suffix*
 			// statement -> select_statement -> SELECT_DISTINCT select_expr*
 			// select_suffix*
-			if (tree.getType() == 81 || tree.getType() == 82)
+			if (tree.getType() == FatwormLexer.SELECT || tree.getType() == FatwormLexer.SELECT_DISTINCT)
 			{
 				FatwormDB.planner().setPlan(traverseSelect(tree));
 			}
-		} catch (Exception e)
+		} catch (FatwormException e)
 		{
 			e.printStackTrace();
 		}
 	}
 
 	// for insert and update
-	private Type getValue(CommonTree valueTree, Column c) throws Exception
+	private Type getValue(CommonTree valueTree, Column c) throws FatwormException
 	{
-		if (valueTree.getType() == 70)
+		if (valueTree.getType() == FatwormLexer.NULL)
 		{
 			if (c.autoIncrement()) return null;
 			Type type = c.getType().clone();
 			type.setNULL();
 			return type;
 		}
-		if (valueTree.getType() == 28)
+		if (valueTree.getType() == FatwormLexer.DEFAULT)
 		{
 			return null;
 		}
@@ -618,7 +582,7 @@ public class TreeTraverse
 		{
 			return new VARCHAR(((VARCHAR) c.getType()).getCapacity(), valueTree.toString());
 		}
-		if (c.getType() instanceof DECIMAL && (valueTree.getType() == 57 || valueTree.getType() == 42))
+		if (c.getType() instanceof DECIMAL && (valueTree.getType() == FatwormLexer.INTEGER_LITERAL || valueTree.getType() == FatwormLexer.FLOAT_LITERAL))
 		{
 			return new DECIMAL(((DECIMAL) (c.getType())).getEffective(), ((DECIMAL) (c.getType())).getDecimalSetting(), valueTree.toString());
 		}
@@ -652,22 +616,22 @@ public class TreeTraverse
 		return null;
 	}
 
-	private Expr getExpr(CommonTree tree) throws Exception
+	private Expr getExpr(CommonTree tree) throws FatwormException
 	{
 		if (tree.getType() == 105 || tree.getType() == 108 || tree.getType() == 109 || (tree.getType() == 111 && tree.getChildCount() == 2) || tree.getType() == 113) return new BinaryExpr(getExpr((CommonTree) tree.getChild(0)), getExpr((CommonTree) tree.getChild(1)), tree.toString());
 		if (tree.getType() == 111 && tree.getChildCount() == 1)
 		{
 			return new NegativeExpr(getExpr((CommonTree) tree.getChild(0)));
 		}
-		if (tree.getType() == 81 && tree.getChildCount() == 1)
+		if (tree.getType() == FatwormLexer.SELECT && tree.getChildCount() == 1)
 		{
 			return getExpr((CommonTree) tree.getChild(0));
 		}
-		if (tree.getType() == 81 || tree.getType() == 82)
+		if (tree.getType() == FatwormLexer.SELECT || tree.getType() == FatwormLexer.SELECT_DISTINCT)
 		{
 			return new SubqueryExpr(traverseSelect(tree));
 		}
-		if (tree.getType() == 85 || tree.getType() == 65 || tree.getType() == 66 || tree.getType() == 17 || tree.getType() == 11)
+		if (tree.getType() == FatwormLexer.SUM || tree.getType() == FatwormLexer.MAX || tree.getType() == FatwormLexer.MIN || tree.getType() == FatwormLexer.COUNT || tree.getType() == FatwormLexer.AVG)
 		{
 			if (tree.getChild(0).getType() == 112)
 			{
@@ -679,27 +643,27 @@ public class TreeTraverse
 		{
 			return new FieldExpr(tree.getChild(0).toString().toLowerCase(), tree.getChild(1).toString().toLowerCase());
 		}
-		if (tree.getType() == 49)
+		if (tree.getType() == FatwormLexer.ID)
 		{
 			return new FieldExpr(tree.toString().toLowerCase());
 		}
-		if (tree.getType() == 57)
+		if (tree.getType() == FatwormLexer.INTEGER_LITERAL)
 		{
 			return new ConstantExpr(new INT(tree.toString()));
 		}
-		if (tree.getType() == 42)
+		if (tree.getType() == FatwormLexer.FLOAT_LITERAL)
 		{
 			return new ConstantExpr(new FLOAT(tree.toString()));
 		}
-		if (tree.getType() == 84)
+		if (tree.getType() == FatwormLexer.STRING_LITERAL)
 		{
 			return new ConstantExpr(new CHAR(tree.toString().length() - 2, tree.toString()));
 		}
-		if (tree.getType() == 89)
+		if (tree.getType() == FatwormLexer.TRUE)
 		{
 			return new ConstantExpr(new BOOLEAN(true));
 		}
-		if (tree.getType() == 40)
+		if (tree.getType() == FatwormLexer.FALSE)
 		{
 			return new ConstantExpr(new BOOLEAN(false));
 		}
@@ -707,32 +671,32 @@ public class TreeTraverse
 	}
 
 	@SuppressWarnings("unchecked")
-	private Plan traverseSelect(CommonTree tree) throws Exception
+	private Plan traverseSelect(CommonTree tree) throws FatwormException
 	{
 		boolean distinct = false;
-		if (tree.getType() == 81) distinct = false;
-		if (tree.getType() == 82) distinct = true;
+		if (tree.getType() == FatwormLexer.SELECT) distinct = false;
+		if (tree.getType() == FatwormLexer.SELECT_DISTINCT) distinct = true;
 		List<CommonTree> childTrees0 = tree.getChildren();
 		LinkedList<Plan> fromPlans = new LinkedList<Plan>();// before from
 		Plan fromPlan = null;// after from
 		// find FROM tbl_ref*
 		for (CommonTree child0 : childTrees0)
 		{
-			if (child0.getType() == 43)
+			if (child0.getType() == FatwormLexer.FROM)
 			{
 				List<CommonTree> childTrees1 = child0.getChildren();
 				for (CommonTree child1 : childTrees1)
 				{
-					if (child1.getType() == 49)
+					if (child1.getType() == FatwormLexer.ID)
 					{
 						fromPlans.add(new TablePlan(DataBase.getDataBase().getTable(child1.toString().toLowerCase())));
 					}
-					if (child1.getType() == 8)
+					if (child1.getType() == FatwormLexer.AS)
 					{
 						CommonTree leftChild = (CommonTree) child1.getChild(0);
 						CommonTree rightChild = (CommonTree) child1.getChild(1);
 						String newName = rightChild.toString().toLowerCase();
-						if (leftChild.getType() == 49)
+						if (leftChild.getType() == FatwormLexer.ID)
 						{
 							Plan leftPlan = new TablePlan(DataBase.getDataBase().getTable(leftChild.toString().toLowerCase()));
 							fromPlans.add(new RenamePlan(leftPlan, newName));
@@ -759,7 +723,7 @@ public class TreeTraverse
 		Predicate wherePred = null;
 		for (CommonTree child0 : childTrees0)
 		{
-			if (child0.getType() == 100)
+			if (child0.getType() == FatwormLexer.WHERE)
 			{
 				wherePred = traverseWhere((CommonTree) child0.getChild(0));
 			}
@@ -778,7 +742,7 @@ public class TreeTraverse
 		List<String> asNames = new ArrayList<String>();
 		for (CommonTree child0 : childTrees0)
 		{
-			if (child0.getType() == 45)
+			if (child0.getType() == FatwormLexer.GROUP)
 			{
 				haveGroup = true;
 				CommonTree child1 = (CommonTree) child0.getChild(0);
@@ -787,7 +751,7 @@ public class TreeTraverse
 					groupTableName = child1.getChild(0).toString().toLowerCase();
 					groupColName = child1.getChild(1).toString().toLowerCase();
 				}
-				if (child1.getType() == 49)
+				if (child1.getType() == FatwormLexer.ID)
 				{
 					groupColName = child1.toString().toLowerCase();
 				}
@@ -798,7 +762,7 @@ public class TreeTraverse
 		boolean hasFunc = false;
 		for (CommonTree child0 : childTrees0)
 		{
-			if (child0.getType() == 43) break;
+			if (child0.getType() == FatwormLexer.FROM) break;
 			if (child0.getType() == 108 && child0.getChildCount() == 0)
 			{
 				Schema schema = wherePlan.schema();
@@ -809,7 +773,7 @@ public class TreeTraverse
 				}
 				continue;
 			}
-			if (child0.getType() == 8)
+			if (child0.getType() == FatwormLexer.AS)
 			{
 				Expr e = getExpr((CommonTree) child0.getChild(0));
 				if (e.hasFunc()) hasFunc = true;
@@ -821,7 +785,7 @@ public class TreeTraverse
 					groupColName = ((FieldExpr) e).getFieldName();
 				}
 			}
-			if (child0.getType() != 8 && (child0.getType() != 108 || child0.getChildCount() != 0) && child0.getType() != 43)
+			if (child0.getType() != FatwormLexer.AS && (child0.getType() != 108 || child0.getChildCount() != 0) && child0.getType() != FatwormLexer.FROM)
 			{
 				Expr e = getExpr((CommonTree) child0);
 				if (e.hasFunc()) hasFunc = true;
@@ -837,7 +801,7 @@ public class TreeTraverse
 			boolean hasHaving = false;
 			for (CommonTree child0 : childTrees0)
 			{
-				if (child0.getType() == 47)
+				if (child0.getType() == FatwormLexer.HAVING)
 				{
 					hasHaving = true;
 					break;
@@ -865,7 +829,7 @@ public class TreeTraverse
 			Predicate havingPred = null;
 			for (CommonTree child0 : childTrees0)
 			{
-				if (child0.getType() == 47)
+				if (child0.getType() == FatwormLexer.HAVING)
 				{
 					havingPred = traverseWhere((CommonTree) child0.getChild(0));
 					extendPlan = new SelectPlan(extendPlan, havingPred);
@@ -897,7 +861,7 @@ public class TreeTraverse
 		List<Boolean> as = new LinkedList<Boolean>();
 		for (CommonTree child0 : childTrees0)
 		{
-			if (child0.getType() == 74)
+			if (child0.getType() == FatwormLexer.ORDER)
 			{
 				List<CommonTree> childTrees1 = child0.getChildren();
 				for (CommonTree child1 : childTrees1)
@@ -908,7 +872,7 @@ public class TreeTraverse
 						tbls.add(child1.getChild(0).toString().toLowerCase());
 						as.add(new Boolean(true));
 					}
-					if (child1.getType() == 9)
+					if (child1.getType() == FatwormLexer.ASC)
 					{
 						if (child1.getChild(0).getType() == 112)
 						{
@@ -923,7 +887,7 @@ public class TreeTraverse
 							as.add(new Boolean(true));
 						}
 					}
-					if (child1.getType() == 30)
+					if (child1.getType() == FatwormLexer.DESC)
 					{
 						if (child1.getChild(0).getType() == 112)
 						{
@@ -938,7 +902,7 @@ public class TreeTraverse
 							as.add(new Boolean(false));
 						}
 					}
-					if (child1.getType() == 49)
+					if (child1.getType() == FatwormLexer.ID)
 					{
 						cols.add(child1.toString().toLowerCase());
 						tbls.add(null);
@@ -966,15 +930,15 @@ public class TreeTraverse
 		return distinctPlan;
 	}
 
-	private Predicate traverseWhere(CommonTree tree) throws Exception
+	private Predicate traverseWhere(CommonTree tree) throws FatwormException
 	{
-		if (tree.getType() == 73)
+		if (tree.getType() == FatwormLexer.OR)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			CommonTree rgtChild = (CommonTree) tree.getChild(1);
 			return new OrPred(traverseWhere(lftChild), traverseWhere(rgtChild));
 		}
-		if (tree.getType() == 6)
+		if (tree.getType() == FatwormLexer.AND)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			CommonTree rgtChild = (CommonTree) tree.getChild(1);
@@ -986,30 +950,30 @@ public class TreeTraverse
 			CommonTree rgtChild = (CommonTree) tree.getChild(1);
 			return new CopPred(getExpr(lftChild), getExpr(rgtChild), tree.getText());
 		}
-		if (tree.getType() == 69)
+		if (tree.getType() == FatwormLexer.NOT_EXISTS)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			return new NotExistsPred(traverseSelect(lftChild));
 		}
-		if (tree.getType() == 38)
+		if (tree.getType() == FatwormLexer.EXISTS)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			return new ExistsPred(traverseSelect(lftChild));
 		}
-		if (tree.getType() == 50)
+		if (tree.getType() == FatwormLexer.IN)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			CommonTree rgtChild = (CommonTree) tree.getChild(1);
 			return new InPred(getExpr(lftChild), traverseSelect(rgtChild));
 		}
-		if (tree.getType() == 7)
+		if (tree.getType() == FatwormLexer.ANY)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			CommonTree rgtChild = (CommonTree) tree.getChild(1);
 			CommonTree thirdChild = (CommonTree) tree.getChild(2);
 			return new AnyPred(getExpr(lftChild), rgtChild.getText(), traverseSelect(thirdChild));
 		}
-		if (tree.getType() == 5)
+		if (tree.getType() == FatwormLexer.ALL)
 		{
 			CommonTree lftChild = (CommonTree) tree.getChild(0);
 			CommonTree rgtChild = (CommonTree) tree.getChild(1);
@@ -1024,34 +988,34 @@ public class TreeTraverse
 	private Type getType(CommonTree tree)
 	{
 		// data_type -> INT
-		if (tree.getType() == 56)
+		if (tree.getType() == FatwormLexer.INT)
 		{
 			return new INT();
 		}
 		// data_type -> FLOAT
-		if (tree.getType() == 41)
+		if (tree.getType() == FatwormLexer.FLOAT)
 		{
 			return new FLOAT();
 		}
 		// data_type -> CHAR INTEGER_LITERAL
-		if (tree.getType() == 16)
+		if (tree.getType() == FatwormLexer.CHAR)
 		{
 			CommonTree child2 = (CommonTree) tree.getChild(0);
 			String cap = child2.getText();
 			return new CHAR(Integer.parseInt(cap));
 		}
 		// data_type -> DATETIME
-		if (tree.getType() == 26)
+		if (tree.getType() == FatwormLexer.DATETIME)
 		{
 			return new DATETIME();
 		}
 		// data_type -> BOOLEAN
-		if (tree.getType() == 13)
+		if (tree.getType() == FatwormLexer.BOOLEAN)
 		{
 			return new BOOLEAN();
 		}
 		// data_type -> DECIMAL INTEGER_LITERAL INTEGER_LITERAL
-		if (tree.getType() == 27)
+		if (tree.getType() == FatwormLexer.DECIMAL)
 		{
 			List<CommonTree> childTrees2 = tree.getChildren();
 			// data_type -> DECIMAL INTEGER_LITERAL INTEGER_LITERAL
@@ -1072,12 +1036,12 @@ public class TreeTraverse
 			}
 		}
 		// data_type -> TIMESTAMP
-		if (tree.getType() == 88)
+		if (tree.getType() == FatwormLexer.TIMESTAMP)
 		{
 			return new TIMESTAMP();
 		}
 		// data_type -> VARCHAR INTEGER_LITERAL
-		if (tree.getType() == 98)
+		if (tree.getType() == FatwormLexer.VARCHAR)
 		{
 			CommonTree child2 = (CommonTree) tree.getChild(0);
 			String cap = child2.getText();

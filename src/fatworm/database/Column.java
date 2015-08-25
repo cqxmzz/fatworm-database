@@ -31,7 +31,7 @@ public class Column implements Serializable
 			try
 			{
 				constValue = getConstValue(t, ConstV);
-			} catch (Exception e)
+			} catch (FatwormException e)
 			{
 				e.printStackTrace();
 			}
@@ -66,7 +66,7 @@ public class Column implements Serializable
 		return constValue;
 	}
 
-	public Type getConstValue(Type t, String c) throws Exception
+	public Type getConstValue(Type t, String c) throws FatwormException
 	{
 		if (t.isNULL()) return t;
 		if (t.isBOOLEAN()) return new BOOLEAN(c);
@@ -118,7 +118,7 @@ public class Column implements Serializable
 			try
 			{
 				return new VARCHAR(((VARCHAR) type).getCapacity(), t.toString());
-			} catch (Exception e)
+			} catch (FatwormException e)
 			{
 				e.printStackTrace();
 			}

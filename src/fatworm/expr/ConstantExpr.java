@@ -37,7 +37,7 @@ public class ConstantExpr implements Expr
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
 		return true;
 	}

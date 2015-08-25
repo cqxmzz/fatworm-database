@@ -85,7 +85,7 @@ public class FuncExpr implements Expr
 			try
 			{
 				throw new FatwormException("can't find this field in the select-expr");
-			} catch (Exception e)
+			} catch (FatwormException e)
 			{
 				e.printStackTrace();
 			}
@@ -108,7 +108,7 @@ public class FuncExpr implements Expr
 	}
 
 	@Override
-	public boolean notNeed(Schema s)
+	public boolean dontNeedSchema(Schema s)
 	{
 		return false;
 	}

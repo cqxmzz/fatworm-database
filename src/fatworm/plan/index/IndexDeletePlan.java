@@ -1,5 +1,6 @@
 package fatworm.plan.index;
 
+import fatworm.FatwormException;
 import fatworm.database.Record;
 import fatworm.database.Table;
 import fatworm.index.Index;
@@ -12,12 +13,12 @@ import fatworm.scan.UpdateScan;
 
 public class IndexDeletePlan extends DeletePlan
 {
-	public IndexDeletePlan(Table t, Predicate p) throws Exception
+	public IndexDeletePlan(Table t, Predicate p) throws FatwormException
 	{
 		super(t, p);
 	}
 
-	public int execute() throws Exception
+	public int execute() throws FatwormException
 	{
 		Plan p;
 		UpdateScan scan;

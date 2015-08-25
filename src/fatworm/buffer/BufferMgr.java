@@ -1,46 +1,41 @@
 package fatworm.buffer;
 
 import java.util.LinkedList;
-import java.util.Random;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import fatworm.FatwormDB;
+import fatworm.FatwormException;
 import fatworm.database.DataBase;
 import fatworm.database.Record;
 import fatworm.database.Schema;
 import fatworm.file.Block;
-import fatworm.types.BOOLEAN;
-import fatworm.types.CHAR;
-import fatworm.types.DATETIME;
-import fatworm.types.DECIMAL;
-import fatworm.types.FLOAT;
-import fatworm.types.INT;
-import fatworm.types.TIMESTAMP;
-import fatworm.types.Type;
-import fatworm.types.VARCHAR;
+import fatworm.types.*;
 
 public class BufferMgr
 {
 	static Buffer[] buffers;
 
-	//filename+blockNum => index in findTree
-	//Use TreeMap to optimize space use
+	// filename+blockNum => index in findTree
 	ConcurrentSkipListMap<String, Integer> findTree = new ConcurrentSkipListMap<String, Integer>();
 	
-	Random rand = new Random();
+	ConcurrentLinkedQueue<Integer> lruQueue = new ConcurrentLinkedQueue<Integer>();
 	
-	ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+	private ReentrantReadWriteLock rwLock = new ReentrantReadWriteLock();
+
 	protected Lock readLock = rwLock.readLock();
+
 	protected Lock writeLock = rwLock.writeLock();
-	
+
 	public BufferMgr()
 	{
 		buffers = new Buffer[FatwormDB.BUFFER_SIZE];
 		for (int i = 0; i < FatwormDB.BUFFER_SIZE; i++)
 		{
 			buffers[i] = new Buffer();
+			lruQueue.add(i);
 		}
 	}
 
@@ -56,7 +51,7 @@ public class BufferMgr
 			buffers[findTree.get(i)].flush();
 		writeLock.unlock();
 	}
-	
+
 	public void writeAll()
 	{
 		readLock.lock();
@@ -70,23 +65,41 @@ public class BufferMgr
 		readLock.unlock();
 	}
 
-	Buffer getLRUBuffer(Block blk)
+	private Buffer getLRUBuffer(Block blk)
 	{
-		int i = rand.nextInt(FatwormDB.BUFFER_SIZE - 1);
-		if (buffers[i].dirty)
-		{
-			buffers[i].flush();
-		}
+		int i = lruQueue.poll();
+		Block block = buffers[i].block;
+		if (block != null)
+			findTree.remove(block.toString());
 		buffers[i].assignToBlock(blk);
 		findTree.put(blk.toString(), i);
+		lruQueue.add(i);
 		return buffers[i];
 	}
 
-	public Buffer getBuffer(Block blk)
+	synchronized private Buffer getBufferAndHoldReadLock(Block blk)
+	{
+		Buffer buffer = getBuffer(blk);
+		readLock.lock();
+		while (buffer.block != null && !buffer.block.equals(blk))
+		{
+			readLock.unlock();
+			buffer = getBuffer(blk);
+			readLock.lock();
+		}
+		return buffer;
+	}
+
+	synchronized private Buffer getBuffer(Block blk)
 	{
 		writeLock.lock();
-		if (findTree.containsKey(blk.toString()))
+		String st = blk.toString();
+		if (findTree.containsKey(st))
 		{
+			int i = findTree.get(st);
+			lruQueue.remove(i);
+			lruQueue.add(i);
+			writeLock.unlock();
 			return buffers[findTree.get(blk.toString())];
 		}
 		Buffer ret = getLRUBuffer(blk);
@@ -94,30 +107,17 @@ public class BufferMgr
 		return ret;
 	}
 
-	public int insert(String name, Record r, int place) // return new tail
-	{
-		int ret = write(name, place, r);
-		return ret;
-	}
-
-	public Record get(String name, int integer)
+	public Record get(String name, int place)
 	{
 		Schema sche = DataBase.getDataBase().getTable(name).getSchema();
-		Block block = new Block(name, integer / FatwormDB.BLOCK_SIZE);
-		Buffer buffer = getBuffer(block);
-		readLock.lock();
-		while (!buffer.block.equals(block))
-		{
-			readLock.unlock();
-			buffer = getBuffer(block);
-			readLock.lock();
-		}
+		Block block = new Block(name, place / FatwormDB.BLOCK_SIZE);
+		Buffer buffer = getBufferAndHoldReadLock(block);
 		buffer.readLock.lock();
 		LinkedList<Type> list = new LinkedList<Type>();
-		int top = integer % FatwormDB.BLOCK_SIZE;
+		int top = place % FatwormDB.BLOCK_SIZE;
 		for (int i = 0; i < sche.getColumns().size(); ++i)
 		{
-			Type type = sche.getIndex(i).getType();
+			Type type = sche.getColumn(i).getType();
 			int isnull = buffer.getInt(top);
 			if (isnull == 1)
 			{
@@ -137,9 +137,8 @@ public class BufferMgr
 				try
 				{
 					type = new CHAR(((CHAR) type).getCapacity(), string);
-				} catch (Exception e)
+				} catch (FatwormException e)
 				{
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -154,7 +153,7 @@ public class BufferMgr
 				try
 				{
 					type = new VARCHAR(((VARCHAR) type).getCapacity(), string);
-				} catch (Exception e)
+				} catch (FatwormException e)
 				{
 					e.printStackTrace();
 				}
@@ -185,33 +184,25 @@ public class BufferMgr
 		return new Record(list, sche);
 	}
 
-	public int write(String name, int integer, Record record)
+	public int write(String name, int place, Record record)
 	{
 		Schema sche = DataBase.getDataBase().getTable(name).getSchema();
-		int top = integer % FatwormDB.BLOCK_SIZE;
+		int top = place % FatwormDB.BLOCK_SIZE;
 		Block block;
-		Buffer buffer;
+		Buffer buffer = null;
 		int recordLength = record.length();
 		if (top + recordLength >= FatwormDB.BLOCK_SIZE)
 		{
-			block = new Block(name, integer / FatwormDB.BLOCK_SIZE + 1);
-			buffer = getBuffer(block);
-			integer = integer - integer % FatwormDB.BLOCK_SIZE + FatwormDB.BLOCK_SIZE;
+			block = new Block(name, place / FatwormDB.BLOCK_SIZE + 1);
+			place = place - place % FatwormDB.BLOCK_SIZE + FatwormDB.BLOCK_SIZE;
 			top = 0;
 		}
 		else
 		{
-			block = new Block(name, integer / FatwormDB.BLOCK_SIZE);
-			buffer = getBuffer(block);
-			integer = integer += recordLength;
+			block = new Block(name, place / FatwormDB.BLOCK_SIZE);
+			place = place += recordLength;
 		}
-		readLock.lock();
-		while (!buffer.block.equals(block))
-		{
-			readLock.unlock();
-			buffer = getBuffer(block);
-			readLock.lock();
-		}
+		buffer = getBufferAndHoldReadLock(block);
 		buffer.writeLock.lock();
 		for (int i = 0; i < sche.getColumns().size(); ++i)
 		{
@@ -262,14 +253,14 @@ public class BufferMgr
 			}
 			top += sche.getColumns().get(i).getType().length();
 		}
-		if (integer % FatwormDB.BLOCK_SIZE + recordLength >= FatwormDB.BLOCK_SIZE)
+		if (place % FatwormDB.BLOCK_SIZE + recordLength >= FatwormDB.BLOCK_SIZE)
 		{
-			integer = integer - integer % FatwormDB.BLOCK_SIZE + FatwormDB.BLOCK_SIZE;
+			place = place - place % FatwormDB.BLOCK_SIZE + FatwormDB.BLOCK_SIZE;
 		}
 		if (FatwormDB.durability)
 			buffer.write();
 		buffer.writeLock.unlock();
 		readLock.unlock();
-		return integer;
+		return place;
 	}
 }

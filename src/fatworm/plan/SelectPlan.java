@@ -98,7 +98,7 @@ public class SelectPlan implements Plan
 			t1.add(renamePlan.name);
 			t2.add("");
 			c1.add(new Column(null, false, false, false, null));
-			if (predicate.notNeed(new Schema(c1, t1, t2)))
+			if (predicate.dontNeedSchema(new Schema(c1, t1, t2)))
 			{
 				Plan sonsonPlan = sonPlan.son().get(0);
 				LinkedList<Plan> tmp = fatherPlan.son();
@@ -128,7 +128,7 @@ public class SelectPlan implements Plan
 				Plan rightPlan = productPlan.son().get(1);
 				if (rightPlan instanceof RenamePlan || rightPlan instanceof TablePlan)
 				{
-					if (predicate.notNeed(rightPlan.schema()))
+					if (predicate.dontNeedSchema(rightPlan.schema()))
 					{
 						productPlan.setFather(father());
 						LinkedList<Plan> tmp = father().son();
@@ -140,7 +140,7 @@ public class SelectPlan implements Plan
 						setFather(productPlan);
 						this.pushDown();
 					}
-					else if (!predicate.notNeed(rightPlan.schema()) && leftPlan instanceof ProductPlan)
+					else if (!predicate.dontNeedSchema(rightPlan.schema()) && leftPlan instanceof ProductPlan)
 					{
 						Plan leftleftPlan = leftPlan.son().get(0);
 						Plan leftrightPlan = leftPlan.son().get(1);
@@ -156,7 +156,7 @@ public class SelectPlan implements Plan
 						// this.pushDown();
 						// }
 						// else
-						if (predicate.notNeed(leftrightPlan.schema()))
+						if (predicate.dontNeedSchema(leftrightPlan.schema()))
 						{
 							LinkedList<Plan> tmp = new LinkedList<Plan>();
 							tmp.add(new ProductPlan(new ProductPlan(leftleftPlan, rightPlan), leftrightPlan));

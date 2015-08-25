@@ -29,7 +29,7 @@ public class ProjectPlan implements Plan
 		schema = new Schema();
 		for (Integer i : places)
 		{
-			schema.add(plan.schema().getIndex(i), plan.schema().getTableName(i), plan.schema().getName(i));
+			schema.add(plan.schema().getColumn(i), plan.schema().getTableName(i), plan.schema().getName(i));
 		}
 	}
 
