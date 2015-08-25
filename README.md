@@ -1,7 +1,7 @@
 fatworm-database
 ================
 
-Implemented a full functional Database System, with hard-drive storage, indexing and various query optimizations.
+Implemented a full functional Database System, with hard-drive storage, concurrency, indexing and various query optimizations.
 
 Requirements website:
 
